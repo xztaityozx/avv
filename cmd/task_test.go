@@ -1,10 +1,12 @@
 package cmd
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestNewTask(t *testing.T) {
-
-	TU.Init()
+	as := assert.New(t)
 
 	expect := Task{
 		ParallelConfig: ParallelConfig{
@@ -46,5 +48,5 @@ func TestNewTask(t *testing.T) {
 	actual := NewTask("Dst", "Src", "TaskName", 1, 2000, 0.3, 0.3,
 		1.2, 0.2, 0.7, 1.0, 2.5, 7.5, 17.5, []string{"A", "B", "C"})
 
-	TU.Assert(actual.Compare(expect), t, "\n", actual, "\nis not\n", expect)
+	as.Equal(expect, actual)
 }

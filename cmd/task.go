@@ -1,5 +1,7 @@
 package cmd
 
+import "github.com/sirupsen/logrus"
+
 type Task struct {
 	DstDir           string
 	SrcDir           string
@@ -97,4 +99,8 @@ func (t Task) Compare(s Task) bool {
 		t.Vtp.Compare(s.Vtp) &&
 		t.Vtn.Compare(s.Vtn) &&
 		t.PlotPoint.Compare(s.PlotPoint)
+}
+
+func (t Task) MkDirs() {
+	logrus.Info()
 }
