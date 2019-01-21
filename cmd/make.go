@@ -22,6 +22,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/spf13/viper"
 
 	"github.com/spf13/cobra"
 )
@@ -38,6 +39,16 @@ var makeCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(makeCmd)
+
+	makeCmd.Flags().Float64("start", 2.5, "プロットの始点[ns]")
+	makeCmd.Flags().Float64("step", 7.5, "プロットの刻み幅[ns]")
+	makeCmd.Flags().Float64("stop", 17.5, "プロットの終点[ns]")
+	makeCmd.Flags().StringSlice("signals", []string{"N1", "N2", "BLB", "BL"}, "プロットしたい信号名")
+
+	viper.BindPFlag("PlotPoint.Start", makeCmd.Flags().Lookup("start"))
+	viper.BindPFlag("PlotPoint.Step", makeCmd.Flags().Lookup("step"))
+	viper.BindPFlag("PlotPoint.Stop", makeCmd.Flags().Lookup("stop"))
+	viper.BindPFlag("PlotPoint.SignalNames", makeCmd.Flags().Lookup("signals"))
 }
 
 type MakeRequest struct {

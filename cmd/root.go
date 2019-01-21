@@ -25,10 +25,12 @@ import (
 	"fmt"
 	"github.com/mattn/go-colorable"
 	"github.com/sirupsen/logrus"
+	"github.com/snowzach/rotatefilehook"
 	"os"
 	"path/filepath"
+	"time"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -69,11 +71,39 @@ func init() {
 	viper.BindPFlag("ParallelConfig.WaveView", rootCmd.Flags().Lookup("pWV"))
 	viper.BindPFlag("ParallelConfig.CountUp", rootCmd.Flags().Lookup("pCountUp"))
 
-	// init logrus System
-	logrus.SetFormatter(&logrus.TextFormatter{
-		ForceColors: true,
+}
+
+var log = logrus.New()
+
+func initLogger() {
+
+	// Hook to log file
+	path := PathJoin(config.LogDir, time.Now().Format("2006-01-02-15-04-05"))
+	hook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
+		Filename: path,
+		MaxAge:   28,
+		MaxSize:  500,
+		Level:    logrus.InfoLevel,
+		Formatter: &logrus.TextFormatter{
+			DisableColors:   true,
+			TimestampFormat: time.RFC3339,
+			FullTimestamp:   true,
+		},
 	})
-	logrus.SetOutput(colorable.NewColorableStdout())
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	log.SetLevel(logrus.InfoLevel)
+	log.SetOutput(colorable.NewColorableStderr())
+	// init logrus System
+	log.SetFormatter(&logrus.TextFormatter{
+		ForceColors:     true,
+		FullTimestamp:   true,
+		TimestampFormat: time.RFC3339,
+	})
+
+	log.AddHook(hook)
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -97,7 +127,7 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	if err := viper.ReadInConfig(); err != nil {
-		logrus.Warn(err)
+		log.Warn(err)
 
 		// Invalid config file ?
 		fmt.Print("設定ファイルがなんか変だけど大丈夫ですか？ (y/n) >>>")
@@ -112,7 +142,9 @@ func initConfig() {
 
 	// Unmarshal config file
 	if err := viper.Unmarshal(&config); err != nil {
-		logrus.Fatal(err)
+		log.Fatal(err)
 	}
 
+	// init Logger System
+	initLogger()
 }

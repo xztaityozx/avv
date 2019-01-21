@@ -12,7 +12,10 @@ type Config struct {
 	SrcDir         string
 	SlackConfig    SlackConfig
 	ParallelConfig ParallelConfig
-	WithAWX        bool
+	LogDir         string
+	MachineName    string
+	PlotPoint      PlotPoint
+	Templates      Templates
 }
 
 type SlackConfig struct {

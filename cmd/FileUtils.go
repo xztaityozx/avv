@@ -3,22 +3,52 @@ package cmd
 import (
 	"github.com/sirupsen/logrus"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
+	"unsafe"
 )
+
+type FileUtils struct {
+	logger *logrus.Entry
+}
+
+var FU = FileUtils{
+	logger: log.WithField("name", "FileUtils"),
+}
+
+// Cat(p string)
+// Read strings from [p]
+// returns: [strings]
+func (fu FileUtils) Cat(p string) string {
+	b, err := ioutil.ReadFile(p)
+	if err != nil {
+		fu.logger.Fatal(err)
+	}
+
+	return *(*string)(unsafe.Pointer(&b))
+}
+
+// WriteFile(p string)
+// Wrapper for ioutil.WriteFile
+func (fu FileUtils) WriteFile(p string, data string) {
+	if err := ioutil.WriteFile(p, []byte(data), 0644); err != nil {
+		fu.logger.Fatal(err)
+	}
+}
 
 // TryMkdir(path string)
 // try make directory path to [path]
-func TryMkDir(p string) {
+func (fu FileUtils) TryMkDir(p string) {
 	if _, err := os.Stat(p); err != nil {
 
 		// output warn
-		logrus.Warn(err)
+		fu.logger.Warn(err)
 		// mkdir all
 		if err := os.MkdirAll(p, 0644); err != nil {
-			logrus.Fatal(err)
+			fu.logger.Fatal(err)
 		} else {
-			logrus.Println(p, " had created")
+			fu.logger.Info(p, " had created")
 		}
 	}
 }
@@ -29,33 +59,33 @@ func PathJoin(p ...string) string {
 }
 
 // wrapper for os.ChDir
-func TryChDir(p string) {
+func (fu FileUtils) TryChDir(p string) {
 	if _, err := os.Stat(p); err != nil {
-		logrus.Warn(err)
+		log.Warn(err)
 
 		// mkdir
-		TryMkDir(p)
+		fu.TryMkDir(p)
 	}
 
 	if err := os.Chdir(p); err != nil {
-		logrus.Fatal(err)
+		fu.logger.Fatal(err)
 	}
 }
 
 // wrapper for io.Copy
-func Copy(src, dst string) {
+func (fu FileUtils) Copy(src, dst string) {
 	sfp, err := os.Open(src)
 	if err != nil {
-		logrus.Fatal(err)
+		fu.logger.Fatal(err)
 	}
 	dfp, err := os.Open(dst)
 	if err != nil {
-		logrus.Fatal(err)
+		fu.logger.Fatal(err)
 	}
 
 	if _, err := io.Copy(dfp, sfp); err != nil {
-		logrus.Fatal(err)
+		fu.logger.Fatal(err)
 	}
 
-	logrus.Println("Copy: ", src, "copy to", dst)
+	fu.logger.Info("Copy: ", src, "copy to", dst)
 }
