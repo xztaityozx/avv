@@ -21,7 +21,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
 
 	"github.com/spf13/cobra"
@@ -33,22 +32,46 @@ var makeCmd = &cobra.Command{
 	Short: "",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("make called")
+		log.Info(config)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(makeCmd)
 
-	makeCmd.Flags().Float64("start", 2.5, "プロットの始点[ns]")
-	makeCmd.Flags().Float64("step", 7.5, "プロットの刻み幅[ns]")
-	makeCmd.Flags().Float64("stop", 17.5, "プロットの終点[ns]")
+	makeCmd.Flags().Float64("PlotStart", 2.5, "プロットの始点[ns]")
+	makeCmd.Flags().Float64("PlotStep", 7.5, "プロットの刻み幅[ns]")
+	makeCmd.Flags().Float64("PlotStop", 17.5, "プロットの終点[ns]")
 	makeCmd.Flags().StringSlice("signals", []string{"N1", "N2", "BLB", "BL"}, "プロットしたい信号名")
 
-	viper.BindPFlag("PlotPoint.Start", makeCmd.Flags().Lookup("start"))
-	viper.BindPFlag("PlotPoint.Step", makeCmd.Flags().Lookup("step"))
-	viper.BindPFlag("PlotPoint.Stop", makeCmd.Flags().Lookup("stop"))
-	viper.BindPFlag("PlotPoint.SignalNames", makeCmd.Flags().Lookup("signals"))
+	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
+	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
+	viper.BindPFlag("Default.PlotPoint.Stop", makeCmd.Flags().Lookup("PlotStop"))
+	viper.BindPFlag("Default.PlotPoint.SignalNames", makeCmd.Flags().Lookup("signals"))
+
+	makeCmd.Flags().Float64P("VtpVoltage", "P", 0, "Vtpのしきい値電圧")
+	makeCmd.Flags().Float64P("VtnVoltage", "N", 0, "Vtnのしきい値電圧")
+	makeCmd.Flags().Float64("VtpDeviation", 1.0, "Vtpの偏差")
+	makeCmd.Flags().Float64("VtnDeviation", 1.0, "Vtnの偏差")
+	makeCmd.Flags().Float64P("sigma", "S", 0.046, "VtpとVtnのシグマ")
+	makeCmd.Flags().Float64("VtpSigma", 0, "Vtpのシグマ")
+	makeCmd.Flags().Float64("VtnSigma", 0, "Vtnのシグマ")
+
+	viper.BindPFlag("Default.Vtn.Threshold", makeCmd.Flags().Lookup("VtnVoltage"))
+	viper.BindPFlag("Default.Vtn.Deviation", makeCmd.Flags().Lookup("VtnDeviation"))
+	viper.BindPFlag("Default.Vtn.Sigma", makeCmd.Flags().Lookup("VtnSigma"))
+	viper.BindPFlag("Default.Vtp.Threshold", makeCmd.Flags().Lookup("VtpVoltage"))
+	viper.BindPFlag("Default.Vtp.Deviation", makeCmd.Flags().Lookup("VtpDeviation"))
+	viper.BindPFlag("Default.Vtp.Sigma", makeCmd.Flags().Lookup("VtpSigma"))
+
+	makeCmd.Flags().BoolP("autoremove", "r", false, "波形データを自動で削除します")
+	makeCmd.Flags().Int("start", 0, "SEEDの始点")
+	makeCmd.Flags().Int("end", 0, "SEEDの終点")
+
+	viper.BindPFlag("Default.AutoRemove", makeCmd.Flags().Lookup("autoremove"))
+	viper.BindPFlag("DefaultSEEDRange.Start", makeCmd.Flags().Lookup("start"))
+	viper.BindPFlag("DefaultSEEDRange.End", makeCmd.Flags().Lookup("end"))
+
 }
 
 type MakeRequest struct {

@@ -4,18 +4,12 @@ import (
 	"time"
 )
 
-var config Config
-
 type Config struct {
-	TaskDir        string
-	DstDir         string
-	SrcDir         string
-	SlackConfig    SlackConfig
-	ParallelConfig ParallelConfig
-	LogDir         string
-	MachineName    string
-	PlotPoint      PlotPoint
-	Templates      Templates
+	//Default Task
+	//DefaultSEEDRange SEED
+	//SlackConfig SlackConfig
+	//MachineName string
+	LogDir string
 }
 
 type SlackConfig struct {
@@ -34,6 +28,7 @@ type SlackMessage struct {
 }
 
 type ParallelConfig struct {
+	Master   int
 	HSPICE   int
 	WaveView int
 	CountUp  int
@@ -41,5 +36,5 @@ type ParallelConfig struct {
 
 // Compare func for ParallelConfig struct
 func (s ParallelConfig) Compare(t ParallelConfig) bool {
-	return s.HSPICE == t.HSPICE && s.WaveView == t.WaveView && s.CountUp == t.CountUp
+	return s.HSPICE == t.HSPICE && s.WaveView == t.WaveView && s.CountUp == t.CountUp && s.Master == t.Master
 }

@@ -36,6 +36,7 @@ import (
 )
 
 var cfgFile string
+var config = Config{}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -61,15 +62,15 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
 
 	// Parallel Options
-	rootCmd.PersistentFlags().IntP("Parallel", "P", 2, "HSPICE,WV,数え上げ全ての並列数です")
-	rootCmd.PersistentFlags().Int("pHSPICE", 2, "HSPICEの並列数です")
-	rootCmd.PersistentFlags().Int("pWV", 2, "WaveViewの並列数です")
-	rootCmd.PersistentFlags().Int("pCountUp", 2, "数え上げの並列数です")
-
-	// BindFlags
-	viper.BindPFlag("ParallelConfig.HSPICE", rootCmd.Flags().Lookup("pHSPICE"))
-	viper.BindPFlag("ParallelConfig.WaveView", rootCmd.Flags().Lookup("pWV"))
-	viper.BindPFlag("ParallelConfig.CountUp", rootCmd.Flags().Lookup("pCountUp"))
+	//rootCmd.PersistentFlags().IntP("Parallel", "p", 2, "HSPICE,WV,数え上げ全ての並列数です")
+	//rootCmd.PersistentFlags().Int("pHSPICE", 2, "HSPICEの並列数です")
+	//rootCmd.PersistentFlags().Int("pWV", 2, "WaveViewの並列数です")
+	//rootCmd.PersistentFlags().Int("pCountUp", 2, "数え上げの並列数です")
+	//
+	//// BindFlags
+	//viper.BindPFlag("Default.ParallelConfig.HSPICE", rootCmd.Flags().Lookup("pHSPICE"))
+	//viper.BindPFlag("Default.ParallelConfig.WaveView", rootCmd.Flags().Lookup("pWV"))
+	//viper.BindPFlag("Default.ParallelConfig.CountUp", rootCmd.Flags().Lookup("pCountUp"))
 
 }
 
@@ -122,6 +123,7 @@ func initConfig() {
 		// Search config in home directory with name ".avv" (without extension).
 		viper.AddConfigPath(filepath.Join(home, ".config", "avv"))
 		viper.SetConfigName(".avv")
+		viper.SetConfigType("json")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

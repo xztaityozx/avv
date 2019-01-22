@@ -1,10 +1,5 @@
 package cmd
 
-import (
-	"fmt"
-	"io/ioutil"
-)
-
 type Templates struct {
 	AddFile       string
 	SPIFile       string
@@ -14,17 +9,17 @@ type Templates struct {
 
 // Make AddFile
 // return [add file path]
-func (s SEED) MkAddFile(base string) []string {
-	format := FU.Cat(config.Templates.AddFile)
-	var rt []string
-
-	for seed := s.Start; seed <= s.End; seed++ {
-		path := PathJoin(base, "AddFiles", fmt.Sprintf("SEED%05d", seed))
-		rt = append(rt, path)
-
-	}
-
-}
+//func (s SEED) MkAddFile(base string) []string {
+//	format := FU.Cat(config.Templates.AddFile)
+//	var rt []string
+//
+//	for seed := s.Start; seed <= s.End; seed++ {
+//		path := PathJoin(base, "AddFiles", fmt.Sprintf("SEED%05d", seed))
+//		rt = append(rt, path)
+//
+//	}
+//
+//}
 
 type SimulationFiles struct {
 	AddFile       string
@@ -33,6 +28,12 @@ type SimulationFiles struct {
 	ResultsXML    string
 	ResultsMapXML string
 	ModelFile     string
+}
+
+type SimulationDirectories struct {
+	DstDir     string
+	NetListDir string
+	BaseDir    string
 }
 
 // compare func for SimulationFiles struct
