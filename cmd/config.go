@@ -5,11 +5,11 @@ import (
 )
 
 type Config struct {
-	//Default Task
-	//DefaultSEEDRange SEED
-	//SlackConfig SlackConfig
-	//MachineName string
-	LogDir string
+	Default          Task
+	DefaultSEEDRange SEED
+	SlackConfig      SlackConfig
+	MachineName      string
+	LogDir           string
 }
 
 type SlackConfig struct {

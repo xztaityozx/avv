@@ -58,20 +58,20 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
 
-	// Parallel Options
-	//rootCmd.PersistentFlags().IntP("Parallel", "p", 2, "HSPICE,WV,数え上げ全ての並列数です")
-	//rootCmd.PersistentFlags().Int("pHSPICE", 2, "HSPICEの並列数です")
-	//rootCmd.PersistentFlags().Int("pWV", 2, "WaveViewの並列数です")
-	//rootCmd.PersistentFlags().Int("pCountUp", 2, "数え上げの並列数です")
-	//
-	//// BindFlags
-	//viper.BindPFlag("Default.ParallelConfig.HSPICE", rootCmd.Flags().Lookup("pHSPICE"))
-	//viper.BindPFlag("Default.ParallelConfig.WaveView", rootCmd.Flags().Lookup("pWV"))
-	//viper.BindPFlag("Default.ParallelConfig.CountUp", rootCmd.Flags().Lookup("pCountUp"))
+	//Parallel Options
+	rootCmd.PersistentFlags().IntP("Parallel", "p", 2, "HSPICE,WV,数え上げ全ての並列数です")
+	rootCmd.PersistentFlags().Int("pHSPICE", 2, "HSPICEの並列数です")
+	rootCmd.PersistentFlags().Int("pWV", 2, "WaveViewの並列数です")
+	rootCmd.PersistentFlags().Int("pCountUp", 2, "数え上げの並列数です")
 
+	// BindFlags
+	viper.BindPFlag("Default.ParallelConfig.HSPICE", rootCmd.PersistentFlags().Lookup("pHSPICE"))
+	viper.BindPFlag("Default.ParallelConfig.WaveView", rootCmd.PersistentFlags().Lookup("pWV"))
+	viper.BindPFlag("Default.ParallelConfig.CountUp", rootCmd.PersistentFlags().Lookup("pCountUp"))
+
+	cobra.OnInitialize(initConfig)
 }
 
 var log = logrus.New()
