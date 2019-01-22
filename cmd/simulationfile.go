@@ -46,12 +46,3 @@ func (s SimulationFiles) Compare(t SimulationFiles) bool {
 		s.AddFile == t.AddFile &&
 		s.ModelFile == t.ModelFile
 }
-
-// Create SimulationFiles struct
-// return: SimulationFiles struct
-func NewSimulationFiles(aceScript string, s SEED, vtp, vtn Transistor) SimulationFiles {
-	var rt SimulationFiles
-	rt.ACEScript = aceScript
-
-	return rt
-}

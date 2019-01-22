@@ -21,7 +21,11 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/spf13/viper"
+	"io/ioutil"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -72,8 +76,53 @@ func init() {
 	viper.BindPFlag("DefaultSEEDRange.Start", makeCmd.Flags().Lookup("start"))
 	viper.BindPFlag("DefaultSEEDRange.End", makeCmd.Flags().Lookup("end"))
 
+	makeCmd.Flags().IntP("times", "t", 0, "モンテカルロシミュレーション1回当たりの回数")
+	viper.BindPFlag("Default.Times", makeCmd.Flags().Lookup("times"))
+
+	makeCmd.Flags().String("basedir", "", "シミュレーションの結果を書き出す親ディレクトリ")
+	makeCmd.Flags().String("logdir", "", "ログを格納するディレクトリ")
+
+	viper.BindPFlag("Default.SimulationDirectories.BaseDir", makeCmd.Flags().Lookup("basedir"))
+	viper.BindPFlag("LogDir", makeCmd.Flags().Lookup("logdir"))
+
 }
 
 type MakeRequest struct {
-	Task Task
+	Task    Task
+	SEED    SEED
+	TaskDir string
+}
+
+// make Task file
+// output task.json to [TaskDir/reserve]
+// return: error
+func (m MakeRequest) MakeTaskFiles() error {
+	for seed := m.SEED.Start; seed <= m.SEED.End; seed++ {
+		data := m.Task
+		data.SEED = seed
+
+		if b, err := json.Marshal(data); err != nil {
+			return err
+		} else {
+			// 書き出し先
+			path := PathJoin(m.TaskDir, "reserve")
+			FU.TryMkDir(path)
+
+			// ファイル名[時間]-[Vtn]-[VtnSigma]-[Vtp]-[VtpSigma]-[回数]-[SEED].json
+			path = PathJoin(path, fmt.Sprintf("%s-Vtn%.4f-Sigma%.4f-Vtp%.4f-Sigma%.4f-Times%05d-SEED%05d.json",
+				time.Now().Format("20060102150405"),
+				m.Task.Vtn.Threshold, m.Task.Vtn.Sigma,
+				m.Task.Vtp.Threshold, m.Task.Vtp.Sigma,
+				m.Task.Times,
+				m.Task.SEED))
+			err := ioutil.WriteFile(path, b, 0644)
+			if err != nil {
+				return err
+			}
+		}
+
+		log.Info("Make Request: Write ", m.SEED.End, "task files")
+
+	}
+	return nil
 }

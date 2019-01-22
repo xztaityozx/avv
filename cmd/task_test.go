@@ -10,62 +10,41 @@ import (
 func TestAllTask(t *testing.T) {
 
 	home, _ := homedir.Dir()
-	config.DstDir = PathJoin(home, "Dst")
-	config.SrcDir = PathJoin(home, "Src")
+	config.Default.SimulationDirectories.BaseDir = PathJoin(home, "Base")
+	config.Default.SimulationDirectories.NetListDir = PathJoin(home, "NetList")
+	config.Default.SEED = 100
+	config.Default.Vtn = Transistor{
+		Sigma:     0.046,
+		Threshold: 0.6,
+		Deviation: 1.0,
+	}
+	config.Default.Vtp = Transistor{
+		Sigma:     0.046,
+		Threshold: -0.6,
+		Deviation: 1.0,
+	}
+	config.Default.Times = 5000
 
 	as := assert.New(t)
-	t.Run("001 NewTask", func(t *testing.T) {
-		expect := Task{
-			ParallelConfig: ParallelConfig{
-				CountUp:  10,
-				WaveView: 20,
-				HSPICE:   30,
-			},
-			PlotPoint: PlotPoint{
-				SignalNames: []string{"A", "B", "C"},
-				Stop:        17.5,
-				Step:        7.5,
-				Start:       2.5,
-			},
-			SEED: SEED{
-				Start: 1,
-				End:   2000,
-			},
-			TaskNameFileName: "TaskName",
-			SrcDir:           "Src",
-			DstDir:           "Dst",
-			Vtp: Transistor{
-				Sigma:     0.7,
-				Deviation: 1.0,
-				Threshold: 0.2,
-			},
-			Vtn: Transistor{
-				Threshold: 0.3,
-				Deviation: 1.2,
-				Sigma:     0.3,
-			},
-			AutoRemove: true,
+
+	t.Run("001_Task.MkDir", func(t *testing.T) {
+		task := NewTask()
+
+		task.MkDir()
+		expect := PathJoin(config.Default.SimulationDirectories.BaseDir,
+			"Vtn0.6000-Sigma0.0460",
+			"Vtp-0.6000-Sigma0.0460",
+			"Times05000",
+			"SEED00100")
+
+		actual := task.SimulationDirectories.DstDir
+
+		as.Equal(expect, actual, "they has equal")
+
+		if _, err := os.Stat(expect); err != nil {
+			as.Fail("cannot find", expect)
+		} else {
+			os.RemoveAll(expect)
 		}
-
-		config.ParallelConfig = ParallelConfig{
-			CountUp:  10,
-			WaveView: 20,
-			HSPICE:   30,
-		}
-
-		actual := NewTask("Dst", "Src", "TaskName", 1, 2000, 0.3, 0.3,
-			1.2, 0.2, 0.7, 1.0, true)
-
-		as.Equal(expect, actual)
-
-	})
-
-	t.Run("002 Task_MkDirs", func(t *testing.T) {
-		task := NewTask("Dst", "Src", "TaskName", 1, 20, 0.3, 0.3,
-			1.2, 0.2, 0.7, 1.0, true)
-
-		task.MkDirs()
-
-		os.RemoveAll(config.DstDir)
 	})
 }
