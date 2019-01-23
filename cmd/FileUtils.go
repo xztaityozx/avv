@@ -34,7 +34,7 @@ func (fu FileUtils) Cat(p string) string {
 // Wrapper for ioutil.WriteFile
 func (fu FileUtils) WriteFile(p string, data string) {
 	if _, err := os.Create(p); err != nil {
-		fu.logger.Fatal(err)
+		fu.logger.Warn(err)
 	}
 
 	if err := ioutil.WriteFile(p, []byte(data), 0644); err != nil {
