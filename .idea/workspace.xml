@@ -4,7 +4,6 @@
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/FileUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/FileUtils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/addfile_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/addfile_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,17 +42,17 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="9" />
-          <entry key="go" value="23274" />
+          <entry key="go" value="23330" />
           <entry key="ideavimrc" value="118" />
-          <entry key="txt" value="261" />
+          <entry key="txt" value="315" />
           <entry key="xml" value="45" />
           <entry key="yml" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="23274" />
-          <entry key="PLAIN_TEXT" value="388" />
+          <entry key="Go" value="23330" />
+          <entry key="PLAIN_TEXT" value="442" />
           <entry key="XML" value="45" />
           <entry key="YAML" value="11" />
         </counts>
@@ -133,8 +132,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cmd/FileUtils.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+            <state relative-caret-position="396">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
             </state>
           </provider>
         </entry>
@@ -247,10 +246,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="195" />
-    <option name="y" value="-25" />
-    <option name="width" value="1935" />
-    <option name="height" value="883" />
+    <option name="x" value="156" />
+    <option name="y" value="-20" />
+    <option name="width" value="1548" />
+    <option name="height" value="706" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -287,7 +286,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="GO_FMT" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="Comm&#9;ACTION&#9;CheckinProject&#10;WriteFile&#9;null&#9;null&#10;Make&#9;null&#9;null&#10;TestAdd&#9;null&#9;null&#10;Test_Mk&#9;RUN_CONFIGURATION&#9;TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd&#10;TryMk&#9;null&#9;null&#10;New&#9;ACTION&#9;NewGroup&#10;Tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;root&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/root.go&#10;Rename&#9;ACTION&#9;RenameElement&#10;test&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml_test.go&#10;results&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml.go&#10;task&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task.go&#10;GotoDe&#9;ACTION&#9;VimGotoDeclaration&#10;goto&#9;ACTION&#9;VimGotoDeclaration&#10;gotod&#9;ACTION&#9;VimGotoDeclaration&#10;Font&#9;ACTION&#9;EditorIncreaseFontSize&#10;Increase&#9;ACTION&#9;EditorIncreaseFontSize&#10;new&#9;ACTION&#9;NewGroup&#10;temp&#9;null&#9;null&#10;plot&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint_test.go&#10;lo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;giti&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/.gitignore&#10;Commit&#9;ACTION&#9;CheckinProject&#10;Commi&#9;ACTION&#9;CheckinProject&#10;make&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go&#10;sim&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;Spli&#9;ACTION&#9;SplitVertically&#10;ta&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task.go&#10;roo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/root.go&#10;confi&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;config&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Goto &#9;ACTION&#9;VimGotoDeclaration&#10;con&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;seed&#9;null&#9;null&#10;tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;New &#9;ACTION&#9;NewGroup&#10;Test&#9;ACTION&#9;GotoTest&#10;Push&#9;ACTION&#9;Vcs.Push&#10;tas&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task_test.go&#10;Tes&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/TestUtils.go&#10;Spl&#9;ACTION&#9;SplitVertically&#10;make.go&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go" />
+    <property name="SearchEverywhereHistoryKey" value="Comm&#9;ACTION&#9;CheckinProject&#10;COm&#9;null&#9;null&#10;WriteFile&#9;null&#9;null&#10;Make&#9;null&#9;null&#10;TestAdd&#9;null&#9;null&#10;Test_Mk&#9;RUN_CONFIGURATION&#9;TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd&#10;TryMk&#9;null&#9;null&#10;New&#9;ACTION&#9;NewGroup&#10;Tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;root&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/root.go&#10;Rename&#9;ACTION&#9;RenameElement&#10;test&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml_test.go&#10;results&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml.go&#10;task&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task.go&#10;GotoDe&#9;ACTION&#9;VimGotoDeclaration&#10;goto&#9;ACTION&#9;VimGotoDeclaration&#10;gotod&#9;ACTION&#9;VimGotoDeclaration&#10;Font&#9;ACTION&#9;EditorIncreaseFontSize&#10;Increase&#9;ACTION&#9;EditorIncreaseFontSize&#10;new&#9;ACTION&#9;NewGroup&#10;temp&#9;null&#9;null&#10;plot&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint_test.go&#10;lo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;giti&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/.gitignore&#10;Commit&#9;ACTION&#9;CheckinProject&#10;Commi&#9;ACTION&#9;CheckinProject&#10;make&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go&#10;sim&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;Spli&#9;ACTION&#9;SplitVertically&#10;ta&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task.go&#10;roo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/root.go&#10;confi&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;config&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Goto &#9;ACTION&#9;VimGotoDeclaration&#10;con&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;seed&#9;null&#9;null&#10;tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;New &#9;ACTION&#9;NewGroup&#10;Test&#9;ACTION&#9;GotoTest&#10;Push&#9;ACTION&#9;Vcs.Push&#10;tas&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task_test.go&#10;Tes&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/TestUtils.go&#10;Spl&#9;ACTION&#9;SplitVertically&#10;make.go&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -418,7 +417,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1536" height="864" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -438,7 +437,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="4" visible="true" weight="0.16174497" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="4" visible="true" weight="0.12846482" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -480,7 +479,9 @@
     <MESSAGE value="Add: MakeResultsMap()" />
     <MESSAGE value="Add: version sub command" />
     <MESSAGE value="Travis CI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Travis CI" />
+    <MESSAGE value="WriteFileでファイルがなかったら弾いてたのを変更" />
+    <MESSAGE value="ioutil.WriteFileの挙動解らん" />
+    <option name="LAST_COMMIT_MESSAGE" value="ioutil.WriteFileの挙動解らん" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/cmd/log.go" />
@@ -655,8 +656,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/FileUtils.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+        <state relative-caret-position="396">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
         </state>
       </provider>
     </entry>
