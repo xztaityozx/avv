@@ -14,7 +14,7 @@ type PlotPoint struct {
 
 // Make ACE script from PlotPoint struct
 // returns: [file path] [error]
-func (p PlotPoint) MkACEScript(base string) (string, error) {
+func (p PlotPoint) MkACEScript(dst string) (string, error) {
 	rt := fmt.Sprintf(`set xml [ sx_open_wdf "resultsMap.xml" ]
 sx_export_csv on
 sx_export_range %.2fns %.2fns %.2fns`, p.Start, p.Step, p.Stop)
@@ -25,7 +25,7 @@ set www [ sx_find_wave_in_file $xml %s ]
 sx_export_data "%s.csv" $www`, rt, v, v)
 	}
 
-	path := PathJoin(base, "extract.ace")
+	path := PathJoin(dst, "extract.ace")
 	return path, ioutil.WriteFile(path, []byte(rt), 0644)
 }
 

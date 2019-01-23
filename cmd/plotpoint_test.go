@@ -20,6 +20,8 @@ func TestAllPlotPoint(t *testing.T) {
 
 	t.Run("001_MkACEScript", func(t *testing.T) {
 		base := PathJoin(home, "TestDir")
+		FU.TryMkDir(base)
+
 		p, err := pp.MkACEScript(base)
 
 		if err != nil {
@@ -32,6 +34,5 @@ func TestAllPlotPoint(t *testing.T) {
 			as.Fail(p, "could not found")
 		}
 
-		os.RemoveAll(base)
 	})
 }

@@ -11,6 +11,7 @@ type Config struct {
 	MachineName      string
 	LogDir           string
 	TaskDir          string
+	Templates 		 Templates
 }
 
 type SlackConfig struct {
