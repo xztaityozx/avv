@@ -46,7 +46,7 @@ func (fu FileUtils) TryMkDir(p string) {
 		// output warn
 		fu.logger.Warn(err)
 		// mkdir all
-		if err := os.MkdirAll(p, 0644); err != nil {
+		if err := os.MkdirAll(p, 0755); err != nil {
 			fu.logger.Fatal(err)
 		} else {
 			fu.logger.Info(p, " had created")
