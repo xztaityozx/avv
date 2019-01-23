@@ -13,6 +13,10 @@ func TestAllTask(t *testing.T) {
 	home, _ := homedir.Dir()
 	config.Default.SimulationDirectories.BaseDir = PathJoin(home, "Base")
 	config.Default.SimulationDirectories.NetListDir = PathJoin(home, "NetList")
+
+	FU.TryMkDir(config.Default.SimulationDirectories.BaseDir)
+	FU.TryMkDir(config.Default.SimulationDirectories.NetListDir)
+
 	config.Default.SEED = 100
 	config.Default.Vtn = Transistor{
 		Sigma:     0.046,
@@ -59,9 +63,9 @@ monte=%d
 
 	task := config.Default
 	home, _ := homedir.Dir()
-	config.Templates.SPIScript = PathJoin(home,"template","spi")
-	FU.TryMkDir(PathJoin(home,"template"))
-	FU.WriteFile(config.Templates.SPIScript,template)
+	config.Templates.SPIScript = PathJoin(home, "template", "spi")
+	FU.TryMkDir(PathJoin(home, "template"))
+	FU.WriteFile(config.Templates.SPIScript, template)
 
 	task.MakeSPIScript()
 	read := FU.Cat(task.SimulationFiles.SPIScript)
