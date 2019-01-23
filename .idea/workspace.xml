@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/resultsxml_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/Vtn0.0000-Sigma0.0000-Vtp0.0000-Sigma0.0000-Times00000.spi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/resultsxml.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/resultsxml.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/resultsxml_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/resultsxml_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -71,12 +68,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="3269" />
+          <entry key="go" value="3552" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="3269" />
+          <entry key="Go" value="3552" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -139,7 +136,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/plotpoint.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="352">
               <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
               <folding>
                 <element signature="e#13#43#0" expanded="true" />
@@ -151,8 +148,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/resultsxml.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-925">
-              <caret line="134" column="20" selection-start-line="134" selection-start-column="20" selection-end-line="134" selection-end-column="20" />
+            <state relative-caret-position="797">
+              <caret line="195" column="78" selection-start-line="195" selection-start-column="78" selection-end-line="195" selection-end-column="78" />
               <folding>
                 <element signature="e#13#45#0" expanded="true" />
               </folding>
@@ -163,8 +160,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cmd/resultsxml_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+            <state relative-caret-position="468">
+              <caret line="18" column="53" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
               <folding>
                 <element signature="e#13#72#0" expanded="true" />
               </folding>
@@ -210,8 +207,8 @@
         <option value="$PROJECT_DIR$/cmd/simulationfile.go" />
         <option value="$PROJECT_DIR$/cmd/task_test.go" />
         <option value="$PROJECT_DIR$/cmd/task.go" />
-        <option value="$PROJECT_DIR$/cmd/resultsxml_test.go" />
         <option value="$PROJECT_DIR$/cmd/resultsxml.go" />
+        <option value="$PROJECT_DIR$/cmd/resultsxml_test.go" />
       </list>
     </option>
   </component>
@@ -234,7 +231,25 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
+              <item name="avv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
+              <item name="avv" type="462c0819:PsiDirectoryNode" />
+              <item name="cmd" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
@@ -259,7 +274,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestTask_MakeSPIScript in github.com/xztaityozx/avv/cmd">
+  <component name="RunManager" selected="Go Test.TestResultsXML_MakeSweepFileObjects in github.com/xztaityozx/avv/cmd">
     <configuration name="TestAddFile_Compare in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
@@ -269,17 +284,6 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestAddFile_Compare$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestAddFile_Make in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/cmd" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/cmd" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestAddFile_Make$" />
       <method v="2" />
     </configuration>
     <configuration name="TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -304,6 +308,17 @@
       <pattern value="^TestNewAddFile$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestResultsXML_MakeSweepFileObjects in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="avv" />
+      <working_directory value="$PROJECT_DIR$/cmd" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/xztaityozx/avv/cmd" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestResultsXML_MakeSweepFileObjects$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestTask_MakeSPIScript in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
@@ -317,28 +332,22 @@
     </configuration>
     <list>
       <item itemvalue="Go Test.TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd" />
-      <item itemvalue="Go Test.TestAddFile_Make in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestAddFile_Compare in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestNewAddFile in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestTask_MakeSPIScript in github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.TestResultsXML_MakeSweepFileObjects in github.com/xztaityozx/avv/cmd" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestResultsXML_MakeSweepFileObjects in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestTask_MakeSPIScript in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestNewAddFile in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestAddFile_Compare in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestAddFile_Make in github.com/xztaityozx/avv/cmd" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestAddFile_Make_in_github_com_xztaityozx_avv_cmd - 2019.01.22 at 22h 15m 24s.xml">
-      <configuration name="TestAddFile_Make in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestAddFile_Make_in_github_com_xztaityozx_avv_cmd - 2019.01.22 at 22h 15m 46s.xml">
-      <configuration name="TestAddFile_Make in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestAddFile_Make_in_github_com_xztaityozx_avv_cmd - 2019.01.22 at 22h 16m 47s.xml">
       <configuration name="TestAddFile_Make in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -363,6 +372,12 @@
     <history-entry file="TestTask_MakeSPIScript_in_github_com_xztaityozx_avv_cmd - 2019.01.22 at 22h 53m 50s.xml">
       <configuration name="TestTask_MakeSPIScript in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
+    <history-entry file="TestResultsXML_MakeSweepFileObjects_in_github_com_xztaityozx_avv_cmd - 2019.01.23 at 17h 07m 05s.xml">
+      <configuration name="TestResultsXML_MakeSweepFileObjects in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestResultsXML_MakeSweepFileObjects_in_github_com_xztaityozx_avv_cmd - 2019.01.23 at 17h 09m 36s.xml">
+      <configuration name="TestResultsXML_MakeSweepFileObjects in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="34" width="2560" height="1406" extended-state="6" />
@@ -385,7 +400,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="4" weight="0.15963376" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="4" visible="true" weight="0.15963376" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -531,16 +546,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/plotpoint.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
-          <folding>
-            <element signature="e#13#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/simulationfile.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8">
@@ -557,18 +562,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/resultsxml.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-925">
-          <caret line="134" column="20" selection-start-line="134" selection-start-column="20" selection-end-line="134" selection-end-column="20" />
+        <state relative-caret-position="797">
+          <caret line="195" column="78" selection-start-line="195" selection-start-column="78" selection-end-line="195" selection-end-column="78" />
           <folding>
             <element signature="e#13#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/plotpoint.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
+          <folding>
+            <element signature="e#13#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/resultsxml_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        <state relative-caret-position="468">
+          <caret line="18" column="53" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
           <folding>
             <element signature="e#13#72#0" expanded="true" />
           </folding>
