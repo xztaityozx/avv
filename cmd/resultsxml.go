@@ -11,25 +11,24 @@ import (
 )
 
 const (
-	XMLMONTE_CARLO="MONTE_CARLO"
-	XMLanalysisName="analysisName"
-	XMLfilename="filename"
-	XMLformat="format"
-	XMLgiString="giString"
-	XMLname="name"
-	XMLparams="params"
-	XMLpsf="psf"
-	XMLresultFiles="resultFiles"
-	XMLresultType="resultType"
-	XMLsaPair="saPair"
-	XMLsaResultFile="saResultFile"
-	XMLsaResults="saResults"
-	XMLsaSweepFile="saSweepFile"
-	XMLstatistical="statistical"
-	XMLsweepFiles="sweepFiles"
-	XMLtran="tran"
-	XMLvalue="value"
-
+	XMLmonteCarlo   = "MONTE_CARLO"
+	XMLanalysisName = "analysisName"
+	XMLfilename     = "filename"
+	XMLformat       = "format"
+	XMLgiString     = "giString"
+	XMLname         = "name"
+	XMLparams       = "params"
+	XMLpsf          = "psf"
+	XMLresultFiles  = "resultFiles"
+	XMLresultType   = "resultType"
+	XMLsaPair       = "saPair"
+	XMLsaResultFile = "saResultFile"
+	XMLsaResults    = "saResults"
+	XMLsaSweepFile  = "saSweepFile"
+	XMLstatistical  = "statistical"
+	XMLsweepFiles   = "sweepFiles"
+	XMLtran         = "tran"
+	XMLvalue        = "value"
 )
 
 type Attribute struct {
@@ -61,69 +60,69 @@ type FileFormat struct {
 	Objects []Object `xml:"Object"`
 }
 
-type ResultsXML struct{
+type ResultsXML struct {
 	Task Task
 }
 
 func (r ResultsXML) MakeResultsFilesCollection() Collection {
 
 	mkIteration := func(t int) string {
-		var rt  []string
+		var rt []string
 
-		for i:=1;i<=t;t++{
-			rt = append(rt, fmt.Sprintf("%d.0",i))
+		for i := 1; i <= t; i++ {
+			rt = append(rt, fmt.Sprintf("%d.0", i))
 		}
 
-		return strings.Join(rt," ")
+		return strings.Join(rt, " ")
 	}
 
 	rt := Collection{
-		Name:XMLresultFiles,
-		Objects:[]Object{
+		Name: XMLresultFiles,
+		Objects: []Object{
 			{
-				Version:"1",
-				Type:XMLsaResultFile,
-				Name:XMLresultFiles,
-				Attributes:[]Attribute{
-					{Type:XMLgiString,Value:XMLtran,Name:XMLanalysisName},
-					{Type:XMLgiString,Value:"",Name:XMLfilename},
-					{Type:XMLgiString,Value:XMLpsf,Name:XMLformat},
-					{Type:XMLgiString,Value:mkIteration(r.Task.Times), Name:"iterations"},
-					{Type:XMLgiString,Value:XMLtran,Name:XMLresultType},
+				Version: "1",
+				Type:    XMLsaResultFile,
+				Name:    XMLresultFiles,
+				Attributes: []Attribute{
+					{Type: XMLgiString, Value: XMLtran, Name: XMLanalysisName},
+					{Type: XMLgiString, Value: "", Name: XMLfilename},
+					{Type: XMLgiString, Value: XMLpsf, Name: XMLformat},
+					{Type: XMLgiString, Value: mkIteration(r.Task.Times), Name: "iterations"},
+					{Type: XMLgiString, Value: XMLtran, Name: XMLresultType},
 				},
-				Collections:[]Collection{r.MakeSweepFilesCollections()},
+				Collections: []Collection{r.MakeSweepFilesCollections()},
 			},
 			{
-				Version:"1",
-				Type:XMLsaResultFile,
-				Name:XMLresultFiles,
-				Attributes:[]Attribute{
-					{Type:XMLgiString, Value:XMLstatistical, Name:XMLanalysisName},
-					{Type:XMLgiString, Value:"hspice.mc0", Name:XMLfilename},
-					{Type:XMLgiString, Value:XMLpsf, Name:XMLformat},
-					{Type:XMLgiString, Value:XMLstatistical, Name: XMLresultType},
-				},
-			},
-			{
-				Version:"1",
-				Type:XMLsaResultFile,
-				Name:XMLresultFiles,
-				Attributes:[]Attribute{
-					{Type:XMLgiString, Value:"scalarData", Name:XMLanalysisName},
-					{Type:XMLgiString, Value:"scalar.dat", Name:XMLfilename},
-					{Type:XMLgiString, Value:"table", Name:XMLformat},
-					{Type:XMLgiString, Value:XMLstatistical, Name:XMLresultType},
+				Version: "1",
+				Type:    XMLsaResultFile,
+				Name:    XMLresultFiles,
+				Attributes: []Attribute{
+					{Type: XMLgiString, Value: XMLstatistical, Name: XMLanalysisName},
+					{Type: XMLgiString, Value: "hspice.mc0", Name: XMLfilename},
+					{Type: XMLgiString, Value: XMLpsf, Name: XMLformat},
+					{Type: XMLgiString, Value: XMLstatistical, Name: XMLresultType},
 				},
 			},
 			{
-				Version:"1",
-				Type:XMLsaResultFile,
-				Name:XMLresultFiles,
-				Attributes:[]Attribute{
-					{Type:XMLgiString, Value:"", Name:XMLanalysisName},
-					{Type:XMLgiString, Value:"designVariables.wdf", Name:XMLfilename},
-					{Type:XMLgiString, Value:"wdf", Name:XMLformat},
-					{Type:XMLgiString, Value:XMLstatistical, Name:XMLresultType},
+				Version: "1",
+				Type:    XMLsaResultFile,
+				Name:    XMLresultFiles,
+				Attributes: []Attribute{
+					{Type: XMLgiString, Value: "scalarData", Name: XMLanalysisName},
+					{Type: XMLgiString, Value: "scalar.dat", Name: XMLfilename},
+					{Type: XMLgiString, Value: "table", Name: XMLformat},
+					{Type: XMLgiString, Value: XMLstatistical, Name: XMLresultType},
+				},
+			},
+			{
+				Version: "1",
+				Type:    XMLsaResultFile,
+				Name:    XMLresultFiles,
+				Attributes: []Attribute{
+					{Type: XMLgiString, Value: "", Name: XMLanalysisName},
+					{Type: XMLgiString, Value: "designVariables.wdf", Name: XMLfilename},
+					{Type: XMLgiString, Value: "wdf", Name: XMLformat},
+					{Type: XMLgiString, Value: "variables", Name: XMLresultType},
 				},
 			},
 		},
@@ -134,23 +133,23 @@ func (r ResultsXML) MakeResultsFilesCollection() Collection {
 
 func (r ResultsXML) MakeSweepFileObjects() []Object {
 	var rt []Object
-	for i := 1; i <= r.Task.Times;i++ {
+	for i := 1; i <= r.Task.Times; i++ {
 		obj := Object{
-			Version:"1",
-			Type:XMLsaSweepFile,
-			Name:XMLsweepFiles,
-			Attributes:[]Attribute{{Type:XMLgiString,Value:fmt.Sprintf("hspice.tr0@%d",i),Name:XMLfilename}},
+			Version:    "1",
+			Type:       XMLsaSweepFile,
+			Name:       XMLsweepFiles,
+			Attributes: []Attribute{{Type: XMLgiString, Value: fmt.Sprintf("hspice.tr0@%d", i), Name: XMLfilename}},
 			Collections: []Collection{
 				{
-					Name:XMLparams,
-					Objects:[]Object{
+					Name: XMLparams,
+					Objects: []Object{
 						{
-							Version:"1",
-							Type:XMLsaPair,
-							Name:XMLparams,
-							Attributes:[]Attribute{
-								{Type:XMLgiString, Value:XMLMONTE_CARLO, Name:XMLname},
-								{Type:XMLgiString, Value:fmt.Sprintf("%d.0",i), Name:XMLvalue},
+							Version: "1",
+							Type:    XMLsaPair,
+							Name:    XMLparams,
+							Attributes: []Attribute{
+								{Type: XMLgiString, Value: XMLmonteCarlo, Name: XMLname},
+								{Type: XMLgiString, Value: fmt.Sprintf("%d.0", i), Name: XMLvalue},
 							},
 						},
 					},
@@ -165,8 +164,8 @@ func (r ResultsXML) MakeSweepFileObjects() []Object {
 func (r ResultsXML) MakeSweepFilesCollections() Collection {
 
 	rt := Collection{
-		Name:XMLsweepFiles,
-		Objects:r.MakeSweepFileObjects(),
+		Name:    XMLsweepFiles,
+		Objects: r.MakeSweepFileObjects(),
 	}
 
 	return rt
@@ -177,10 +176,10 @@ func (t *Task) NewResultsXml() (string, error) {
 	dst := t.SimulationDirectories.DstDir
 
 	if _, err := os.Stat(netlist); err != nil {
-		return "", errors.New(fmt.Sprint("can not found", netlist, "dir (NewResultsXml)"))
+		return "", errors.New(fmt.Sprint("can not found ", netlist, " dir (NewResultsXml)"))
 	}
 
-	rx := ResultsXML{Task:*t}
+	rx := ResultsXML{Task: *t}
 
 	path := PathJoin(dst, "results.xml")
 
@@ -200,19 +199,19 @@ func (t *Task) NewResultsXml() (string, error) {
 					{Type: XMLgiString, Value: "HSPICE", Name: "simulator"},
 					{Type: XMLgiString, Value: "", Name: "version"},
 				},
-				Collections:[]Collection{rx.MakeResultsFilesCollection()},
+				Collections: []Collection{rx.MakeResultsFilesCollection()},
 			},
 		},
 	}
 
-	b, err := xml.Marshal(data)
+	b, err := xml.MarshalIndent(data, "", " ")
 	if err != nil {
 		return "", err
 	}
 
 	log.Info("NewResultsXml: Write to", path)
 	if err := ioutil.WriteFile(path, b, 0644); err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
 	return path, nil

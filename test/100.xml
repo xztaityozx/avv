@@ -3,7 +3,7 @@
   <attribute type="giString" value="resultsMap.xml" name="name"></attribute>
   <attribute type="giString" value="../netlist" name="netlistDir"></attribute>
   <attribute type="giString" value="." name="resultsDir"></attribute>
-  <attribute type="giString" value="Tue Jul  3 16:08:46 2018" name="runTime"></attribute>
+  <attribute type="giString" value="%s" name="runTime"></attribute>
   <attribute type="giString" value="HSPICE" name="simulator"></attribute>
   <attribute type="giString" value="" name="version"></attribute>
   <collection name="resultFiles">
