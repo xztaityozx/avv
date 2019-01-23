@@ -171,12 +171,12 @@ func (r ResultsXML) MakeSweepFilesCollections() Collection {
 	return rt
 }
 
-func (t *Task) NewResultsXml() (string, error) {
+func (t *Task) MakeResultsXml() (string, error) {
 	netlist := t.SimulationDirectories.NetListDir
 	dst := t.SimulationDirectories.DstDir
 
 	if _, err := os.Stat(netlist); err != nil {
-		return "", errors.New(fmt.Sprint("can not found ", netlist, " dir (NewResultsXml)"))
+		return "", errors.New(fmt.Sprint("can not found ", netlist, " dir (MakeResultsXml)"))
 	}
 
 	rx := ResultsXML{Task: *t}
@@ -209,7 +209,7 @@ func (t *Task) NewResultsXml() (string, error) {
 		return "", err
 	}
 
-	log.Info("NewResultsXml: Write to", path)
+	log.Info("MakeResultsXml: Write to", path)
 	if err := ioutil.WriteFile(path, b, 0644); err != nil {
 		return "", err
 	}

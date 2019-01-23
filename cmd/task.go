@@ -51,13 +51,18 @@ func (t *Task) MkSimulationFiles() {
 	t.MakeSPIScript()
 
 	// Make results.xml
-	if path, err := t.NewResultsXml(); err != nil {
+	if path, err := t.MakeResultsXml(); err != nil {
 		log.Fatal(err)
 	} else {
 		t.SimulationFiles.ResultsXML = path
 	}
 
 	// Make resultsMap.xml
+	if path, err := t.MakeMapXml(); err != nil {
+		log.Fatal(err)
+	} else {
+		t.SimulationFiles.ResultsMapXML = path
+	}
 }
 
 // Make SPI script for simulation

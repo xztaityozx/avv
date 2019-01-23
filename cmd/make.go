@@ -36,7 +36,26 @@ var makeCmd = &cobra.Command{
 	Short: "",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Info(config)
+		start, err := cmd.Flags().GetInt("start")
+		if err != nil {
+			log.Fatal(err)
+		}
+		end, err := cmd.Flags().GetInt("end")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		mr := MakeRequest{
+			Task: NewTask(),
+			SEED: SEED{
+				Start: start,
+				End:   end},
+			TaskDir: config.TaskDir,
+		}
+
+		if err := mr.MakeTaskFiles(); err != nil {
+			log.Fatal("MakeTaskFiles: ", err)
+		}
 	},
 }
 
@@ -120,9 +139,7 @@ func (m MakeRequest) MakeTaskFiles() error {
 				return err
 			}
 		}
-
-		log.Info("Make Request: Write ", m.SEED.End, "task files")
-
 	}
+	log.Info("Make Request: Write ", m.SEED.End, "task files")
 	return nil
 }

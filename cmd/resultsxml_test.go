@@ -24,7 +24,7 @@ func TestResultsXML_MakeSweepFileObjects(t *testing.T) {
 	FU.TryChDir(task.SimulationDirectories.DstDir)
 	FU.TryMkDir(task.SimulationDirectories.NetListDir)
 
-	path, err := task.NewResultsXml()
+	path, err := task.MakeResultsXml()
 	if err != nil {
 		as.FailNow("", err)
 	}

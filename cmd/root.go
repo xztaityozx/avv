@@ -41,11 +41,8 @@ var config = Config{}
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "avv",
-	Short: "",
+	Short: "avv: Advanced WaveView tool",
 	Long:  ``,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -61,15 +58,16 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
 
 	//Parallel Options
-	rootCmd.PersistentFlags().IntP("Parallel", "p", 2, "HSPICE,WV,数え上げ全ての並列数です")
-	rootCmd.PersistentFlags().Int("pHSPICE", 2, "HSPICEの並列数です")
-	rootCmd.PersistentFlags().Int("pWV", 2, "WaveViewの並列数です")
-	rootCmd.PersistentFlags().Int("pCountUp", 2, "数え上げの並列数です")
+	rootCmd.PersistentFlags().IntP("Parallel", "p", 0, "HSPICE,WV,数え上げ全ての並列数です")
+	rootCmd.PersistentFlags().Int("pHSPICE", 0, "HSPICEの並列数です")
+	rootCmd.PersistentFlags().Int("pWV", 0, "WaveViewの並列数です")
+	rootCmd.PersistentFlags().Int("pCountUp", 0, "数え上げの並列数です")
 
 	// BindFlags
 	viper.BindPFlag("Default.ParallelConfig.HSPICE", rootCmd.PersistentFlags().Lookup("pHSPICE"))
 	viper.BindPFlag("Default.ParallelConfig.WaveView", rootCmd.PersistentFlags().Lookup("pWV"))
 	viper.BindPFlag("Default.ParallelConfig.CountUp", rootCmd.PersistentFlags().Lookup("pCountUp"))
+	viper.BindPFlag("Default.ParallelConfig.Master", rootCmd.PersistentFlags().Lookup("Parallel"))
 
 	cobra.OnInitialize(initConfig)
 }
@@ -149,4 +147,13 @@ func initConfig() {
 
 	// init Logger System
 	initLogger()
+
+	// init Task Directories
+	initDirectories()
+}
+
+func initDirectories() {
+	FU.TryMkDir(PathJoin(config.TaskDir, "reserve"))
+	FU.TryMkDir(PathJoin(config.TaskDir, "done"))
+	FU.TryMkDir(PathJoin(config.TaskDir, "failed"))
 }
