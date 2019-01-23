@@ -37,3 +37,29 @@ func TestResultsXML_MakeSweepFileObjects(t *testing.T) {
 	as.Equal(expect, actual)
 
 }
+
+func TestResultsXML_MakeMapXml(t *testing.T) {
+	as := assert.New(t)
+	task := Task{
+		Times: 100,
+	}
+
+	home, _ := homedir.Dir()
+	home = PathJoin(home, "Testdir")
+	task.SimulationDirectories.DstDir = PathJoin(home, "Dst")
+	FU.TryMkDir(PathJoin(home, "Dst"))
+	task.SimulationDirectories.NetListDir = "../netlist"
+	wd, _ := os.Getwd()
+	FU.TryChDir(task.SimulationDirectories.DstDir)
+	FU.TryMkDir(task.SimulationDirectories.NetListDir)
+
+	path, err := task.MakeMapXml()
+	if err != nil {
+		log.Fatal(err)
+	}
+	FU.TryChDir(wd)
+	expect := fmt.Sprintf(FU.Cat("../test/resultsMap.xml"), time.Now().Format(time.ANSIC))
+	actual := FU.Cat(path)
+
+	as.Equal(expect, actual)
+}

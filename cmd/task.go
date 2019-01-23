@@ -49,6 +49,15 @@ func (t *Task) MkSimulationFiles() {
 
 	// Make SPIScript
 	t.MakeSPIScript()
+
+	// Make results.xml
+	if path, err := t.NewResultsXml(); err != nil {
+		log.Fatal(err)
+	} else {
+		t.SimulationFiles.ResultsXML = path
+	}
+
+	// Make resultsMap.xml
 }
 
 // Make SPI script for simulation
@@ -72,11 +81,10 @@ func (t *Task) MakeSPIScript() {
 	// spi script path
 	path := PathJoin(t.SimulationDirectories.NetListDir,
 		fmt.Sprintf("Vtn%.4f-Sigma%.4f-Vtp%.4f-Sigma%.4f-Times%05d.spi",
-		t.Vtn.Threshold,t.Vtn.Sigma,t.Vtp.Threshold,t.Vtp.Sigma,t.Times))
+			t.Vtn.Threshold, t.Vtn.Sigma, t.Vtp.Threshold, t.Vtp.Sigma, t.Times))
 
 	// write script
-	FU.WriteFile(path,data)
+	FU.WriteFile(path, data)
 	// set script path to Task struct
 	t.SimulationFiles.SPIScript = path
 }
-

@@ -216,3 +216,56 @@ func (t *Task) NewResultsXml() (string, error) {
 
 	return path, nil
 }
+
+func (t Task) MakeMapXml() (string, error) {
+	path := PathJoin(t.SimulationDirectories.DstDir, "resultsMap.xml")
+
+	saResultsMap := "saResultsMap"
+
+	data := FileFormat{
+		Version: "1.0",
+		Name:    saResultsMap,
+		Objects: []Object{
+			{
+				Version: "1",
+				Type:    saResultsMap,
+				Name:    saResultsMap,
+				Attributes: []Attribute{
+					{Type: XMLgiString, Value: ".", Name: "masterResultsDir"},
+					{Type: XMLgiString, Value: XMLmonteCarlo, Name: "monteCarlo"},
+					{Type: XMLgiString, Value: "resultsMap.xml", Name: XMLname},
+					{Type: XMLgiString, Value: ".", Name: "resultsMapDir"},
+					{Type: XMLgiString, Value: "HSPICE", Name: "simulator"},
+					{Type: XMLgiString, Value: time.Now().Format(time.ANSIC), Name: "timeStamp"},
+				},
+				Collections: []Collection{
+					{
+						Name: "resultsInfo",
+						Objects: []Object{
+							{
+								Version: "1",
+								Type:    "saResultsInfo",
+								Name:    "resultsInfo",
+								Attributes: []Attribute{
+									{Type: XMLgiString, Value: t.SimulationDirectories.NetListDir, Name: "netlistDir"},
+									{Type: XMLgiString, Value: ".", Name: "resultsDir"},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	b, err := xml.MarshalIndent(data, "", " ")
+	if err != nil {
+		return "", err
+	}
+
+	if err := ioutil.WriteFile(path, b, 0644); err != nil {
+		return "", err
+	}
+
+	return path, nil
+}
