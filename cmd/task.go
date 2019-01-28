@@ -20,6 +20,22 @@ func NewTask() Task {
 	return config.Default
 }
 
+func ReserveDir() string {
+	return PathJoin(config.TaskDir, "reserve")
+}
+
+func DoneDir() string {
+	return PathJoin(config.TaskDir, "done")
+}
+
+func FailedDir() string {
+	return PathJoin(config.TaskDir, "failed")
+}
+
+func DustDir() string {
+	return PathJoin(config.TaskDir, "dust")
+}
+
 // make DstDir
 func (t *Task) MkDir() {
 	log.Info("Task.Mkdir: Make Directories for simulations")

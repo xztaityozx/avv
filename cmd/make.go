@@ -124,7 +124,7 @@ func (m MakeRequest) MakeTaskFiles() error {
 			return err
 		} else {
 			// 書き出し先
-			path := PathJoin(m.TaskDir, "reserve")
+			path := ReserveDir()
 			FU.TryMkDir(path)
 
 			// ファイル名[時間]-[Vtn]-[VtnSigma]-[Vtp]-[VtpSigma]-[回数]-[SEED].json
