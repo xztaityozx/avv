@@ -64,10 +64,10 @@ func init() {
 	rootCmd.PersistentFlags().Int("pCountUp", 0, "数え上げの並列数です")
 
 	// BindFlags
-	viper.BindPFlag("Default.ParallelConfig.HSPICE", rootCmd.PersistentFlags().Lookup("pHSPICE"))
-	viper.BindPFlag("Default.ParallelConfig.WaveView", rootCmd.PersistentFlags().Lookup("pWV"))
-	viper.BindPFlag("Default.ParallelConfig.CountUp", rootCmd.PersistentFlags().Lookup("pCountUp"))
-	viper.BindPFlag("Default.ParallelConfig.Master", rootCmd.PersistentFlags().Lookup("Parallel"))
+	viper.BindPFlag("ParallelConfig.HSPICE", rootCmd.PersistentFlags().Lookup("pHSPICE"))
+	viper.BindPFlag("ParallelConfig.WaveView", rootCmd.PersistentFlags().Lookup("pWV"))
+	viper.BindPFlag("ParallelConfig.CountUp", rootCmd.PersistentFlags().Lookup("pCountUp"))
+	viper.BindPFlag("ParallelConfig.Master", rootCmd.PersistentFlags().Lookup("Parallel"))
 
 	cobra.OnInitialize(initConfig)
 }

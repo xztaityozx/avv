@@ -8,7 +8,6 @@ type Task struct {
 	SimulationFiles       SimulationFiles
 	Vtn                   Transistor
 	Vtp                   Transistor
-	ParallelConfig        ParallelConfig
 	AutoRemove            bool
 	SimulationDirectories SimulationDirectories
 	PlotPoint             PlotPoint

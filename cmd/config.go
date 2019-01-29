@@ -11,7 +11,14 @@ type Config struct {
 	MachineName      string
 	LogDir           string
 	TaskDir          string
-	Templates 		 Templates
+	Templates        Templates
+	ParallelConfig   ParallelConfig
+	HSPICE           HSPICEConfig
+}
+
+type HSPICEConfig struct {
+	Command string
+	Option  string
 }
 
 type SlackConfig struct {
