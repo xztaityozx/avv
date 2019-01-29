@@ -24,7 +24,6 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os"
 )
 
 // initCmd represents the init command
@@ -36,9 +35,7 @@ var initCmd = &cobra.Command{
 		home, _ := homedir.Dir()
 		FU.TryMkDir(PathJoin(home, ".config", "avv"))
 		p := PathJoin(home, ".config", "avv", ".avv.json")
-		if _, err := os.Stat(p); err == nil {
-			viper.WriteConfigAs(p)
-		}
+		viper.WriteConfigAs(p)
 	},
 }
 
