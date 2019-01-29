@@ -1,10 +1,9 @@
 package cmd
 
 type Templates struct {
-	SPIScript       string
+	SPIScript     string
 	ResultsMapXML string
 }
-
 
 type SimulationFiles struct {
 	AddFile       AddFile
@@ -19,7 +18,8 @@ type SimulationDirectories struct {
 	DstDir     string
 	NetListDir string
 	BaseDir    string
-	SearchDir string
+	SearchDir  string
+	ResultDir  string
 }
 
 // compare func for SimulationFiles struct

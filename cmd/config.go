@@ -14,11 +14,16 @@ type Config struct {
 	Templates        Templates
 	ParallelConfig   ParallelConfig
 	HSPICE           HSPICEConfig
+	WaveView         WaveViewConfig
 }
 
 type HSPICEConfig struct {
 	Command string
 	Option  string
+}
+
+type WaveViewConfig struct {
+	Command string
 }
 
 type SlackConfig struct {

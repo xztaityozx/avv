@@ -14,5 +14,5 @@ func (t Transistor) Compare(s Transistor) bool {
 }
 
 func (t Transistor) ToString(prefix string) string {
-	return fmt.Sprintf("prefix%.4f-Sigma%.4f", t.Threshold, t.Sigma)
+	return fmt.Sprintf("%s%.4f-Sigma%.4f", prefix, t.Threshold, t.Sigma)
 }

@@ -153,7 +153,8 @@ func initConfig() {
 }
 
 func initDirectories() {
-	FU.TryMkDir(PathJoin(config.TaskDir, "reserve"))
-	FU.TryMkDir(PathJoin(config.TaskDir, "done"))
-	FU.TryMkDir(PathJoin(config.TaskDir, "failed"))
+	FU.TryMkDir(ReserveDir())
+	FU.TryMkDir(DoneDir())
+	FU.TryMkDir(FailedDir())
+	FU.TryMkDir(DustDir())
 }

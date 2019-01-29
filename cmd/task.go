@@ -50,7 +50,17 @@ func (t *Task) MkDir() {
 
 	FU.TryMkDir(dst)
 
+	resultDir := PathJoin(
+		t.SimulationDirectories.BaseDir,
+		fmt.Sprintf("Vtn%.4f-Sigma%.4f", t.Vtn.Threshold, t.Vtn.Sigma),
+		fmt.Sprintf("Vtp%.4f-Sigma%.4f", t.Vtp.Threshold, t.Vtp.Sigma),
+		fmt.Sprintf("Times%05d", t.Times),
+		fmt.Sprintf("Result"))
+
+	FU.TryMkDir(resultDir)
+
 	t.SimulationDirectories.DstDir = dst
+	t.SimulationDirectories.ResultDir = resultDir
 }
 
 func (t *Task) MkSimulationFiles() {
@@ -127,7 +137,8 @@ func (t Task) RunSimulation() error {
 	// Run Simulation
 	out, err := command.CombinedOutput()
 	if err != nil {
-		return errors.New("Failed Simulation\n")
+		logfile := PathJoin(t.SimulationDirectories.DstDir, "hspice.log")
+		return errors.New("Failed Simulation: " + FU.Cat(logfile))
 	} else {
 		log.WithField("at", "Task.RunSimulation").Info(string(out))
 	}
@@ -135,6 +146,8 @@ func (t Task) RunSimulation() error {
 	return nil
 }
 
+// Generate simulation command
+// return: command string
 func (t Task) GetSimulationCommand() string {
 	var rt []string
 
@@ -144,4 +157,9 @@ func (t Task) GetSimulationCommand() string {
 	rt = append(rt, config.HSPICE.GetCommand(t.SimulationFiles.SPIScript))
 
 	return strings.Join(rt, " ")
+}
+
+// Generate cd command
+func (t Task) GetCdCommand() string {
+	return fmt.Sprintf("cd %s &&", t.SimulationDirectories.DstDir)
 }
