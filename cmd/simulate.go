@@ -21,12 +21,10 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
-	"os/exec"
-	"strings"
-
+	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
+	"time"
 )
 
 // simulateCmd represents the simulate command
@@ -35,7 +33,26 @@ var simulateCmd = &cobra.Command{
 	Short: "",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("simulate called")
+		if len(args[0]) == 0 {
+			log.WithField("command", "simulate").Fatal("Invalid file path")
+		}
+
+		task, err := ReadTaskFile(args[0])
+		if err != nil {
+			log.WithField("command", "simulate").Fatal(err)
+		}
+
+		log.WithField("command", "simulate").Info("Start Simulation at ", time.Now().Format(time.RFC3339))
+		s := spinner.New(spinner.CharSets[36], time.Millisecond*500)
+		s.FinalMSG = "Finished!!"
+		s.Suffix = "Running..."
+		s.Start()
+		err = task.RunSimulation()
+		if err != nil {
+			log.WithField("command", "simulate").Fatal(err)
+		}
+		s.Stop()
+
 	},
 }
 
@@ -43,50 +60,6 @@ func init() {
 	rootCmd.AddCommand(simulateCmd)
 }
 
-type SimulateTask struct {
-	Task Task
-}
-
-func NewSimulateTask() SimulateTask {
-	return SimulateTask{
-		Task: config.Default,
-	}
-}
-
-func (st SimulateTask) Run() error {
-	task := st.Task
-
-	// Make Simulation Parameter and Directories
-	task.MkDir()
-	task.SimulationFiles.AddFile.Make(task.SimulationDirectories.BaseDir)
-	task.MakeSPIScript()
-
-	command := st.GetCommand()
-	log.WithField("at", "SimulateTask.Run").Info(command)
-
-	c := exec.Command("bash", "-c", command)
-
-	// Run Simulation
-	out, err := c.CombinedOutput()
-	if err != nil {
-		return errors.New("Failed Simulation\n")
-	} else {
-		log.WithField("at", "SimulateTask.Run").Info(string(out))
-	}
-
-	return nil
-}
-
 func (hc HSPICEConfig) GetCommand(spi string) string {
 	return fmt.Sprintf("%s %s -i %s -o ./hspice &> ./hspice.log", hc.Command, hc.Option, spi)
-}
-
-func (st SimulateTask) GetCommand() string {
-	var rt []string
-
-	// append cd command
-	rt = append(rt, fmt.Sprintf("cd %s &&", st.Task.SimulationDirectories.DstDir))
-	// append hspice command
-	rt = append(rt, config.HSPICE.GetCommand(st.Task.SimulationFiles.SPIScript))
-	return strings.Join(rt, " ")
 }

@@ -1,7 +1,10 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
+	"os/exec"
+	"strings"
 )
 
 type Task struct {
@@ -107,4 +110,38 @@ func (t *Task) MakeSPIScript() {
 	FU.WriteFile(path, data)
 	// set script path to Task struct
 	t.SimulationFiles.SPIScript = path
+}
+
+func (t Task) RunSimulation() error {
+
+	// Make Simulation Parameter and Directories
+	t.MkDir()
+	t.SimulationFiles.AddFile.Make(t.SimulationDirectories.BaseDir)
+	t.MakeSPIScript()
+
+	cmdStr := t.GetSimulationCommand()
+	log.WithField("at", "Task.RunSimulation").Info("Command: ", cmdStr)
+
+	command := exec.Command("bash", "-c", cmdStr)
+
+	// Run Simulation
+	out, err := command.CombinedOutput()
+	if err != nil {
+		return errors.New("Failed Simulation\n")
+	} else {
+		log.WithField("at", "Task.RunSimulation").Info(string(out))
+	}
+
+	return nil
+}
+
+func (t Task) GetSimulationCommand() string {
+	var rt []string
+
+	// append cd command
+	rt = append(rt, fmt.Sprintf("cd %s &&", t.SimulationDirectories.DstDir))
+	// append hspice command
+	rt = append(rt, config.HSPICE.GetCommand(t.SimulationFiles.SPIScript))
+
+	return strings.Join(rt, " ")
 }
