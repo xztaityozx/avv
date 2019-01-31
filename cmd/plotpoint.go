@@ -15,17 +15,17 @@ type PlotPoint struct {
 // Signal Name and filter values for count up failure stage
 type Filter struct {
 	SignalName string
-	Values     []float64
+	Status     []string
 }
 
 // compare func fof Filter struct
 func (f Filter) Compare(t Filter) bool {
-	if len(f.Values) != len(t.Values) {
+	if len(f.Status) != len(t.Status) {
 		return false
 	}
 
-	for i, v := range f.Values {
-		if v != t.Values[i] {
+	for i, v := range f.Status {
+		if v != t.Status[i] {
 			return false
 		}
 	}
