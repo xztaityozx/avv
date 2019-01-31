@@ -32,7 +32,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
-          <entry key="go" value="69" />
+          <entry key="go" value="71" />
           <entry key="ideavimrc" value="1" />
           <entry key="xml" value="6" />
           <entry key="yml" value="2" />
@@ -40,7 +40,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="69" />
+          <entry key="Go" value="71" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="XML" value="6" />
           <entry key="YAML" value="2" />
@@ -49,7 +49,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="9" />
-          <entry key="go" value="26380" />
+          <entry key="go" value="26393" />
           <entry key="ideavimrc" value="118" />
           <entry key="txt" value="346" />
           <entry key="xml" value="45" />
@@ -58,7 +58,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="26380" />
+          <entry key="Go" value="26393" />
           <entry key="PLAIN_TEXT" value="473" />
           <entry key="XML" value="45" />
           <entry key="YAML" value="11" />
@@ -110,13 +110,25 @@
       </usages-collector>
     </session>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="avv" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/run.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="814">
-              <caret line="40" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="444">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/count.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="533">
+              <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -187,6 +199,12 @@
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
@@ -227,13 +245,13 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="GO_FMT" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="Push&#9;ACTION&#9;Vcs.Push&#10;Reposi&#9;ACTION&#9;Git.RepositoryContextMenu&#10;Branch&#9;ACTION&#9;Git.CreateNewBranch&#10;Comm&#9;ACTION&#9;CheckinProject&#10;Setting&#9;ACTION&#9;Database.Settings&#10;Color&#9;ACTION&#9;ChangeColorScheme&#10;Colo&#9;ACTION&#9;ChangeColorScheme&#10;plot&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;make&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go&#10;Rename&#9;ACTION&#9;RenameElement&#10;FileU&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/FileUtils.go&#10;Decl&#9;ACTION&#9;VimGotoDeclaration&#10;trans&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;count.&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/count.go&#10;MkDir&#9;null&#9;null&#10;simu&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;New&#9;ACTION&#9;NewGroup&#10;root&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/root.go&#10;init&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/init.go&#10;task&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/task.go&#10;run&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/run.go&#10;Doc&#9;ACTION&#9;QuickJavaDoc&#10;con&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Split&#9;ACTION&#9;SplitVertically&#10;sim&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;config&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Dec&#9;ACTION&#9;VimGotoDeclaration&#10;runta&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/runtask_test.go&#10;new&#9;ACTION&#9;NewGroup&#10;TryMk&#9;null&#9;null&#10;COm&#9;null&#9;null&#10;WriteFile&#9;null&#9;null&#10;Make&#9;null&#9;null&#10;TestAdd&#9;null&#9;null&#10;Test_Mk&#9;RUN_CONFIGURATION&#9;TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd&#10;Tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;test&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml_test.go&#10;results&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml.go&#10;GotoDe&#9;ACTION&#9;VimGotoDeclaration&#10;goto&#9;ACTION&#9;VimGotoDeclaration&#10;gotod&#9;ACTION&#9;VimGotoDeclaration&#10;Font&#9;ACTION&#9;EditorIncreaseFontSize&#10;Increase&#9;ACTION&#9;EditorIncreaseFontSize&#10;temp&#9;null&#9;null&#10;lo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;giti&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/.gitignore&#10;Commit&#9;ACTION&#9;CheckinProject&#10;Commi&#9;ACTION&#9;CheckinProject&#10;Spli&#9;ACTION&#9;SplitVertically&#10;ta&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task.go" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/version.go&#10;Sett&#9;ACTION&#9;WelcomeScreen.Settings&#10;Push&#9;ACTION&#9;Vcs.Push&#10;Reposi&#9;ACTION&#9;Git.RepositoryContextMenu&#10;Branch&#9;ACTION&#9;Git.CreateNewBranch&#10;Comm&#9;ACTION&#9;CheckinProject&#10;Setting&#9;ACTION&#9;Database.Settings&#10;Color&#9;ACTION&#9;ChangeColorScheme&#10;Colo&#9;ACTION&#9;ChangeColorScheme&#10;plot&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;make&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go&#10;Rename&#9;ACTION&#9;RenameElement&#10;FileU&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/FileUtils.go&#10;Decl&#9;ACTION&#9;VimGotoDeclaration&#10;trans&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;count.&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/count.go&#10;MkDir&#9;null&#9;null&#10;simu&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;New&#9;ACTION&#9;NewGroup&#10;root&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/root.go&#10;init&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/init.go&#10;task&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/task.go&#10;run&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/run.go&#10;Doc&#9;ACTION&#9;QuickJavaDoc&#10;con&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Split&#9;ACTION&#9;SplitVertically&#10;sim&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;config&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Dec&#9;ACTION&#9;VimGotoDeclaration&#10;runta&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/runtask_test.go&#10;new&#9;ACTION&#9;NewGroup&#10;TryMk&#9;null&#9;null&#10;COm&#9;null&#9;null&#10;WriteFile&#9;null&#9;null&#10;Make&#9;null&#9;null&#10;TestAdd&#9;null&#9;null&#10;Test_Mk&#9;RUN_CONFIGURATION&#9;TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd&#10;Tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;test&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml_test.go&#10;results&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml.go&#10;GotoDe&#9;ACTION&#9;VimGotoDeclaration&#10;goto&#9;ACTION&#9;VimGotoDeclaration&#10;gotod&#9;ACTION&#9;VimGotoDeclaration&#10;Font&#9;ACTION&#9;EditorIncreaseFontSize&#10;Increase&#9;ACTION&#9;EditorIncreaseFontSize&#10;temp&#9;null&#9;null&#10;lo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;giti&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/.gitignore&#10;Commit&#9;ACTION&#9;CheckinProject&#10;Commi&#9;ACTION&#9;CheckinProject" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="MTCustomThemeConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -357,10 +375,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info id="Favorites" order="0" side_tool="true" weight="0.32995737" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" auto_hide="true" id="Find" order="1" weight="0.32778865" />
@@ -377,7 +395,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="4" weight="0.16044776" />
+      <window_info active="true" anchor="right" content_ui="combo" id="Project" order="4" visible="true" weight="0.16044776" />
       <window_info anchor="right" auto_hide="true" id="Run" order="5" weight="0.4156051" />
     </layout>
     <layout-to-restore>
@@ -616,13 +634,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/count.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="43" column="22" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1870">
@@ -639,8 +650,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/run.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="814">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="444">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/count.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="533">
+          <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
         </state>
       </provider>
     </entry>
