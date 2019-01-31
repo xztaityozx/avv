@@ -65,12 +65,10 @@ func init() {
 	makeCmd.Flags().Float64("PlotStart", 2.5, "プロットの始点[ns]")
 	makeCmd.Flags().Float64("PlotStep", 7.5, "プロットの刻み幅[ns]")
 	makeCmd.Flags().Float64("PlotStop", 17.5, "プロットの終点[ns]")
-	makeCmd.Flags().StringSlice("signals", []string{"N1", "N2", "BLB", "BL"}, "プロットしたい信号名")
 
 	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
 	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
 	viper.BindPFlag("Default.PlotPoint.Stop", makeCmd.Flags().Lookup("PlotStop"))
-	viper.BindPFlag("Default.PlotPoint.SignalNames", makeCmd.Flags().Lookup("signals"))
 
 	makeCmd.Flags().Float64P("VtpVoltage", "P", 0, "Vtpのしきい値電圧")
 	makeCmd.Flags().Float64P("VtnVoltage", "N", 0, "Vtnのしきい値電圧")

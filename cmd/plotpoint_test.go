@@ -12,10 +12,9 @@ func TestAllPlotPoint(t *testing.T) {
 	as := assert.New(t)
 
 	pp := PlotPoint{
-		SignalNames: []string{"A", "B", "C"},
-		Stop:        17.5,
-		Step:        7.5,
-		Start:       2.5,
+		Stop:  17.5,
+		Step:  7.5,
+		Start: 2.5,
 	}
 
 	t.Run("001_MkACEScript", func(t *testing.T) {

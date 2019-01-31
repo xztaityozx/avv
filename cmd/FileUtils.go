@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 	"unsafe"
 )
 
@@ -89,4 +90,8 @@ func (fu FileUtils) Copy(src, dst string) {
 	}
 
 	fu.logger.Info("Copy: ", src, "copy to", dst)
+}
+
+func (fu FileUtils) WriteSlice(dst string, box []string, sep string) {
+	fu.WriteFile(dst, strings.Join(box, sep))
 }
