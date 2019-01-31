@@ -3,6 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/FileUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/FileUtils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/count.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/count.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/count_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/count_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/extract.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/extract.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/make.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/make.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/plotpoint.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/plotpoint.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/plotpoint_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/plotpoint_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/run.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/run.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/runtask.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/runtask.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/version.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/version.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,7 +37,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
-          <entry key="go" value="77" />
+          <entry key="go" value="84" />
           <entry key="ideavimrc" value="1" />
           <entry key="xml" value="6" />
           <entry key="yml" value="2" />
@@ -34,7 +45,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="77" />
+          <entry key="Go" value="84" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="XML" value="6" />
           <entry key="YAML" value="2" />
@@ -43,7 +54,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="9" />
-          <entry key="go" value="30682" />
+          <entry key="go" value="31698" />
           <entry key="ideavimrc" value="118" />
           <entry key="txt" value="411" />
           <entry key="xml" value="45" />
@@ -52,7 +63,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="30682" />
+          <entry key="Go" value="31698" />
           <entry key="PLAIN_TEXT" value="538" />
           <entry key="XML" value="45" />
           <entry key="YAML" value="11" />
@@ -113,17 +124,71 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/run.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="792">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="907">
+              <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmd/runtask.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="66" column="4" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/extract.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="950">
+              <caret line="113" selection-start-line="113" selection-end-line="113" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/config.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/runsummary.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/task.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="124" column="30" selection-start-line="124" selection-start-column="30" selection-end-line="124" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/count.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1408">
-              <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+            <state relative-caret-position="748">
+              <caret line="42" column="2" selection-start-line="42" selection-start-column="2" selection-end-line="42" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -171,17 +236,13 @@
         <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/cmd/addfile_test.go" />
         <option value="$PROJECT_DIR$/cmd/task_test.go" />
-        <option value="$PROJECT_DIR$/cmd/run.go" />
         <option value="$PROJECT_DIR$/cmd/runsummary.go" />
         <option value="$PROJECT_DIR$/cmd/runtask_test.go" />
-        <option value="$PROJECT_DIR$/cmd/runtask.go" />
         <option value="$PROJECT_DIR$/cmd/simulate.go" />
         <option value="$PROJECT_DIR$/cmd/init.go" />
-        <option value="$PROJECT_DIR$/cmd/config.go" />
         <option value="$PROJECT_DIR$/cmd/root.go" />
         <option value="$PROJECT_DIR$/cmd/simulationfile.go" />
         <option value="$PROJECT_DIR$/cmd/transistor.go" />
-        <option value="$PROJECT_DIR$/cmd/task.go" />
         <option value="$PROJECT_DIR$/cmd/make.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint_test.go" />
         <option value="$PROJECT_DIR$/cmd/version.go" />
@@ -190,6 +251,10 @@
         <option value="$PROJECT_DIR$/cmd/extract.go" />
         <option value="$PROJECT_DIR$/cmd/FileUtils.go" />
         <option value="$PROJECT_DIR$/cmd/count.go" />
+        <option value="$PROJECT_DIR$/cmd/run.go" />
+        <option value="$PROJECT_DIR$/cmd/task.go" />
+        <option value="$PROJECT_DIR$/cmd/config.go" />
+        <option value="$PROJECT_DIR$/cmd/runtask.go" />
       </list>
     </option>
   </component>
@@ -241,7 +306,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="GO_FMT" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="Push&#9;ACTION&#9;Vcs.Push&#10;Comm&#9;ACTION&#9;CheckinProject&#10;FU&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/FileUtils.go&#10;ACE&#9;null&#9;null&#10;new&#9;ACTION&#9;NewGroup&#10;extr&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/extract.go&#10;Rename&#9;ACTION&#9;RenameElement&#10;Plo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;Spli&#9;ACTION&#9;SplitVertically&#10;ext&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/extract.go&#10;cou&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/count.go&#10;Sett&#9;ACTION&#9;WelcomeScreen.Settings&#10;Reposi&#9;ACTION&#9;Git.RepositoryContextMenu&#10;Branch&#9;ACTION&#9;Git.CreateNewBranch&#10;Setting&#9;ACTION&#9;Database.Settings&#10;Color&#9;ACTION&#9;ChangeColorScheme&#10;Colo&#9;ACTION&#9;ChangeColorScheme&#10;plot&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;make&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go&#10;FileU&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/FileUtils.go&#10;Decl&#9;ACTION&#9;VimGotoDeclaration&#10;trans&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;count.&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/count.go&#10;MkDir&#9;null&#9;null&#10;simu&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;New&#9;ACTION&#9;NewGroup&#10;root&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/root.go&#10;init&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/init.go&#10;task&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/task.go&#10;run&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/run.go&#10;Doc&#9;ACTION&#9;QuickJavaDoc&#10;con&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Split&#9;ACTION&#9;SplitVertically&#10;sim&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;config&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Dec&#9;ACTION&#9;VimGotoDeclaration&#10;runta&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/runtask_test.go&#10;TryMk&#9;null&#9;null&#10;COm&#9;null&#9;null&#10;WriteFile&#9;null&#9;null&#10;Make&#9;null&#9;null&#10;TestAdd&#9;null&#9;null&#10;Test_Mk&#9;RUN_CONFIGURATION&#9;TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd&#10;Tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;test&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml_test.go&#10;results&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml.go&#10;GotoDe&#9;ACTION&#9;VimGotoDeclaration&#10;goto&#9;ACTION&#9;VimGotoDeclaration&#10;gotod&#9;ACTION&#9;VimGotoDeclaration" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/runtask.go&#10;config&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;extr&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/extract.go&#10;RunSim&#9;null&#9;null&#10;Goto&#9;ACTION&#9;VimGotoDeclaration&#10;run.go&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/run.go&#10;Spli&#9;ACTION&#9;SplitVertically&#10;run&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/runtask.go&#10;runta&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/runtask_test.go&#10;Push&#9;ACTION&#9;Vcs.Push&#10;Comm&#9;ACTION&#9;CheckinProject&#10;FU&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/FileUtils.go&#10;ACE&#9;null&#9;null&#10;new&#9;ACTION&#9;NewGroup&#10;Rename&#9;ACTION&#9;RenameElement&#10;Plo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;ext&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/extract.go&#10;cou&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/count.go&#10;Sett&#9;ACTION&#9;WelcomeScreen.Settings&#10;Reposi&#9;ACTION&#9;Git.RepositoryContextMenu&#10;Branch&#9;ACTION&#9;Git.CreateNewBranch&#10;Setting&#9;ACTION&#9;Database.Settings&#10;Color&#9;ACTION&#9;ChangeColorScheme&#10;Colo&#9;ACTION&#9;ChangeColorScheme&#10;plot&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;make&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/make.go&#10;FileU&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/FileUtils.go&#10;Decl&#9;ACTION&#9;VimGotoDeclaration&#10;trans&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;count.&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/count.go&#10;MkDir&#9;null&#9;null&#10;simu&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;New&#9;ACTION&#9;NewGroup&#10;root&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/root.go&#10;init&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/init.go&#10;task&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/task.go&#10;Doc&#9;ACTION&#9;QuickJavaDoc&#10;con&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/config.go&#10;Split&#9;ACTION&#9;SplitVertically&#10;sim&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/simulationfile.go&#10;Dec&#9;ACTION&#9;VimGotoDeclaration&#10;TryMk&#9;null&#9;null&#10;COm&#9;null&#9;null&#10;WriteFile&#9;null&#9;null&#10;Make&#9;null&#9;null&#10;TestAdd&#9;null&#9;null&#10;Test_Mk&#9;RUN_CONFIGURATION&#9;TestAllPlotPoint/001_MkACEScript in github.com/xztaityozx/avv/cmd&#10;Tran&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/transistor.go&#10;test&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml_test.go&#10;results&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/resultsxml.go" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -524,13 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/runsummary.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/init.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
@@ -542,20 +600,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/runtask.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/task.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -587,24 +631,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/resultsxml_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1232">
           <caret line="63" selection-start-line="63" selection-end-line="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1870">
-          <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -622,24 +652,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/run.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/plotpoint.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="880">
           <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/extract.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-106">
-          <caret line="113" selection-start-line="113" selection-end-line="113" />
         </state>
       </provider>
     </entry>
@@ -669,8 +685,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/count.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1408">
-          <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+        <state relative-caret-position="748">
+          <caret line="42" column="2" selection-start-line="42" selection-start-column="2" selection-end-line="42" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="907">
+          <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/run.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/task.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="124" column="30" selection-start-line="124" selection-start-column="30" selection-end-line="124" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/runsummary.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/extract.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="950">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/runtask.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="66" column="4" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
         </state>
       </provider>
     </entry>
