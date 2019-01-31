@@ -95,3 +95,11 @@ func (fu FileUtils) Copy(src, dst string) {
 func (fu FileUtils) WriteSlice(dst string, box []string, sep string) {
 	fu.WriteFile(dst, strings.Join(box, sep))
 }
+
+func (fu FileUtils) Ls(path string) []os.FileInfo {
+	rt, err := ioutil.ReadDir(path)
+	if err != nil {
+		fu.logger.Fatal(err)
+	}
+	return rt
+}
