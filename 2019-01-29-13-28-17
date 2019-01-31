@@ -1,8 +1,0 @@
-time="2019-01-29T13:28:17+09:00" level=warning msg="stat reserve: no such file or directory" name=FileUtils
-time="2019-01-29T13:28:17+09:00" level=info msg="reserve had created" name=FileUtils
-time="2019-01-29T13:28:17+09:00" level=warning msg="stat done: no such file or directory" name=FileUtils
-time="2019-01-29T13:28:17+09:00" level=info msg="done had created" name=FileUtils
-time="2019-01-29T13:28:17+09:00" level=warning msg="stat failed: no such file or directory" name=FileUtils
-time="2019-01-29T13:28:17+09:00" level=info msg="failed had created" name=FileUtils
-time="2019-01-29T13:28:17+09:00" level=warning msg="stat /home/xztaityozx/.config/avv: no such file or directory" name=FileUtils
-time="2019-01-29T13:28:17+09:00" level=info msg="/home/xztaityozx/.config/avv had created" name=FileUtils
