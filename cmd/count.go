@@ -21,8 +21,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
@@ -31,23 +29,45 @@ var countCmd = &cobra.Command{
 	Use:     "count",
 	Aliases: []string{"cnt"},
 	Short:   "",
-	Long:    ``,
+	Long: `avv count [file string] [queries strings]
+
+- [query string]
+各項の条件式をカンマ区切りで指定できます．条件はすべて && で連結されます
+
+ex)
+	avv count file.csv '>=0.4' '>=0.4' '>=0.4'
+	
+`,
+	PreRun: func(cmd *cobra.Command, args []string) {
+		if len(args) < 1 {
+			log.WithField("command", "count").Fatal("引数が足りません")
+		}
+	},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("count called")
+		//out, _ := cmd.Flags().GetString("out")
+		//wd, _ := os.Getwd()
+		//
+		//res :=Filter{
+		//	SignalName:filepath.Base(wd),
+		//	Status:args,
+		//}.CountUp(out)
+		//
+		//fmt.Printf("Total: %d Failure: %d\n",res.Lines,res.Failure)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(countCmd)
+
+	countCmd.Flags().StringP("out", "o", "result", "書きだすファイルです")
 }
 
-func CountUp(src string) CountResult {
-	var rt CountResult
-
-	return rt
-}
+//func (f Filter) CountUp(dst string) CountResult {
+//	l := log.WithField("at","Filter.CountUp")
+//
+//}
 
 type CountResult struct {
-	Success int
+	Lines   int
 	Failure int
 }
