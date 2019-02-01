@@ -56,57 +56,61 @@ func init() {
 	viper.BindPFlag("Default.PlotPoint.Stop", extractCmd.Flags().Lookup("stop"))
 }
 
+type ExtractTask struct {
+	Task Task
+}
+
 // Generate wv Command
 func (wvc WaveViewConfig) GetCommand(ace string) string {
 	return fmt.Sprintf("%s -k -ace_no_gui %s &> wv.log", wvc.Command, ace)
 }
 
 // Generate extract command
-func (t Task) GetExtractCommand() string {
+func (t ExtractTask) GetExtractCommand() string {
 	var rt []string
 
 	// append cd command
-	rt = append(rt, t.GetCdCommand())
+	rt = append(rt, t.Task.GetCdCommand())
 	// append waveview command
-	rt = append(rt, config.WaveView.GetCommand(t.SimulationFiles.ACEScript))
+	rt = append(rt, config.WaveView.GetCommand(t.Task.SimulationFiles.ACEScript))
 
 	return strings.Join(rt, " ")
 }
 
 // Run extract command with WaveView
 // returns: errors
-func (t Task) RunExtract() error {
+func (t ExtractTask) Run() error {
 	// Make AddFile
-	t.SimulationFiles.AddFile.Make(t.SimulationDirectories.BaseDir)
+	t.Task.SimulationFiles.AddFile.Make(t.Task.SimulationDirectories.BaseDir)
 
 	// Make results.xml
-	if path, err := t.MakeResultsXml(); err != nil {
+	if path, err := t.Task.MakeResultsXml(); err != nil {
 		return err
 	} else {
-		t.SimulationFiles.ResultsXML = path
+		t.Task.SimulationFiles.ResultsXML = path
 	}
 
 	// Make resultsMap.xml
-	if path, err := t.MakeMapXml(); err != nil {
+	if path, err := t.Task.MakeMapXml(); err != nil {
 		return err
 	} else {
-		t.SimulationFiles.ResultsMapXML = path
+		t.Task.SimulationFiles.ResultsMapXML = path
 	}
 
 	cmdStr := t.GetExtractCommand()
 	command := exec.Command("bash", "-c", cmdStr)
 	out, err := command.CombinedOutput()
 	if err != nil {
-		logfile := PathJoin(t.SimulationDirectories.DstDir, "wv.log")
+		logfile := PathJoin(t.Task.SimulationDirectories.DstDir, "wv.log")
 		return errors.New("Failed Extract: " + FU.Cat(logfile))
 	} else {
 		log.WithField("at", "Task.Run").Info(string(out))
 	}
 
-	for _, v := range t.PlotPoint.Filters {
+	for _, v := range t.Task.PlotPoint.Filters {
 		// csvをそれぞれの信号線のディレクトリに移動させる
-		oldPath := PathJoin(t.SimulationDirectories.DstDir, v.SignalName+".csv")
-		newPath := PathJoin(t.SimulationDirectories.ResultDir, v.SignalName, fmt.Sprintf("SEED%05d.csv", t.SEED))
+		oldPath := PathJoin(t.Task.SimulationDirectories.DstDir, v.SignalName+".csv")
+		newPath := PathJoin(t.Task.SimulationDirectories.ResultDir, v.SignalName, fmt.Sprintf("SEED%05d.csv", t.Task.SEED))
 
 		if err := os.Rename(oldPath, newPath); err != nil {
 			return err

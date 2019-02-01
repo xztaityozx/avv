@@ -7,6 +7,11 @@ import (
 	"strings"
 )
 
+type ITask interface {
+	Run() (Task,error)
+	ToString() string
+}
+
 type Task struct {
 	SimulationFiles       SimulationFiles
 	Vtn                   Transistor
@@ -16,6 +21,14 @@ type Task struct {
 	PlotPoint             PlotPoint
 	SEED                  int
 	Times                 int
+}
+
+func (t Task)Run() (Task, error){
+	return t,nil
+}
+
+func (t Task) ToString() string {
+	return fmt.Sprint("Task: ",t.Times,"-",t.Vtn.ToString("Vtn"),"-",t.Vtp.ToString("Vtp"))
 }
 
 func NewTask() Task {

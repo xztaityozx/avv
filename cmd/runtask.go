@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 type RunTask struct {
@@ -18,53 +17,9 @@ type SimulationResult struct{
 	Status bool
 }
 
-func (rt RunTask) Run() {
-	l := log.WithField("at","RunTask.Run")
+func (rt RunTask) Run() error {
 
-
-	simWorker := func(tasks []Task) <- chan SimulationResult {
-		l.Info("Start HSPICE Simulations")
-		rec := make(chan SimulationResult, config.ParallelConfig.HSPICE)
-		for _, v := range tasks {
-			go func(t Task) {
-				if err := t.RunSimulation(); err != nil {
-					rec <- SimulationResult{
-						Task:t,
-						Status:false,
-					}
-				} else {
-					rec <- SimulationResult{
-						Task:t,
-						Status:true,
-					}
-				}
-			}(v)
-		}
-
-		return rec
-	}
-
-	extWorker := func(tasks []Task) <- chan SimulationResult {
-		l.Info("Start Extract")
-		rec := make(chan SimulationResult, config.ParallelConfig.WaveView)
-		for _, v := range tasks {
-			go func(t Task) {
-				if err := t.RunExtract(); err != nil {
-					rec <- SimulationResult{
-						Task:t,
-						Status:false,
-					}
-				} else {
-					rec <- SimulationResult{
-						Task:t,
-						Status:true,
-					}
-				}
-			}(v)
-		}
-		return rec
-	}
-	
+	return nil
 }
 
 // Read Task File
