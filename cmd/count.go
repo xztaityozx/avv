@@ -21,6 +21,7 @@
 package cmd
 
 import (
+	"context"
 	"github.com/spf13/cobra"
 )
 
@@ -56,11 +57,17 @@ func init() {
 
 type CountTask struct {
 	Task Task
-	TotalLines int
-	Failure int
 }
 
-func (ct CountTask) Run() error {
+func (ct CountTask) Run(parent context.Context) Result {
 
-	return nil
+	return Result{}
+}
+
+func (ct CountTask) String() string {
+	return ""
+}
+
+func (ct CountTask) Self() Task {
+	return ct.Task
 }

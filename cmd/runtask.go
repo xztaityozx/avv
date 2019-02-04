@@ -12,8 +12,8 @@ type RunTask struct {
 	RunSummary RunSummary
 }
 
-type SimulationResult struct{
-	Task Task
+type SimulationResult struct {
+	Task   Task
 	Status bool
 }
 
