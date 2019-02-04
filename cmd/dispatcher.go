@@ -3,8 +3,11 @@ package cmd
 import (
 	"context"
 	"errors"
-	"github.com/vbauerster/mpb"
 	"sync"
+
+	"github.com/fatih/color"
+	"github.com/vbauerster/mpb"
+	"github.com/vbauerster/mpb/decor"
 )
 
 type (
@@ -139,8 +142,8 @@ func (d *Dispatcher) Worker(parent context.Context) {
 		case <-ctx.Done():
 			return
 		case res := <-rec:
-			d.Receiver <- res
 			d.Done()
+			d.Receiver <- res
 		}
 
 		close(rec)
@@ -171,11 +174,33 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 	defer close(d.Queue)
 
 	pb := mpb.New(mpb.WithContext(ctx), mpb.WithWaitGroup(d.WaitGroup))
-	d.ProgressBar = pb.AddBar(int64(d.Size), mpb.BarWidth(50), mpb.SpinnerStyle([]string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}))
+
+	barName := color.New(color.FgHiYellow).Sprint("Dispatcher:") + d.Name
+
+	finishMSG := color.New(color.FgHiGreen).Sprint(" done!")
+	workingMSG := color.New(color.FgCyan).Sprint(" In progress...")
+
+	d.ProgressBar = pb.AddBar(int64(d.Size),
+		mpb.BarStyle("┃██▒┃"),
+		mpb.BarWidth(50),
+		//mpb.BarClearOnComplete(),
+		mpb.PrependDecorators(
+			decor.Name(barName, decor.WC{W: len(barName) + 1, C: decor.DidentRight}),
+		),
+		mpb.AppendDecorators(
+			decor.Name("   "),
+			decor.Percentage(decor.WC{W: 5}),
+			decor.Name(" | "),
+			decor.CountersNoUnit("%d / %d", decor.WCSyncWidth),
+			decor.Name(" | "),
+			decor.OnComplete(decor.Name(workingMSG), finishMSG),
+		),
+	)
 
 	ch := make(chan struct{})
 	defer close(ch)
 	go func() {
+		pb.Wait()
 		d.WaitGroup.Wait()
 		ch <- struct{}{}
 	}()
@@ -200,8 +225,8 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 }
 
 func (d *Dispatcher) Done() {
-	d.WaitGroup.Done()
 	d.ProgressBar.Increment()
+	d.WaitGroup.Done()
 }
 
 func (d *Dispatcher) Add(job ITask) {
