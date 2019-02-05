@@ -36,6 +36,26 @@ func (d DummyTask) Self() Task {
 	return d.Task
 }
 
+type SecondDummyTask struct {
+	Task Task
+}
+
+func (s SecondDummyTask) Run(ctx context.Context) Result {
+	time.Sleep(time.Microsecond)
+	return Result{
+		Status: true,
+		Task:   s.Task,
+	}
+}
+
+func (s SecondDummyTask) String() string {
+	return ""
+}
+
+func (s SecondDummyTask) Self() Task {
+	return s.Task
+}
+
 func TestDispatcher_Dispatch(t *testing.T) {
 	d := NewDispatcher("")
 	ctx, can := context.WithCancel(context.Background())
@@ -59,4 +79,53 @@ func TestDispatcher_Dispatch(t *testing.T) {
 		}, v)
 	}
 
+}
+
+func TestPipeLine_Start(t *testing.T) {
+	ctx := context.Background()
+	p := PipeLine{}
+	var in []ITask
+	for i := 0; i < 10; i++ {
+		in = append(in, DummyTask{Task: Task{}, Param: i})
+	}
+
+	ch := make(chan struct{})
+	defer close(ch)
+
+	as := assert.New(t)
+
+	go func() {
+
+		s, f, err := p.Start(ctx, in,
+			Pipe{
+				Name:       "first",
+				Parallel:   5,
+				RetryLimit: 2,
+				Converter: func(task Task) ITask {
+					return DummyTask{
+						Task:  task,
+						Param: 10,
+					}
+				},
+			},
+			Pipe{
+				Name:       "second",
+				Parallel:   8,
+				RetryLimit: 2,
+				Converter: func(task Task) ITask {
+					return SecondDummyTask{
+						Task: task,
+					}
+				},
+			})
+		as.Equal(10, len(s))
+		as.Equal(0, len(f))
+		as.Nil(err)
+		ch <- struct{}{}
+	}()
+
+	select {
+	case <-ctx.Done():
+	case <-ch:
+	}
 }

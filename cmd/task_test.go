@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -52,27 +53,27 @@ func TestAllTask(t *testing.T) {
 }
 
 func TestTask_MakeSPIScript(t *testing.T) {
-	//	template := `search='%s'
-	//%.4f %.4f %.4f
-	//%.4f %.4f %.4f
-	//include='%s'
-	//include='%s'
-	//monte=%d
-	//`
-	//
-	//	task := config.Default
-	//	home, _ := homedir.Dir()
-	//	config.Templates.SPIScript = PathJoin(home, "template", "spi")
-	//	FU.TryMkDir(PathJoin(home, "template"))
-	//	FU.WriteFile(config.Templates.SPIScript, template)
-	//
-	//	task.MakeSPIScript()
-	//	read := FU.Cat(task.SimulationFiles.SPIScript)
-	//	assert.Equal(t, fmt.Sprintf(template,
-	//		task.SimulationDirectories.SearchDir,
-	//		task.Vtn.Threshold, task.Vtn.Deviation, task.Vtn.Sigma,
-	//		task.Vtp.Threshold, task.Vtp.Deviation, task.Vtp.Sigma,
-	//		task.SimulationFiles.AddFile.Path,
-	//		task.SimulationFiles.ModelFile,
-	//		task.Times), read)
+	template := `search='%s'
+%.4f %.4f %.4f
+%.4f %.4f %.4f
+include='%s'
+include='%s'
+monte=%d
+`
+
+	task := config.Default
+	home, _ := homedir.Dir()
+	config.Templates.SPIScript = PathJoin(home, "template", "spi")
+	FU.TryMkDir(PathJoin(home, "template"))
+	FU.WriteFile(config.Templates.SPIScript, template)
+
+	task.MakeSPIScript()
+	read := FU.Cat(task.SimulationFiles.SPIScript)
+	assert.Equal(t, fmt.Sprintf(template,
+		task.SimulationDirectories.SearchDir,
+		task.Vtn.Threshold, task.Vtn.Deviation, task.Vtn.Sigma,
+		task.Vtp.Threshold, task.Vtp.Deviation, task.Vtp.Sigma,
+		task.SimulationFiles.AddFile.Path,
+		task.SimulationFiles.ModelFile,
+		task.Times), read)
 }

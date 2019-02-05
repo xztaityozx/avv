@@ -27,105 +27,97 @@ type (
 	}
 
 	PipeLine struct{}
+	Pipe     struct {
+		Name       string
+		Converter  func(Task) ITask
+		Parallel   int
+		RetryLimit int
+		AutoRetry  bool
+	}
 )
 
-func (p PipeLine) Start(ctx context.Context, tasks []SimulationTask) (success []Task, failed []Task, err error) {
-	simDis := NewDispatcher("HSPICE")
-	wvDis := NewDispatcher("WaveView")
-	cuDis := NewDispatcher("CountUp")
-	err = nil
+func (p PipeLine) Start(ctx context.Context, input []ITask, pipe ...Pipe) (success []Task, failed []Task, err error) {
 
-	var wg sync.WaitGroup
-	wg.Add(3)
-
-	go func() {
-		var do []ITask
-		for _, v := range tasks {
-			do = append(do, v)
-		}
-
-		do, retry := p.PipeStart(ctx, simDis, config.ParallelConfig.HSPICE, do)
-		failed = append(failed, retry...)
-		wg.Done()
-
-		do, retry = p.PipeStart(ctx, wvDis, config.ParallelConfig.WaveView, do)
-		failed = append(failed, retry...)
-		wg.Done()
-
-		do, retry = p.PipeStart(ctx, cuDis, config.ParallelConfig.CountUp, do)
-		failed = append(failed, retry...)
-
-		for _, r := range do {
-			success = append(success, r.Self())
-		}
-
-		wg.Done()
-	}()
-
-	ch := make(chan struct{})
+	ch := make(chan error)
 	defer close(ch)
+
 	go func() {
-		wg.Wait()
-		ch <- struct{}{}
+		for _, pi := range pipe {
+			rt, f, err := pi.Connect(ctx, input)
+			if err != nil {
+				ch <- err
+				return
+			}
+
+			failed = append(failed, f...)
+			input = rt
+		}
+		ch <- nil
 	}()
 
 	select {
 	case <-ctx.Done():
-		return nil, nil, errors.New("Canceled by context\n")
-	case <-ch:
+		return nil, nil, errors.New("PipeLine: canceled by context")
+	case err = <-ch:
+	}
+
+	for _, t := range input {
+		success = append(success, t.Self())
 	}
 
 	return
 }
 
-func (r Result) Next() ITask {
-	if !r.Status {
-		return r.Task.GetWrapper()
-	}
+func (p Pipe) Connect(ctx context.Context, input []ITask) (success []ITask, failed []Task, err error) {
+	tasks := len(input)
+	var do = input
 
-	if r.Task.Stage == HSPICE {
-		r.Task.Stage = WaveView
-		return ExtractTask{
-			Task: r.Task,
-		}
-	}
+	ch := make(chan struct{})
+	defer close(ch)
 
-	r.Task.Stage = CountUp
-	return CountTask{
-		Task: r.Task,
-	}
-}
+	cnt := 0
+	go func() {
 
-func (p PipeLine) PipeStart(ctx context.Context, d Dispatcher, parallel int, tasks []ITask) (done []ITask, failed []Task) {
-	var do = tasks
-	done = []ITask{}
-	var retry []ITask
-	failed = []Task{}
-
-	for len(done) != len(tasks) && config.AutoRetry {
-		res := d.Dispatch(ctx, parallel, do)
-		for _, r := range res {
-			next := r.Next()
-			if r.Status {
-				done = append(done, next)
-			} else {
-				retry = append(retry, next)
+		for ok := true; ok; ok = len(success) != tasks && (p.AutoRetry || config.AutoRetry) {
+			dis := NewDispatcher(p.Name)
+			res := dis.Dispatch(ctx, p.Parallel, do)
+			do = []ITask{}
+			for _, r := range res {
+				if r.Status {
+					success = append(success, p.Converter(r.Task))
+				} else {
+					do = append(do, p.Converter(r.Task))
+				}
 			}
+
+			if len(do) != 0 && cnt >= p.RetryLimit {
+				err = errors.New("Retry Limit Exceeded ")
+				ch <- struct{}{}
+				return
+			} else if len(do) != 0 {
+				cnt++
+				log.Warn("Pipe.Connect: Retry(", cnt, ")")
+			}
+
 		}
-		do = retry
+		ch <- struct{}{}
+	}()
+
+	select {
+	case <-ctx.Done():
+		return nil, nil, nil
+	case <-ch:
 	}
 
-	for _, r := range retry {
-		failed = append(failed, r.Self())
+	for _, t := range do {
+		failed = append(failed, t.Self())
 	}
-
-	return done, failed
+	return
 }
 
 func NewDispatcher(name string) Dispatcher {
 	return Dispatcher{
-		WaitGroup: &sync.WaitGroup{},
-		Name:      name,
+		Name: name,
 	}
 }
 
@@ -152,6 +144,7 @@ func (d *Dispatcher) Worker(parent context.Context) {
 }
 
 func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []Result {
+	d.WaitGroup = &sync.WaitGroup{}
 	ctx, cancel := context.WithCancel(parent)
 	defer cancel()
 
