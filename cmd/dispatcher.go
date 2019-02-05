@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"sync"
+	"time"
 
 	"github.com/fatih/color"
 	"github.com/vbauerster/mpb"
@@ -155,13 +156,9 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 	defer cancel()
 
 	l := log.WithField("at", "dispatcher")
-
-	// start workers
-	l.Info("Start Dispatcher")
-	for i := 0; i < workers; i++ {
-		go func() { d.Worker(ctx) }()
-	}
-	l.Info(workers, " workers was started")
+	l.Info(d.Name, " job Start")
+	l.Info("Parallel: ", workers)
+	l.Info("Begin: ", time.Now().Format(time.ANSIC))
 
 	d.Size = len(t)
 	// make result channel
@@ -196,6 +193,10 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 			decor.OnComplete(decor.Name(workingMSG), finishMSG),
 		),
 	)
+	// start workers
+	for i := 0; i < workers; i++ {
+		go func() { d.Worker(ctx) }()
+	}
 
 	ch := make(chan struct{})
 	defer close(ch)
@@ -220,6 +221,8 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 	for r := range d.Receiver {
 		results = append(results, r)
 	}
+
+	l.Info("End: ", time.Now().Format(time.ANSIC))
 
 	return results
 }
