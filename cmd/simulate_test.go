@@ -26,6 +26,16 @@ func TestSimulate_Run(t *testing.T) {
 	FU.TryMkDir(task.SimulationDirectories.BaseDir)
 	FU.TryMkDir(task.SimulationDirectories.NetListDir)
 	FU.TryMkDir(task.SimulationDirectories.SearchDir)
+	template := `search='%s'
+%.4f %.4f %.4f
+%.4f %.4f %.4f
+include='%s'
+include='%s'
+monte=%d
+`
+	config.Templates.SPIScript = PathJoin(home, "template", "spi")
+	FU.TryMkDir(PathJoin(home, "template"))
+	FU.WriteFile(config.Templates.SPIScript, template)
 
 	config.HSPICE = HSPICEConfig{
 		Command: "../test/hspice.sh",
