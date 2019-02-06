@@ -1,8 +1,5 @@
 language: go
 script:
 - cd cmd
-- mkdir -p $HOME/Base
-- mkdir -p $HOME/.config/UHA
-- touch $HOME/.config/UHA/addfile.txt
-- touch $HOME/.config/UHA/spitemplate.spi
+- alias hspice="$HOME/xztaityozx/avv/test/hspice.sh"
 - go test -v

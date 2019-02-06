@@ -23,9 +23,8 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
-	"time"
+	"os/exec"
 )
 
 // simulateCmd represents the simulate command
@@ -34,25 +33,25 @@ var simulateCmd = &cobra.Command{
 	Short: "",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args[0]) == 0 {
-			log.WithField("command", "simulate").Fatal("Invalid file path")
-		}
-
-		task, err := ReadTaskFile(args[0])
-		if err != nil {
-			log.WithField("command", "simulate").Fatal(err)
-		}
-
-		log.WithField("command", "simulate").Info("Start Simulation at ", time.Now().Format(time.RFC3339))
-		s := spinner.New(spinner.CharSets[36], time.Millisecond*500)
-		s.FinalMSG = "Finished!!"
-		s.Suffix = "Running..."
-		s.Start()
-		err = task.RunSimulation()
-		if err != nil {
-			log.WithField("command", "simulate").Fatal(err)
-		}
-		s.Stop()
+		//if len(args[0]) == 0 {
+		//	log.WithField("command", "simulate").Fatal("Invalid file path")
+		//}
+		//
+		//task, err := ReadTaskFile(args[0])
+		//if err != nil {
+		//	log.WithField("command", "simulate").Fatal(err)
+		//}
+		//
+		//log.WithField("command", "simulate").Info("Start Simulation at ", time.Now().Format(time.RFC3339))
+		//s := spinner.New(spinner.CharSets[36], time.Millisecond*500)
+		//s.FinalMSG = "Finished!!"
+		//s.Suffix = "Running..."
+		//s.Start()
+		//err = SimulationTask{Task:task}.Run()
+		//if err != nil {
+		//	log.WithField("command", "simulate").Fatal(err)
+		//}
+		//s.Stop()
 
 	},
 }
@@ -66,7 +65,31 @@ type SimulationTask struct {
 }
 
 func (s SimulationTask) Run(parent context.Context) Result {
-	return Result{}
+	t := s.Task
+
+	// Make Simulation Parameter and Directories
+	t.MkDir()
+	t.SimulationFiles.AddFile.Make(t.SimulationDirectories.BaseDir)
+	t.MakeSPIScript()
+
+	cmdStr := t.GetSimulationCommand()
+	log.WithField("at", "Task.RunSimulation").Info("Command: ", cmdStr)
+
+	command := exec.Command("bash", "-c", cmdStr)
+
+	// Run Simulation
+	out, err := command.CombinedOutput()
+	if err != nil {
+		logfile := PathJoin(t.SimulationDirectories.DstDir, "hspice.log")
+		log.WithField("at", "SimulationTask.Run()").
+			WithError(err).
+			Error("Failed Simulation:" + string(out) + " hspice.log=" + FU.Cat(logfile))
+	}
+
+	return Result{
+		Task:   t,
+		Status: err == nil,
+	}
 }
 
 func (s SimulationTask) String() string {
