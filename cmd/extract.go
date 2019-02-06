@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -84,45 +85,65 @@ func (t ExtractTask) String() string {
 // Run extract command with WaveView
 // returns: errors
 func (t ExtractTask) Run(parent context.Context) Result {
-	//// Make AddFile
-	//t.Task.SimulationFiles.AddFile.Make(t.Task.SimulationDirectories.BaseDir)
-	//
-	//// Make results.xml
-	//if path, err := t.Task.MakeResultsXml(); err != nil {
-	//	return err
-	//} else {
-	//	t.Task.SimulationFiles.ResultsXML = path
-	//}
-	//
-	//// Make resultsMap.xml
-	//if path, err := t.Task.MakeMapXml(); err != nil {
-	//	return err
-	//} else {
-	//	t.Task.SimulationFiles.ResultsMapXML = path
-	//}
-	//
-	//cmdStr := t.GetExtractCommand()
-	//command := exec.Command("bash", "-c", cmdStr)
-	//out, err := command.CombinedOutput()
-	//if err != nil {
-	//	logfile := PathJoin(t.Task.SimulationDirectories.DstDir, "wv.log")
-	//	return errors.New("Failed Extract: " + FU.Cat(logfile))
-	//} else {
-	//	log.WithField("at", "Task.Run").Info(string(out))
-	//}
-	//
-	//for _, v := range t.Task.PlotPoint.Filters {
-	//	// csvをそれぞれの信号線のディレクトリに移動させる
-	//	oldPath := PathJoin(t.Task.SimulationDirectories.DstDir, v.SignalName+".csv")
-	//	newPath := PathJoin(t.Task.SimulationDirectories.ResultDir, v.SignalName, fmt.Sprintf("SEED%05d.csv", t.Task.SEED))
-	//
-	//	if err := os.Rename(oldPath, newPath); err != nil {
-	//		return err
-	//	}
-	//}
-	//
-	//return nil
-	return Result{}
+
+	l := log.WithField("at", "ExtractTask")
+
+	// Make AddFile
+	t.Task.SimulationFiles.AddFile.Make(t.Task.SimulationDirectories.BaseDir)
+
+	// Make results.xml
+	if path, err := t.Task.MakeResultsXml(); err != nil {
+		l.WithError(err).Error("Failed make results.xml")
+		return Result{
+			Task:   t.Task,
+			Status: false,
+		}
+	} else {
+		t.Task.SimulationFiles.ResultsXML = path
+	}
+
+	// Make resultsMap.xml
+	if path, err := t.Task.MakeMapXml(); err != nil {
+		l.WithError(err).Error("Failed make resultsMap.xml")
+		return Result{
+			Task:   t.Task,
+			Status: false,
+		}
+	} else {
+		t.Task.SimulationFiles.ResultsMapXML = path
+	}
+
+	cmdStr := t.GetExtractCommand()
+	command := exec.Command("bash", "-c", cmdStr)
+	_ , err := command.CombinedOutput()
+	if err != nil {
+		logfile := PathJoin(t.Task.SimulationDirectories.DstDir, "wv.log")
+		l.WithError(err).Error("Failed Extract: " + FU.Cat(logfile))
+		return Result{
+			Task:   t.Task,
+			Status: false,
+		}
+	}
+
+	for _, v := range t.Task.PlotPoint.Filters {
+		// csvをそれぞれの信号線のディレクトリに移動させる
+		oldPath := PathJoin(t.Task.SimulationDirectories.DstDir, v.SignalName+".csv")
+		FU.TryMkDir(PathJoin(t.Task.SimulationDirectories.ResultDir, v.SignalName))
+		newPath := PathJoin(t.Task.SimulationDirectories.ResultDir, v.SignalName, fmt.Sprintf("SEED%05d.csv", t.Task.SEED))
+
+		if err := os.Rename(oldPath, newPath); err != nil {
+			l.WithError(err).Error("Failed Rename ", oldPath, " to ", newPath)
+			return Result{
+				Task:   t.Task,
+				Status: false,
+			}
+		}
+	}
+
+	return Result{
+		Task:   t.Task,
+		Status: true,
+	}
 }
 
 func (t ExtractTask) Self() Task {
