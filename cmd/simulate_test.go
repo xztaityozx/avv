@@ -38,7 +38,7 @@ monte=%d
 	FU.WriteFile(config.Templates.SPIScript, template)
 
 	config.HSPICE = HSPICEConfig{
-		Command: "../test/hspice.sh",
+		Command: "hspice",
 		Option:  "",
 	}
 
