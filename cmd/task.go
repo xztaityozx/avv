@@ -1,11 +1,18 @@
 package cmd
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
 	"strings"
 )
+
+type ITask interface {
+	Run(context.Context) Result
+	Self() Task
+	String() string
+}
 
 type Task struct {
 	SimulationFiles       SimulationFiles
@@ -16,9 +23,43 @@ type Task struct {
 	PlotPoint             PlotPoint
 	SEED                  int
 	Times                 int
+	Stage                 Stage
+}
+
+type Stage string
+
+const (
+	HSPICE   Stage = "HSPICE"
+	WaveView Stage = "WaveView"
+	CountUp  Stage = "CountUp"
+)
+
+func (t Task) GetWrapper() ITask {
+	if t.Stage == HSPICE {
+		return SimulationTask{
+			Task: t,
+		}
+	} else if t.Stage == WaveView {
+		return ExtractTask{
+			Task: t,
+		}
+	} else {
+		return CountTask{
+			Task: t,
+		}
+	}
+}
+
+func (t Task) Run(ctx context.Context) Result {
+	return Result{}
+}
+
+func (t Task) String() string {
+	return fmt.Sprint("Task: ", t.Times, "-", t.Vtn.ToString("Vtn"), "-", t.Vtp.ToString("Vtp"))
 }
 
 func NewTask() Task {
+	config.Default.Stage = HSPICE
 	return config.Default
 }
 

@@ -29,7 +29,8 @@ func TestAddFile_Compare(t *testing.T) {
 func TestAddFile_Make(t *testing.T) {
 	as := assert.New(t)
 	home, _ := homedir.Dir()
-	base := PathJoin(home, "Base")
+	base := PathJoin(home, "TestDir", "Base")
+	FU.TryMkDir(base)
 	a := AddFile{
 		SEED:       10,
 		Options:    []string{"op1", "op2"},

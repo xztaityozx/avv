@@ -21,6 +21,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
@@ -58,6 +59,22 @@ var simulateCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(simulateCmd)
+}
+
+type SimulationTask struct {
+	Task Task
+}
+
+func (s SimulationTask) Run(parent context.Context) Result {
+	return Result{}
+}
+
+func (s SimulationTask) String() string {
+	return ""
+}
+
+func (s SimulationTask) Self() Task {
+	return s.Task
 }
 
 func (hc HSPICEConfig) GetCommand(spi string) string {

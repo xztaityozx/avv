@@ -77,7 +77,7 @@ var log = logrus.New()
 func initLogger() {
 
 	// Hook to log file
-	path := PathJoin(config.LogDir, time.Now().Format("2006-01-02-15-04-05"))
+	path := PathJoin(config.LogDir, time.Now().Format("2006-01-02-15-04-05")+".log")
 	hook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
 		Filename: path,
 		MaxAge:   28,
@@ -93,7 +93,7 @@ func initLogger() {
 		logrus.Fatal(err)
 	}
 
-	log.SetLevel(logrus.InfoLevel)
+	log.SetLevel(logrus.FatalLevel)
 	log.SetOutput(colorable.NewColorableStderr())
 	// init logrus System
 	log.SetFormatter(&logrus.TextFormatter{

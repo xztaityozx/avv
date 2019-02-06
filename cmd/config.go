@@ -15,7 +15,7 @@ type Config struct {
 	ParallelConfig   ParallelConfig
 	HSPICE           HSPICEConfig
 	WaveView         WaveViewConfig
-	AutoRetry bool
+	AutoRetry        bool
 }
 
 type HSPICEConfig struct {
