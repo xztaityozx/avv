@@ -28,7 +28,7 @@ func TestSimulate_Run(t *testing.T) {
 	FU.TryMkDir(task.SimulationDirectories.SearchDir)
 
 	config.HSPICE = HSPICEConfig{
-		Command: "./test/hspice.sh",
+		Command: "../test/hspice.sh",
 		Option:  "",
 	}
 
