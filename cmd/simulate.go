@@ -88,7 +88,7 @@ func (s SimulationTask) Run(parent context.Context) Result {
 
 	return Result{
 		Task:   t,
-		Status: err != nil,
+		Status: err == nil,
 	}
 }
 
