@@ -21,6 +21,8 @@
       <change beforePath="$PROJECT_DIR$/cmd/task.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/task.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/version.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/version.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/hspice.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test/hspice.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/wv.err.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test/wv.err.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/wv.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test/wv.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
