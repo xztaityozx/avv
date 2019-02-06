@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/extract_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/FileUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/FileUtils.go" afterDir="false" />
@@ -11,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/cmd/dispatcher.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/dispatcher.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/dispatcher_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/dispatcher_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/extract.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/extract.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/extract_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/extract_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/make.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/make.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/plotpoint.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/plotpoint.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/plotpoint_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/plotpoint_test.go" afterDir="false" />
@@ -66,7 +66,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="9" />
-          <entry key="go" value="45450" />
+          <entry key="go" value="45469" />
           <entry key="ideavimrc" value="613" />
           <entry key="sh" value="116" />
           <entry key="txt" value="428" />
@@ -76,7 +76,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="45450" />
+          <entry key="Go" value="45469" />
           <entry key="PLAIN_TEXT" value="1166" />
           <entry key="XML" value="45" />
           <entry key="YAML" value="79" />
@@ -158,8 +158,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/cmd/extract_test.go">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="726">
-                  <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+                <state relative-caret-position="616">
+                  <caret line="28" column="58" selection-start-line="28" selection-start-column="58" selection-end-line="28" selection-end-column="58" />
                   <folding>
                     <element signature="e#13#92#0" expanded="true" />
                   </folding>
@@ -776,8 +776,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/extract_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        <state relative-caret-position="616">
+          <caret line="28" column="58" selection-start-line="28" selection-start-column="58" selection-end-line="28" selection-end-column="58" />
           <folding>
             <element signature="e#13#92#0" expanded="true" />
           </folding>

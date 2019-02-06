@@ -26,10 +26,14 @@ func TestExtractTask_GetExtractCommand(t *testing.T) {
 
 	et := ExtractTask{Task:task}
 	actual := et.GetExtractCommand()
-	expect := fmt.Sprintf("cd %s && %s -k -ace_no_gui %s > wv.log",
+	expect := fmt.Sprintf("cd %s && %s -k -ace_no_gui %s &> wv.log",
 		task.SimulationDirectories.DstDir,
 		config.WaveView.Command,
 		task.SimulationFiles.ACEScript)
 
 	assert.Equal(t, actual, expect)
+}
+
+func TestExtractTask_Run(t *testing.T) {
+
 }
