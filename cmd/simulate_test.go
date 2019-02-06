@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
@@ -37,8 +38,10 @@ monte=%d
 	FU.TryMkDir(PathJoin(home, "template"))
 	FU.WriteFile(config.Templates.SPIScript, template)
 
+	wd, _ := os.Getwd()
+
 	config.HSPICE = HSPICEConfig{
-		Command: "hspice",
+		Command: PathJoin(wd,"..","test","hspice.sh"),
 		Option:  "",
 	}
 
