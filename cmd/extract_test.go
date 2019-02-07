@@ -44,10 +44,12 @@ func TestExtractTask_Run(t *testing.T) {
 	task := Task{
 		SimulationDirectories: SimulationDirectories{
 			DstDir: PathJoin(home, "TestDir", "Dst"),
+			NetListDir:PathJoin(home,"TestDir","NetList"),
 		},
 	}
 
 	FU.TryMkDir(task.SimulationDirectories.DstDir)
+	FU.TryMkDir(task.SimulationDirectories.NetListDir)
 	et := ExtractTask{Task: task}
 
 	res := et.Run(context.Background())
