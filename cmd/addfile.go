@@ -8,10 +8,10 @@ import (
 type AddFile struct {
 	VddVoltage float64
 	GndVoltage float64
-	ICCommand string
-	Options []string
-	SEED int
-	Path string
+	ICCommand  string
+	Options    []string
+	SEED       int
+	Path       string
 }
 
 func NewAddFile(s int) AddFile {
@@ -21,7 +21,6 @@ func NewAddFile(s int) AddFile {
 	return rt
 }
 
-
 // Compare func for AddFile
 // return: compare result
 func (a AddFile) Compare(b AddFile) bool {
@@ -29,7 +28,7 @@ func (a AddFile) Compare(b AddFile) bool {
 		return false
 	}
 
-	for i,v := range a.Options {
+	for i, v := range a.Options {
 		if b.Options[i] != v {
 			return false
 		}
@@ -42,21 +41,19 @@ func (a AddFile) Compare(b AddFile) bool {
 		a.VddVoltage == b.VddVoltage
 }
 
-
 func (a *AddFile) Make(base string) {
 	data := fmt.Sprintf(`
 VDD VDD! 0 %.1fV
 VGND GND! 0 %.1fV
 %s
 %s
-.option SEED=%d`, a.VddVoltage,a.GndVoltage,a.ICCommand, strings.Join(a.Options,"\n"), a.SEED)
+.option SEED=%d`, a.VddVoltage, a.GndVoltage, a.ICCommand, strings.Join(a.Options, "\n"), a.SEED)
 
 	// Try make Directory
 	p := PathJoin(base, "AddFiles")
 	FU.TryMkDir(p)
 
-
-	p = PathJoin(p,fmt.Sprintf("%d", a.SEED))
-	FU.WriteFile(p,data)
+	p = PathJoin(p, fmt.Sprintf("%d", a.SEED))
+	FU.WriteFile(p, data)
 	a.Path = p
 }

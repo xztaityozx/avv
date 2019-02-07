@@ -41,7 +41,7 @@ monte=%d
 	wd, _ := os.Getwd()
 
 	config.HSPICE = HSPICEConfig{
-		Command: PathJoin(wd,"..","test","hspice.sh"),
+		Command: PathJoin(wd, "..", "test", "hspice.sh"),
 		Option:  "",
 	}
 
@@ -84,7 +84,7 @@ monte=%d
 	wd, _ := os.Getwd()
 
 	config.HSPICE = HSPICEConfig{
-		Command: PathJoin(wd,"..","test","hspice.sh"),
+		Command: PathJoin(wd, "..", "test", "hspice.sh"),
 		Option:  "err",
 	}
 
