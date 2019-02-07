@@ -56,3 +56,36 @@ func TestExtractTask_Run(t *testing.T) {
 	as := assert.New(t)
 	as.True(res.Status)
 }
+
+func TestExtractTask_Run2(t *testing.T) {
+	wd, _ := os.Getwd()
+	home, _ := homedir.Dir()
+	config.WaveView = WaveViewConfig{
+		Command: PathJoin(wd, "..", "test", "wv.sh"),
+	}
+	task := Task{
+		SimulationDirectories: SimulationDirectories{
+			DstDir: PathJoin(home, "TestDir", "Dst"),
+			NetListDir:PathJoin(home,"TestDir","NetList"),
+		},
+		Stage:WaveView,
+	}
+
+	FU.TryMkDir(task.SimulationDirectories.DstDir)
+	FU.TryMkDir(task.SimulationDirectories.NetListDir)
+
+	var in []ITask
+	for i:=0; i<20; i++ {
+		in=append(in, ExtractTask{Task:task})
+	}
+
+	d := NewDispatcher("Extract")
+	res := d.Dispatch(context.Background(), 10, in)
+	as:=assert.New(t)
+
+	as.Equal(20, len(res))
+
+	for _, r := range res {
+		as.True(r.Status)
+	}
+}
