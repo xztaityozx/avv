@@ -42,13 +42,13 @@ func TestExtractTask_Run(t *testing.T) {
 		Command: PathJoin(wd, "..", "test", "wv.sh"),
 	}
 	task := Task{
-		SimulationDirectories:SimulationDirectories{
-			DstDir:PathJoin(home, "TestDir","Dst"),
+		SimulationDirectories: SimulationDirectories{
+			DstDir: PathJoin(home, "TestDir", "Dst"),
 		},
 	}
 
 	FU.TryMkDir(task.SimulationDirectories.DstDir)
-	et := ExtractTask{Task:task}
+	et := ExtractTask{Task: task}
 
 	res := et.Run(context.Background())
 	as := assert.New(t)

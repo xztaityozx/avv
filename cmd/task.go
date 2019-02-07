@@ -22,7 +22,7 @@ type Task struct {
 	SEED                  int
 	Times                 int
 	Stage                 Stage
-	ResultCSV []string
+	ResultCSV             []string
 }
 
 type Stage string

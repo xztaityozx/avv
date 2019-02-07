@@ -67,12 +67,11 @@ func (t ExtractTask) Run(parent context.Context) Result {
 	if err != nil {
 		l.WithError(err).Error("Failed make ACEScript")
 		return Result{
-			Task:t.Task,
+			Task:   t.Task,
 			Status: false,
 		}
 	}
 	t.Task.SimulationFiles.ACEScript = ace
-
 
 	// Make results.xml
 	if path, err := t.Task.MakeResultsXml(); err != nil {
@@ -98,7 +97,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 
 	cmdStr := t.GetExtractCommand()
 	command := exec.Command("bash", "-c", cmdStr)
-	_ , err := command.CombinedOutput()
+	_, err = command.CombinedOutput()
 	if err != nil {
 		logfile := PathJoin(t.Task.SimulationDirectories.DstDir, "wv.log")
 		l.WithError(err).Error("Failed Extract: " + FU.Cat(logfile))
@@ -122,7 +121,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 			}
 		}
 
-		t.Task.ResultCSV=append(t.Task.ResultCSV, newPath)
+		t.Task.ResultCSV = append(t.Task.ResultCSV, newPath)
 	}
 
 	return Result{
@@ -134,4 +133,3 @@ func (t ExtractTask) Run(parent context.Context) Result {
 func (t ExtractTask) Self() Task {
 	return t.Task
 }
-
