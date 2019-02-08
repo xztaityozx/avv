@@ -59,9 +59,9 @@ type CountTask struct {
 	Task Task
 }
 
-func (ct CountTask) Run(parent context.Context) Result {
+func (ct CountTask) Run(parent context.Context) TaskResult {
 
-	return Result{}
+	return TaskResult{}
 }
 
 func (ct CountTask) String() string {

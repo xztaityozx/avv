@@ -58,7 +58,7 @@ func (t ExtractTask) String() string {
 
 // Run extract command with WaveView
 // returns: errors
-func (t ExtractTask) Run(parent context.Context) Result {
+func (t ExtractTask) Run(parent context.Context) TaskResult {
 
 	l := log.WithField("at", "ExtractTask")
 
@@ -66,7 +66,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 	ace, err := t.Task.PlotPoint.MkACEScript(t.Task.SimulationDirectories.DstDir)
 	if err != nil {
 		l.WithError(err).Error("Failed make ACEScript")
-		return Result{
+		return TaskResult{
 			Task:   t.Task,
 			Status: false,
 		}
@@ -76,7 +76,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 	// Make results.xml
 	if path, err := t.Task.MakeResultsXml(); err != nil {
 		l.WithError(err).Error("Failed make results.xml")
-		return Result{
+		return TaskResult{
 			Task:   t.Task,
 			Status: false,
 		}
@@ -87,7 +87,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 	// Make resultsMap.xml
 	if path, err := t.Task.MakeMapXml(); err != nil {
 		l.WithError(err).Error("Failed make resultsMap.xml")
-		return Result{
+		return TaskResult{
 			Task:   t.Task,
 			Status: false,
 		}
@@ -101,7 +101,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 	if err != nil {
 		logfile := PathJoin(t.Task.SimulationDirectories.DstDir, "wv.log")
 		l.WithError(err).Error("Failed Extract: " + FU.Cat(logfile))
-		return Result{
+		return TaskResult{
 			Task:   t.Task,
 			Status: false,
 		}
@@ -115,7 +115,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 
 		if err := os.Rename(oldPath, newPath); err != nil {
 			l.WithError(err).Error("Failed Rename ", oldPath, " to ", newPath)
-			return Result{
+			return TaskResult{
 				Task:   t.Task,
 				Status: false,
 			}
@@ -124,7 +124,7 @@ func (t ExtractTask) Run(parent context.Context) Result {
 		t.Task.ResultCSV = append(t.Task.ResultCSV, newPath)
 	}
 
-	return Result{
+	return TaskResult{
 		Task:   t.Task,
 		Status: true,
 	}

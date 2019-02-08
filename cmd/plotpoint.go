@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 )
@@ -16,6 +17,16 @@ type PlotPoint struct {
 type Filter struct {
 	SignalName string
 	Status     []string
+}
+
+
+func (p PlotPoint) String() string {
+	out, err := json.Marshal(p)
+	if err != nil {
+		log.WithError(err).Fatal("Failed Marshal PlotPoint")
+	}
+
+	return string(out)
 }
 
 // compare func fof Filter struct
