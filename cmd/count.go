@@ -71,3 +71,8 @@ func (ct CountTask) String() string {
 func (ct CountTask) Self() Task {
 	return ct.Task
 }
+
+type CountResult struct {
+	Task    Task
+	Failure int64
+}

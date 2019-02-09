@@ -19,14 +19,15 @@ type Filter struct {
 	Status     []string
 }
 
-
-func (p PlotPoint) String() string {
+// convert to json for ResultRecord.Signals
+// returns: json-string, error
+func (p PlotPoint) ToJson() (string, error) {
 	out, err := json.Marshal(p)
 	if err != nil {
-		log.WithError(err).Fatal("Failed Marshal PlotPoint")
+		return "", err
 	}
 
-	return string(out)
+	return string(out), nil
 }
 
 // compare func fof Filter struct

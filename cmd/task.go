@@ -23,7 +23,8 @@ type Task struct {
 	Times                 int
 	Stage                 Stage
 	ResultCSV             []string
-	Repository Repository
+	Repository            Repository
+	TaskId                int64
 }
 
 type Stage string
