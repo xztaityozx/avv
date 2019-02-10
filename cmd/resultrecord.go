@@ -49,13 +49,13 @@ func (ResultRecord) SelectQuery() string {
 }
 
 // NewResultRecord create ResultRecord struct
-// args: succeeded TaskResult
+// args: succeeded Task
 // returns: ResultRecord struct not inserted yet
-func NewResultRecord(result CountResult) ResultRecord {
+func NewResultRecord(result Task) ResultRecord {
 	return ResultRecord{
-		TaskId:result.Task.TaskId,
+		TaskId:result.TaskId,
 		Date:time.Now(),
-		Seed:int64(result.Task.SEED),
+		Seed:int64(result.SEED),
 		Failure:result.Failure,
 	}
 }

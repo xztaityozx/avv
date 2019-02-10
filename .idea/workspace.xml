@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/dbaccesstask.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/dbaccesstask_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/count.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/count.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/resultrecord.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/resultrecord.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/resultrecord_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/resultrecord_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/task.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/task.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,46 +34,72 @@
     <favorites_list name="avv" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="132">
-                  <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="132">
-                  <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/cmd/resultrecord_test.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="452">
-                  <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
-                  <folding>
-                    <element signature="e#13#72#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/count.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1540">
+              <caret line="73" selection-start-line="73" selection-end-line="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/resultrecord_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="638">
+              <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="506">
+              <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+              <folding>
+                <element signature="e#13#72#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/simulate.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1452" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/task.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="488">
+              <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -84,9 +115,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cmd/.avv.json.go" />
-        <option value="$PROJECT_DIR$/main.go" />
-        <option value="$PROJECT_DIR$/cmd/addfile.go" />
         <option value="$PROJECT_DIR$/test/100.xml" />
         <option value="$PROJECT_DIR$/cmd/resultsxml.go" />
         <option value="$PROJECT_DIR$/test/resultsMap.xml" />
@@ -123,18 +151,21 @@
         <option value="$USER_HOME$/.ideavimrc" />
         <option value="$PROJECT_DIR$/cmd/result.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint.go" />
-        <option value="$PROJECT_DIR$/cmd/count.go" />
         <option value="$PROJECT_DIR$/cmd/repository_test.go" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5445a02f-4b17-4ff2-b208-0abddf656ee9/console.sql" />
-        <option value="$PROJECT_DIR$/cmd/task.go" />
         <option value="$PROJECT_DIR$/cmd/transistor.go" />
         <option value="$PROJECT_DIR$/cmd/parameter.go" />
         <option value="$PROJECT_DIR$/cmd/repository.go" />
         <option value="$PROJECT_DIR$/cmd/taskgroup.go" />
         <option value="$PROJECT_DIR$/cmd/taskgroup_test.go" />
         <option value="$PROJECT_DIR$/cmd/make.go" />
-        <option value="$PROJECT_DIR$/cmd/resultrecord_test.go" />
+        <option value="$PROJECT_DIR$/cmd/count.go" />
         <option value="$PROJECT_DIR$/cmd/resultrecord.go" />
+        <option value="$PROJECT_DIR$/cmd/task.go" />
+        <option value="$PROJECT_DIR$/cmd/resultrecord_test.go" />
+        <option value="$PROJECT_DIR$/cmd/repositorytask.go" />
+        <option value="$PROJECT_DIR$/cmd/dbaccesstask_test.go" />
+        <option value="$PROJECT_DIR$/cmd/dbaccesstask.go" />
       </list>
     </option>
   </component>
@@ -156,7 +187,25 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
+              <item name="avv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
+              <item name="avv" type="462c0819:PsiDirectoryNode" />
+              <item name="cmd" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="postgresql" />
@@ -194,7 +243,18 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestResultRecord_Insert in github.com/xztaityozx/avv/cmd">
+  <component name="RunManager" selected="Go Test.TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd">
+    <configuration name="TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="avv" />
+      <working_directory value="$PROJECT_DIR$/cmd" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/xztaityozx/avv/cmd" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestDBAccessTask_Run$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestNewResultRecord in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
@@ -215,17 +275,6 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestResultRecord_Insert$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestResultRecord_InsertQuery in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/cmd" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/cmd" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestResultRecord_InsertQuery$" />
       <method v="2" />
     </configuration>
     <configuration name="TestResultRecord_Insert/Check_Select in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -253,36 +302,21 @@
     <list>
       <item itemvalue="Go Test.TestNewResultRecord in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestResultRecord_Insert in github.com/xztaityozx/avv/cmd" />
-      <item itemvalue="Go Test.TestResultRecord_InsertQuery in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestResultRecord_SelectQuery in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestResultRecord_Insert/Check_Select in github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd" />
+        <item itemvalue="Go Test.TestNewResultRecord in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestResultRecord_Insert in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestResultRecord_Insert/Check_Select in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestResultRecord_SelectQuery in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestResultRecord_InsertQuery in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestNewResultRecord in github.com/xztaityozx/avv/cmd" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestMakeRequest_NewTaskGroup_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 15h 29m 54s.xml">
-      <configuration name="TestMakeRequest_NewTaskGroup in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestMakeRequest_NewTaskGroup_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 15h 30m 25s.xml">
-      <configuration name="TestMakeRequest_NewTaskGroup in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestResultRecord_Insert_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 16h 10m 59s.xml">
-      <configuration name="TestResultRecord_Insert in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestResultRecord_InsertQuery_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 16h 11m 21s.xml">
-      <configuration name="TestResultRecord_InsertQuery in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestResultRecord_SelectQuery_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 16h 11m 28s.xml">
-      <configuration name="TestResultRecord_SelectQuery in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestResultRecord_Insert_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 16h 13m 27s.xml">
       <configuration name="TestResultRecord_Insert in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -297,6 +331,21 @@
     </history-entry>
     <history-entry file="TestResultRecord_Insert_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 16h 19m 06s.xml">
       <configuration name="TestResultRecord_Insert in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestResultRecord_Insert_in_github_com_xztaityozx_avv_cmd - 2019.02.09 at 16h 19m 32s.xml">
+      <configuration name="TestResultRecord_Insert in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNewResultRecord_in_github_com_xztaityozx_avv_cmd - 2019.02.10 at 11h 54m 00s.xml">
+      <configuration name="TestNewResultRecord in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNewResultRecord_in_github_com_xztaityozx_avv_cmd - 2019.02.10 at 11h 54m 41s.xml">
+      <configuration name="TestNewResultRecord in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNewResultRecord_in_github_com_xztaityozx_avv_cmd - 2019.02.10 at 12h 16m 10s.xml">
+      <configuration name="TestNewResultRecord in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestDBAccessTask_Run_in_github_com_xztaityozx_avv_cmd - 2019.02.10 at 15h 19m 03s.xml">
+      <configuration name="TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -378,14 +427,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="TravisCI: ちょっとテスト" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../playground/100" />
     <entry file="file://$PROJECT_DIR$/test/100.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -548,9 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/simulate.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/extract_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="826">
@@ -562,13 +600,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4036">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -593,24 +624,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/task.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1254">
-          <caret line="61" column="13" selection-start-line="61" selection-start-column="13" selection-end-line="61" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/parameter_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
           <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/count.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
         </state>
       </provider>
     </entry>
@@ -680,20 +697,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2332">
+          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/count.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1540">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/resultrecord_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
+        <state relative-caret-position="418">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/task.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
           <folding>
             <element signature="e#13#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
+    <entry file="file://$PROJECT_DIR$/cmd/simulate.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+        <state relative-caret-position="-1452" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
         </state>
       </provider>
     </entry>

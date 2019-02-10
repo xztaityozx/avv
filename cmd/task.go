@@ -25,6 +25,7 @@ type Task struct {
 	ResultCSV             []string
 	Repository            Repository
 	TaskId                int64
+	Failure 			  int64
 }
 
 type Stage string
@@ -33,6 +34,7 @@ const (
 	HSPICE   Stage = "HSPICE"
 	WaveView Stage = "WaveView"
 	CountUp  Stage = "CountUp"
+	DBAccess Stage = "DBAccess"
 )
 
 func (t Task) GetWrapper() ITask {
@@ -44,11 +46,16 @@ func (t Task) GetWrapper() ITask {
 		return ExtractTask{
 			Task: t,
 		}
-	} else {
+	} else if t.Stage == CountUp {
 		return CountTask{
 			Task: t,
 		}
+	} else if t.Stage == DBAccess {
+		return DBAccessTask{
+			Task:t,
+		}
 	}
+	return SimulationTask{}
 }
 
 func (t Task) Run(ctx context.Context) TaskResult {

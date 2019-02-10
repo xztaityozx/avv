@@ -10,14 +10,13 @@ import (
 
 func TestNewResultRecord(t *testing.T) {
 	as:=assert.New(t)
-	actual := NewResultRecord(CountResult{
-		Failure:20,
-		Task:Task{TaskId:1, SEED:10},
-	})
+	actual := NewResultRecord(
+		Task{TaskId:1, SEED:10, Failure:20},
+	)
 
-	as.Equal(20, actual.Failure)
-	as.Equal(1, actual.TaskId)
-	as.Equal(10,actual.Seed)
+	as.Equal(int64(20), actual.Failure)
+	as.Equal(int64(1), actual.TaskId)
+	as.Equal(int64(10),actual.Seed)
 }
 
 func TestResultRecord_InsertQuery(t *testing.T) {
@@ -45,13 +44,13 @@ func TestResultRecord_Insert(t *testing.T) {
 
 	r:=NewRepositoryFromFile(p)
 
-	rr := NewResultRecord(CountResult{
-		Failure:10,
-		Task:Task{
+	rr := NewResultRecord(
+		Task{
 			TaskId:50,
 			SEED:20,
 			Repository:r,
-		}})
+			Failure:10,
+		})
 	err := rr.Insert(context.Background(),r)
 	as.NoError(err)
 
