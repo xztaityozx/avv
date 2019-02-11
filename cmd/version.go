@@ -32,7 +32,7 @@ var versionCmd = &cobra.Command{
 	Short: "Print avv version",
 	Long:  `バージョン情報を出力して終了します`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(Version.ToString())
+		fmt.Println(Version)
 	},
 }
 
@@ -40,16 +40,21 @@ type AVVVersion struct {
 	Major int
 	Minor int
 	Build int
+	Date string
+	Status string
 }
 
 var Version = AVVVersion{
 	Major: 0,
 	Minor: 1,
-	Build: 18,
+	Build: 19,
+	Date: "2019/020/12",
+	Status: "Development",
 }
 
-func (av AVVVersion) ToString() string {
-	return fmt.Sprintf("avv v%d.%d.%d\n\nAuthor: xztaityozx\nRepository: https://github.com/xztaityozx/avv\nLicense: MIT", av.Major, av.Major, av.Build)
+func (av AVVVersion) String() string {
+	return fmt.Sprintf("avv v%d.%d.%d %s %s\n\nAuthor: xztaityozx\nRepository: https://github.com/xztaityozx/avv\nLicense: MIT",
+		av.Major, av.Major, av.Build, av.Date, av.Status)
 }
 
 func init() {

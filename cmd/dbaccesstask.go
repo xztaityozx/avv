@@ -6,6 +6,7 @@ type DBAccessTask struct {
 	Task Task
 }
 
+
 func (da DBAccessTask) Run(parent context.Context) TaskResult {
 	ctx, cancel := context.WithCancel(parent)
 	defer cancel()
@@ -20,6 +21,10 @@ func (da DBAccessTask) Run(parent context.Context) TaskResult {
 
 	select {
 	case <-ctx.Done():
+		return TaskResult{
+			Task:   da.Task,
+			Status: false,
+		}
 	case err := <-ch:
 		if err != nil {
 			log.WithError(err).WithField("at", "DBAccessTask.Run").Error("Failed Insert to DB")

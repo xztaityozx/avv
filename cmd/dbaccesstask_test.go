@@ -32,4 +32,23 @@ func TestDBAccessTask_Run(t *testing.T) {
 	res := dt.Run(context.Background())
 	as.True(res.Status)
 	as.Equal(dt.Task, res.Task)
+
+	t.Run("Dispatch", func(t *testing.T) {
+		d := NewDispatcher("DBAccess")
+		var dts []ITask
+		for i:=0;i<20;i++ {
+			dts=append(dts, dt)
+		}
+
+		res := d.Dispatch(context.Background(), 4, dts)
+
+		as.Equal(20, d.Size)
+		as.Equal(20,len(res))
+
+		for _, v := range res{
+			as.Equal(TaskResult{Task:dt.Task, Status:true}, v)
+		}
+		
+	})
 }
+
