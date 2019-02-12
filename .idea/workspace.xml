@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/count_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/count.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/count.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/dbaccesstask.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/dbaccesstask.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/dbaccesstask_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/dbaccesstask_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/plotpoint.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/plotpoint.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/plotpoint_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/plotpoint_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/version.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/version.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,65 +31,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1100">
-              <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cmd/count.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="103" selection-start-line="103" selection-end-line="103" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cmd/version.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="34" column="27" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
+            <state relative-caret-position="285">
+              <caret line="56" selection-start-line="56" selection-end-line="56" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/extract.go">
+        <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1616">
-              <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/plotpoint.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="73" selection-start-line="73" selection-end-line="73" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/plotpoint_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="716">
-              <caret line="78" selection-start-line="78" selection-end-line="78" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+            <state relative-caret-position="110">
+              <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -130,7 +82,6 @@
         <option value="$PROJECT_DIR$/cmd/progressbar.go" />
         <option value="$PROJECT_DIR$/cmd/dispatcher_test.go" />
         <option value="$PROJECT_DIR$/cmd/progresbar_test.go" />
-        <option value="$PROJECT_DIR$/cmd/count_test.go" />
         <option value="$PROJECT_DIR$/cmd/addfile_test.go" />
         <option value="$PROJECT_DIR$/cmd/task_test.go" />
         <option value="$PROJECT_DIR$/test/hspice.sh" />
@@ -162,8 +113,9 @@
         <option value="$PROJECT_DIR$/cmd/dbaccesstask.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint_test.go" />
-        <option value="$PROJECT_DIR$/cmd/count.go" />
         <option value="$PROJECT_DIR$/cmd/version.go" />
+        <option value="$PROJECT_DIR$/cmd/count_test.go" />
+        <option value="$PROJECT_DIR$/cmd/count.go" />
       </list>
     </option>
   </component>
@@ -185,25 +137,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="cmd" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="postgresql" />
@@ -221,7 +155,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="vcs.Mercurial" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -241,18 +175,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestGetPasteCommand in github.com/xztaityozx/avv/cmd">
-    <configuration name="TestFilter_GetAwkScript in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/cmd" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/cmd" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestFilter_GetAwkScript$" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Go Test.TestShapingCSV in github.com/xztaityozx/avv/cmd">
     <configuration name="TestFilter_ToAwkStatement in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
@@ -297,53 +220,64 @@
       <pattern value="^TestPlotPoint_GetPasteCommand$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="avv" />
+      <working_directory value="$PROJECT_DIR$/cmd" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/xztaityozx/avv/cmd" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestShapingCSV$" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Go Test.TestFilter_ToAwkStatement in github.com/xztaityozx/avv/cmd" />
-      <item itemvalue="Go Test.TestFilter_GetAwkScript in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestPlotPoint_GetPasteCommand in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestGetPasteCommand in github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.TestShapingCSV in github.com/xztaityozx/avv/cmd" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestShapingCSV in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestGetPasteCommand in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestPlotPoint_GetPasteCommand in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestFilter_ToAwkStatement in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestFilter_GetAwkScript in github.com/xztaityozx/avv/cmd" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestFilter_Compare_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 15h 50m 25s.xml">
-      <configuration name="TestFilter_Compare in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 39m 31s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFilter_Compare_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 15h 53m 45s.xml">
-      <configuration name="TestFilter_Compare in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 39m 52s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFilter_GetAwkScript_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 15h 53m 54s.xml">
-      <configuration name="TestFilter_GetAwkScript in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 44m 32s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFilter_ToAwkStatement_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 16h 11m 29s.xml">
-      <configuration name="TestFilter_ToAwkStatement in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 53m 51s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestPlotPoint_GetAwkScript_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 16h 19m 57s.xml">
-      <configuration name="TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 54m 40s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestPlotPoint_GetAwkScript_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 16h 20m 50s.xml">
-      <configuration name="TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 55m 29s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestPlotPoint_GetAwkScript_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 16h 21m 38s.xml">
-      <configuration name="TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 56m 19s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestPlotPoint_GetAwkScript_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 16h 22m 24s.xml">
-      <configuration name="TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 56m 52s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestPlotPoint_GetPasteCommand_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 16h 30m 59s.xml">
-      <configuration name="TestPlotPoint_GetPasteCommand in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 06h 04m 09s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestGetPasteCommand_in_github_com_xztaityozx_avv_cmd - 2019.02.11 at 16h 31m 23s.xml">
-      <configuration name="TestGetPasteCommand in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 15h 04m 06s.xml">
+      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -369,8 +303,8 @@
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Project" order="4" weight="0.16151386" />
-      <window_info anchor="right" auto_hide="true" id="Run" order="5" weight="0.53038377" />
-      <window_info anchor="right" auto_hide="true" id="Terminal" order="6" weight="0.4120469" />
+      <window_info anchor="right" auto_hide="true" id="Run" order="5" weight="0.52878463" />
+      <window_info anchor="right" auto_hide="true" id="Terminal" order="6" weight="0.57995737" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -506,7 +440,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/count_test.go" />
     <entry file="file://$PROJECT_DIR$/cmd/FileUtils.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
@@ -660,20 +593,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2332">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1100">
-          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/resultrecord_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -698,52 +617,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/task.go">
+    <entry file="file://$PROJECT_DIR$/cmd/version.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+        <state relative-caret-position="232">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/extract.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
+        <state>
           <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/plotpoint_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="716">
+        <state relative-caret-position="-8">
           <caret line="78" selection-start-line="78" selection-end-line="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/extract.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1616">
-          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/plotpoint.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        <state relative-caret-position="-8">
+          <caret line="105" column="35" selection-start-line="105" selection-start-column="35" selection-end-line="105" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/resultrecord.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1100">
+          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/count_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/task.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1148">
+          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/count.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="103" selection-start-line="103" selection-end-line="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/version.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="34" column="27" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
+        <state relative-caret-position="285">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
         </state>
       </provider>
     </entry>

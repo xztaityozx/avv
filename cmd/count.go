@@ -21,13 +21,22 @@
 package cmd
 
 import (
+	"bufio"
+	"bytes"
 	"context"
 	"fmt"
 	"github.com/mattn/go-pipeline"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 	"os"
+	"os/exec"
+	"os/signal"
+	"path/filepath"
+	"regexp"
+	"sort"
 	"strconv"
 	"strings"
+	"syscall"
 )
 
 // countCmd represents the count command
@@ -41,27 +50,205 @@ var countCmd = &cobra.Command{
 各項の条件式をカンマ区切りで指定できます．条件はすべて && で連結されます
 
 ex)
-	avv count file.csv '>=0.4' '>=0.4' '>=0.4'
+	avv count --input=file.csv --filter='>=0.4,>=0.4,>=0.4' --out=./out.txt
 	
 `,
-	PreRun: func(cmd *cobra.Command, args []string) {
-		if len(args) < 1 {
-			log.WithField("command", "count").Fatal("引数が足りません")
-		}
-	},
 	Run: func(cmd *cobra.Command, args []string) {
+		l := log.WithField("at", "avv count")
+
+		inputs, err := cmd.Flags().GetStringSlice("input")
+		if err != nil {
+			l.Fatal(err)
+		}
+		query, err := cmd.Flags().GetStringSlice("filter")
+		if err != nil {
+			l.Fatal(err)
+		}
+
+		if len(query) == 0 {
+			query = config.Default.PlotPoint.Filters[0].Status
+		}
+
+		filter := Filter{
+			Status: query,
+		}
+
+		dst, err := cmd.Flags().GetString("out")
+		if err != nil {
+			l.Fatal(err)
+		}
+
+		cum, err := cmd.Flags().GetBool("Cumulative")
+		if err != nil {
+			l.Fatal(err)
+		}
+
+		reg, err := regexp.Compile("SEED[0-9]+.csv")
+		if err != nil {
+			l.Fatal(err)
+		}
+
+		if len(inputs) == 0 || inputs[0] == "all" {
+			inputs = []string{}
+			wd, _ := os.Getwd()
+			fi, err := ioutil.ReadDir(wd)
+			if err != nil {
+				l.Fatal(err)
+			}
+			for _, v := range fi {
+				inputs = append(inputs, PathJoin(wd, v.Name()))
+			}
+		}
+
+		var cct []ITask
+		script := "BEGIN{sum=0}" + filter.ToAwkStatement(1) + "{sum++}END{print sum}"
+		for _, v := range inputs {
+			base := filepath.Base(v)
+			if !reg.MatchString(base) {
+				l.Fatal("Does not match file name to `SEED[0-9].csv` regexp")
+			}
+
+			seed, _ := strconv.Atoi(base[5:9])
+			cct = append(cct, CommandLineCountTask{SEED: seed, TargetFile: v, ColSize: len(query), Script: script})
+		}
+
+		d := NewDispatcher("avv count")
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
+		sigCh := make(chan os.Signal)
+		defer close(sigCh)
+		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGSTOP)
+		go func() {
+			<-sigCh
+			cancel()
+		}()
+
+		ch := make(chan struct{})
+		defer close(ch)
+
+		go func() {
+
+			res := d.Dispatch(ctx, config.ParallelConfig.CountUp, cct)
+
+			sort.Slice(res, func(i, j int) bool {
+				return res[i].Task.SEED < res[j].Task.SEED
+			})
+
+			fp, err := os.OpenFile(dst, os.O_APPEND|os.O_CREATE, 0644)
+			defer fp.Close()
+			if err != nil {
+				l.WithError(err).Error("Failed open out file")
+				ch <- struct{}{}
+				return
+			}
+
+			w := bufio.NewWriter(fp)
+
+			sum := int64(0)
+			for _, r := range res {
+				if !r.Status {
+					l.Error("Find failed task. please retry")
+					ch <- struct{}{}
+					return
+				}
+
+				sum += r.Task.Failure
+				w.WriteString(fmt.Sprintf("SEED: %d", r.Task.SEED))
+				if cum {
+					w.WriteString(fmt.Sprintf("Sum: %d", sum))
+				} else {
+					w.WriteString(fmt.Sprintf("Failure: %d", r.Task.Failure))
+				}
+			}
+			ch <- struct{}{}
+		}()
+
+		select {
+		case <-ctx.Done():
+		case <-ch:
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(countCmd)
 
-	countCmd.Flags().StringP("out", "o", "result", "書きだすディレクトリです")
+	countCmd.Flags().StringP("out", "o", "result", "specify output file")
 	countCmd.Flags().BoolP("Cumulative", "c", false, "累積和で出力します")
+	countCmd.Flags().StringSliceP("filter", "f", []string{}, "Query string")
+	countCmd.Flags().StringSliceP("input", "i", []string{}, "Input files. if set 'all' or empty, avv pick up all csv file in current directory")
 }
 
 type CountTask struct {
 	Task Task
+}
+
+type CommandLineCountTask struct {
+	TargetFile string
+	ColSize    int
+	SignalName string
+	Script     string
+	SEED       int
+}
+
+// Run for CommandLine Interface Task
+func (cct CommandLineCountTask) Run(parent context.Context) TaskResult {
+	ctx, cancel := context.WithCancel(parent)
+	defer cancel()
+
+	ch := make(chan int64)
+	defer close(ch)
+	ech := make(chan error)
+	defer close(ech)
+
+	go func() {
+		p, err := ShapingCSV(cct.TargetFile, cct.SignalName, cct.ColSize)
+		if err != nil {
+			ech <- err
+			return
+		}
+		out, err := exec.Command("awk", cct.Script, p).Output()
+		if err != nil {
+			ech <- err
+			return
+		}
+
+		f, err := strconv.Atoi(string(out))
+		if err != nil {
+			ech <- err
+			return
+		}
+
+		ch <- int64(f)
+	}()
+
+	l := log.WithField("at", "CommandLineCountTask.Run")
+	select {
+	case <-ctx.Done():
+		l.Warn("Canceled By Context")
+		return TaskResult{Status: false}
+	case err := <-ech:
+		l.Error(err)
+		return TaskResult{Status: false}
+	case f := <-ch:
+		return TaskResult{
+			Task: Task{
+				SEED:    cct.SEED,
+				Failure: int64(f),
+			},
+			Status: true,
+		}
+	}
+
+}
+
+func (cct CommandLineCountTask) Self() Task {
+	return Task{}
+}
+
+func (CommandLineCountTask) String() string {
+	return ""
 }
 
 func (ct CountTask) Run(parent context.Context) TaskResult {
@@ -70,26 +257,37 @@ func (ct CountTask) Run(parent context.Context) TaskResult {
 
 	ch := make(chan int64)
 	defer close(ch)
+	ech := make(chan error)
+	defer close(ech)
 
 	// fork Task
 	go func() {
-
+		f, err := ct.CountUp()
+		if err != nil {
+			ech <- err
+		} else {
+			ch <- f
+		}
 	}()
 
 	// return Result
 	select {
 	case <-ctx.Done():
-		// Failed PlotSteps Up
 		return TaskResult{
-			Status:false,
-			Task:ct.Task,
+			Status: false,
+			Task:   ct.Task,
+		}
+	case err := <-ech:
+		log.WithField("at", "CountTask.Run").WithError(err).Error("Failed CountUp")
+		return TaskResult{
+			Status: false,
+			Task:   ct.Task,
 		}
 	case rec := <-ch:
-		// Succeeded PlotSteps Up
-		ct.Task.Failure=rec
+		ct.Task.Failure = rec
 		return TaskResult{
-			Status:true,
-			Task:ct.Task,
+			Status: true,
+			Task:   ct.Task,
 		}
 	}
 }
@@ -102,7 +300,6 @@ func (ct CountTask) Self() Task {
 	return ct.Task
 }
 
-// TODO: ファイルの中身をxargsで横にするやつやらないとだめぽよ
 // CountUp Aggregate failure from csv file which generated by WaveView
 // returns: number of failure, error
 func (ct CountTask) CountUp() (failure int64, err error) {
@@ -116,21 +313,71 @@ func (ct CountTask) CountUp() (failure int64, err error) {
 	var targets []string
 	for _, v := range ct.Task.PlotPoint.Filters {
 		p := PathJoin(resultDir, v.SignalName, fmt.Sprintf("SEED%05d.csv", ct.Task.SEED))
-		if _, err := os.Stat(p);err != nil {
+		if _, err := os.Stat(p); err != nil {
 			return -1, err
 		}
-		targets=append(targets, p)
+
+		// Convert file format
+		out, err := ShapingCSV(p, v.SignalName, len(v.Status))
+		if err != nil {
+			return -1, err
+		}
+
+		targets = append(targets, out)
 	}
 
 	out, err := pipeline.Output(
-		[]string{"paste",strings.Join(targets," ")},
+		[]string{"paste", strings.Join(targets, " ")},
 		[]string{"awk", ct.Task.PlotPoint.GetAwkScript()})
 
 	if err != nil {
-		log.WithField("at","CountTask.CountUp").Error(string(out))
+		log.WithField("at", "CountTask.CountUp").Error(string(out))
 		return -1, err
 	}
 
-	failure, err = strconv.ParseInt(string(out),10,64)
+	failure, err = strconv.ParseInt(string(out), 10, 64)
 	return
+}
+
+// Convert CSV file that generated by WaveView to one tran's record per one line
+//returns: output file path, error
+func ShapingCSV(p, signalName string, n int) (string, error) {
+	out, err := ioutil.ReadFile(p)
+	if err != nil {
+		return "", err
+	}
+
+	tmp, err := ioutil.TempFile("/tmp", signalName+".*.csv")
+	if err != nil {
+		return "", err
+	}
+	w := bufio.NewWriter(tmp)
+	defer w.Flush()
+
+	idx := 0
+	for _, line := range bytes.Split(out, []byte("\n")) {
+		if len(line) == 0 || line[0] == byte('#') || line[0] == byte('T') {
+			continue
+		}
+
+		data := bytes.Split(bytes.Replace(line, []byte(" "), []byte(""), -1), []byte(","))[1]
+		_, err := w.Write(data)
+		if err != nil {
+			return "", err
+		}
+		idx++
+		if idx%n == 0 {
+			_, err := w.WriteString("\n")
+			if err != nil {
+				return "", err
+			}
+		} else {
+			_, err := w.WriteString(" ")
+			if err != nil {
+				return "", err
+			}
+		}
+	}
+
+	return PathJoin("/tmp/avv", tmp.Name()), nil
 }
