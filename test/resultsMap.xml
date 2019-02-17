@@ -1,0 +1,16 @@
+<file-format version="1.0" name="saResultsMap">
+ <object version="1" type="saResultsMap" name="saResultsMap">
+  <attribute type="giString" value="." name="masterResultsDir"></attribute>
+  <attribute type="giString" value="MONTE_CARLO" name="monteCarlo"></attribute>
+  <attribute type="giString" value="resultsMap.xml" name="name"></attribute>
+  <attribute type="giString" value="." name="resultsMapDir"></attribute>
+  <attribute type="giString" value="HSPICE" name="simulator"></attribute>
+  <attribute type="giString" value="%s" name="timeStamp"></attribute>
+  <collection name="resultsInfo">
+   <object version="1" type="saResultsInfo" name="resultsInfo">
+    <attribute type="giString" value="../netlist" name="netlistDir"></attribute>
+    <attribute type="giString" value="." name="resultsDir"></attribute>
+   </object>
+  </collection>
+ </object>
+</file-format>

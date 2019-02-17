@@ -1,0 +1,7 @@
+language: go
+apt_packages:
+  - gcc
+script:
+- cd cmd
+- alias hspice="$HOME/xztaityozx/avv/test/hspice.sh"
+- go test -v
