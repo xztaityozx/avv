@@ -43,7 +43,7 @@ type SlackMessage struct {
 }
 
 type ParallelConfig struct {
-	Master   int
+	DB       int
 	HSPICE   int
 	WaveView int
 	CountUp  int
@@ -51,5 +51,5 @@ type ParallelConfig struct {
 
 // Compare func for ParallelConfig struct
 func (s ParallelConfig) Compare(t ParallelConfig) bool {
-	return s.HSPICE == t.HSPICE && s.WaveView == t.WaveView && s.CountUp == t.CountUp && s.Master == t.Master
+	return s.HSPICE == t.HSPICE && s.WaveView == t.WaveView && s.CountUp == t.CountUp && s.DB == t.DB
 }

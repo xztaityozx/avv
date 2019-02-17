@@ -58,7 +58,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
 
 	//Parallel Options
-	rootCmd.PersistentFlags().IntP("Parallel", "p", 0, "HSPICE,WV,数え上げ全ての並列数です")
+	rootCmd.PersistentFlags().Int("pDB" , 0, "DB")
 	rootCmd.PersistentFlags().Int("pHSPICE", 0, "HSPICEの並列数です")
 	rootCmd.PersistentFlags().Int("pWV", 0, "WaveViewの並列数です")
 	rootCmd.PersistentFlags().Int("pCountUp", 0, "数え上げの並列数です")
@@ -67,7 +67,7 @@ func init() {
 	viper.BindPFlag("ParallelConfig.HSPICE", rootCmd.PersistentFlags().Lookup("pHSPICE"))
 	viper.BindPFlag("ParallelConfig.WaveView", rootCmd.PersistentFlags().Lookup("pWV"))
 	viper.BindPFlag("ParallelConfig.CountUp", rootCmd.PersistentFlags().Lookup("pCountUp"))
-	viper.BindPFlag("ParallelConfig.Master", rootCmd.PersistentFlags().Lookup("Parallel"))
+	viper.BindPFlag("ParallelConfig.DB", rootCmd.PersistentFlags().Lookup("pDB"))
 
 	cobra.OnInitialize(initConfig)
 }

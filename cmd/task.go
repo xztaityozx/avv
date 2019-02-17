@@ -7,7 +7,7 @@ import (
 )
 
 type ITask interface {
-	Run(context.Context) Result
+	Run(context.Context) TaskResult
 	Self() Task
 	String() string
 }
@@ -23,6 +23,9 @@ type Task struct {
 	Times                 int
 	Stage                 Stage
 	ResultCSV             []string
+	Repository            Repository
+	TaskId                int64
+	Failure 			  int64
 }
 
 type Stage string
@@ -31,6 +34,7 @@ const (
 	HSPICE   Stage = "HSPICE"
 	WaveView Stage = "WaveView"
 	CountUp  Stage = "CountUp"
+	DBAccess Stage = "DBAccess"
 )
 
 func (t Task) GetWrapper() ITask {
@@ -42,19 +46,24 @@ func (t Task) GetWrapper() ITask {
 		return ExtractTask{
 			Task: t,
 		}
-	} else {
+	} else if t.Stage == CountUp {
 		return CountTask{
 			Task: t,
 		}
+	} else if t.Stage == DBAccess {
+		return DBAccessTask{
+			Task:t,
+		}
 	}
+	return SimulationTask{}
 }
 
-func (t Task) Run(ctx context.Context) Result {
-	return Result{}
+func (t Task) Run(ctx context.Context) TaskResult {
+	return TaskResult{}
 }
 
 func (t Task) String() string {
-	return fmt.Sprint("Task: ", t.Times, "-", t.Vtn.ToString("Vtn"), "-", t.Vtp.ToString("Vtp"))
+	return fmt.Sprint("Task: ", t.Times, "-", t.Vtn.StringPrefix("Vtn"), "-", t.Vtp.StringPrefix("Vtp"))
 }
 
 func NewTask() Task {
@@ -95,7 +104,7 @@ func (t *Task) MkDir() {
 		fmt.Sprintf("Vtn%.4f-Sigma%.4f", t.Vtn.Threshold, t.Vtn.Sigma),
 		fmt.Sprintf("Vtp%.4f-Sigma%.4f", t.Vtp.Threshold, t.Vtp.Sigma),
 		fmt.Sprintf("Times%05d", t.Times),
-		fmt.Sprintf("Result"))
+		fmt.Sprintf("TaskResult"))
 
 	FU.TryMkDir(resultDir)
 

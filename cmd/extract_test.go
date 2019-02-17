@@ -43,8 +43,8 @@ func TestExtractTask_Run(t *testing.T) {
 	}
 	task := Task{
 		SimulationDirectories: SimulationDirectories{
-			DstDir: PathJoin(home, "TestDir", "Dst"),
-			NetListDir:PathJoin(home,"TestDir","NetList"),
+			DstDir:     PathJoin(home, "TestDir", "Dst"),
+			NetListDir: PathJoin(home, "TestDir", "NetList"),
 		},
 	}
 
@@ -65,23 +65,23 @@ func TestExtractTask_Run2(t *testing.T) {
 	}
 	task := Task{
 		SimulationDirectories: SimulationDirectories{
-			DstDir: PathJoin(home, "TestDir", "Dst"),
-			NetListDir:PathJoin(home,"TestDir","NetList"),
+			DstDir:     PathJoin(home, "TestDir", "Dst"),
+			NetListDir: PathJoin(home, "TestDir", "NetList"),
 		},
-		Stage:WaveView,
+		Stage: WaveView,
 	}
 
 	FU.TryMkDir(task.SimulationDirectories.DstDir)
 	FU.TryMkDir(task.SimulationDirectories.NetListDir)
 
 	var in []ITask
-	for i:=0; i<20; i++ {
-		in=append(in, ExtractTask{Task:task})
+	for i := 0; i < 20; i++ {
+		in = append(in, ExtractTask{Task: task})
 	}
 
 	d := NewDispatcher("Extract")
 	res := d.Dispatch(context.Background(), 10, in)
-	as:=assert.New(t)
+	as := assert.New(t)
 
 	as.Equal(20, len(res))
 

@@ -21,10 +21,14 @@
 package cmd
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/viper"
 	"io/ioutil"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -53,18 +57,44 @@ var makeCmd = &cobra.Command{
 			TaskDir: config.TaskDir,
 		}
 
-		if err := mr.MakeTaskFiles(); err != nil {
-			log.Fatal("MakeTaskFiles: ", err)
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
+		sigCh := make(chan os.Signal)
+		defer close(sigCh)
+		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGSTOP, syscall.SIGQUIT)
+
+		go func() {
+			<-sigCh
+			cancel()
+		}()
+
+		ch := make(chan struct{})
+		defer close(ch)
+
+		go func() {
+			clo := func() { ch <- struct{}{} }
+			defer clo()
+			if err := mr.MakeTaskFiles(ctx); err != nil {
+				log.Fatal("MakeTaskFiles: ", err)
+			}
+		}()
+
+		select {
+		case <-ctx.Done():
+		case <-ch:
 		}
+
+
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(makeCmd)
 
-	makeCmd.Flags().Float64("PlotStart", 2.5, "プロットの始点[ns]")
-	makeCmd.Flags().Float64("PlotStep", 7.5, "プロットの刻み幅[ns]")
-	makeCmd.Flags().Float64("PlotStop", 17.5, "プロットの終点[ns]")
+	makeCmd.Flags().Float64P("PlotStart","a", 2.5, "プロットの始点[ns]")
+	makeCmd.Flags().Float64P("PlotStep", "b",7.5, "プロットの刻み幅[ns]")
+	makeCmd.Flags().Float64P("PlotStop", "c",17.5, "プロットの終点[ns]")
 
 	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
 	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
@@ -102,6 +132,9 @@ func init() {
 	viper.BindPFlag("Default.SimulationDirectories.BaseDir", makeCmd.Flags().Lookup("basedir"))
 	viper.BindPFlag("LogDir", makeCmd.Flags().Lookup("logdir"))
 
+	makeCmd.Flags().StringP("DB","d", "", "path to Output DataBase's")
+	viper.BindPFlag("Default.Repository.Path",makeCmd.Flags().Lookup("DB"))
+
 }
 
 type MakeRequest struct {
@@ -113,10 +146,16 @@ type MakeRequest struct {
 // make Task file
 // output task.json to [TaskDir/reserve]
 // return: error
-func (m MakeRequest) MakeTaskFiles() error {
+func (m MakeRequest) MakeTaskFiles(ctx context.Context) error {
+	tg, err := m.NewTaskGroup(ctx)
+	if err != nil {
+		return err
+	}
+
 	for seed := m.SEED.Start; seed <= m.SEED.End; seed++ {
 		data := m.Task
 		data.SEED = seed
+		data.TaskId = tg.TaskId
 
 		if b, err := json.Marshal(data); err != nil {
 			return err

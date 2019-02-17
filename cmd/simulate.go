@@ -64,7 +64,7 @@ type SimulationTask struct {
 	Task Task
 }
 
-func (s SimulationTask) Run(parent context.Context) Result {
+func (s SimulationTask) Run(parent context.Context) TaskResult {
 	t := s.Task
 
 	// Make Simulation Parameter and Directories
@@ -86,7 +86,7 @@ func (s SimulationTask) Run(parent context.Context) Result {
 			Error("Failed Simulation:" + string(out) + " hspice.log=" + FU.Cat(logfile))
 	}
 
-	return Result{
+	return TaskResult{
 		Task:   t,
 		Status: err == nil,
 	}

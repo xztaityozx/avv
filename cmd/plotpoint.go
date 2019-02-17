@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strings"
 )
 
 type PlotPoint struct {
@@ -16,6 +18,17 @@ type PlotPoint struct {
 type Filter struct {
 	SignalName string
 	Status     []string
+}
+
+// convert to json for ResultRecord.Signals
+// returns: json-string, error
+func (p PlotPoint) ToJson() (string, error) {
+	out, err := json.Marshal(p)
+	if err != nil {
+		return "", err
+	}
+
+	return string(out), nil
 }
 
 // compare func fof Filter struct
@@ -33,9 +46,35 @@ func (f Filter) Compare(t Filter) bool {
 	return f.SignalName == t.SignalName
 }
 
+// ToAwkStatement generate awk statement for count up
+// returns: awk statement string
+func (f Filter) ToAwkStatement(start int) string {
+	var rt []string
+	for i, v := range f.Status {
+		rt = append(rt, fmt.Sprintf("$%d%s", i+start, v))
+	}
+
+	return strings.Join(rt, "&&")
+}
+
+// GetAwkScript generate awk script for count up
+// returns: awk script string
+func (p PlotPoint) GetAwkScript() string {
+	// statement
+	var stmt []string
+	start := 1
+	for _, v := range p.Filters {
+		stmt =append(stmt, v.ToAwkStatement(start))
+		start+=len(v.Status)
+	}
+
+	return fmt.Sprintf("BEGIN{sum=0}%s{sum++}END{print sum}", strings.Join(stmt,"&&"))
+}
+
+
 // Get plot step
 //returns: Number of Plot Steps
-func (p PlotPoint) Count() int {
+func (p PlotPoint) PlotSteps() int {
 	return (int)((p.Stop-p.Start)/p.Step + 1.0)
 }
 

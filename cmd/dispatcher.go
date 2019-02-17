@@ -12,7 +12,7 @@ import (
 )
 
 type (
-	Result struct {
+	TaskResult struct {
 		Task   Task
 		Status bool
 	}
@@ -21,7 +21,7 @@ type (
 		WaitGroup   *sync.WaitGroup
 		Queue       chan ITask
 		Size        int
-		Receiver    chan Result
+		Receiver    chan TaskResult
 		Name        string
 		ProgressBar *mpb.Bar
 	}
@@ -126,7 +126,7 @@ func (d *Dispatcher) Worker(parent context.Context) {
 	defer cancel()
 
 	for j := range d.Queue {
-		rec := make(chan Result)
+		rec := make(chan TaskResult)
 		go func() {
 			rec <- j.Run(ctx)
 		}()
@@ -143,7 +143,7 @@ func (d *Dispatcher) Worker(parent context.Context) {
 	}
 }
 
-func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []Result {
+func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []TaskResult {
 	d.WaitGroup = &sync.WaitGroup{}
 	ctx, cancel := context.WithCancel(parent)
 	defer cancel()
@@ -155,7 +155,7 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 
 	d.Size = len(t)
 	// make result channel
-	d.Receiver = make(chan Result, d.Size)
+	d.Receiver = make(chan TaskResult, d.Size)
 	// enqueue jobs
 	d.Queue = make(chan ITask, d.Size)
 	for _, v := range t {
@@ -209,7 +209,7 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 
 	close(d.Receiver)
 
-	var results []Result
+	var results []TaskResult
 
 	for r := range d.Receiver {
 		results = append(results, r)

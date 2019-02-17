@@ -20,9 +20,9 @@ type DummyTask struct {
 	Param int
 }
 
-func (d DummyTask) Run(ctx context.Context) Result {
+func (d DummyTask) Run(ctx context.Context) TaskResult {
 	time.Sleep(time.Microsecond)
-	return Result{
+	return TaskResult{
 		Status: true,
 		Task:   d.Task,
 	}
@@ -40,9 +40,9 @@ type SecondDummyTask struct {
 	Task Task
 }
 
-func (s SecondDummyTask) Run(ctx context.Context) Result {
+func (s SecondDummyTask) Run(ctx context.Context) TaskResult {
 	time.Sleep(time.Microsecond)
-	return Result{
+	return TaskResult{
 		Status: true,
 		Task:   s.Task,
 	}
@@ -73,7 +73,7 @@ func TestDispatcher_Dispatch(t *testing.T) {
 	as.Equal(20, len(res))
 
 	for _, v := range res {
-		as.Equal(Result{
+		as.Equal(TaskResult{
 			Task:   config.Default,
 			Status: true,
 		}, v)
