@@ -78,7 +78,7 @@ func initLogger() {
 
 	// Hook to log file
 	path := PathJoin(config.LogDir, time.Now().Format("2006-01-02-15-04-05")+".log")
-	hook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
+	filehook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
 		Filename: path,
 		MaxAge:   28,
 		MaxSize:  500,
@@ -102,7 +102,11 @@ func initLogger() {
 		TimestampFormat: time.RFC3339,
 	})
 
-	log.AddHook(hook)
+	log.AddHook(filehook)
+
+	// Slack Hook
+	slackHook := config.SlackConfig.NewFatalLoggerHook()
+	log.AddHook(slackHook)
 }
 
 // initConfig reads in config file and ENV variables if set.

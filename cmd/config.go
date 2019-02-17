@@ -1,9 +1,5 @@
 package cmd
 
-import (
-	"time"
-)
-
 type Config struct {
 	Default          Task
 	DefaultSEEDRange SEED
@@ -35,21 +31,6 @@ type RetryConfig struct {
 
 type WaveViewConfig struct {
 	Command string
-}
-
-type SlackConfig struct {
-	Channel string
-	User    string
-	Token   string
-}
-
-type SlackMessage struct {
-	Success      int
-	Failed       int
-	StartTime    time.Time
-	FinishedTime time.Time
-	SubMessage   string
-	ErrorMassage string
 }
 
 type ParallelConfig struct {

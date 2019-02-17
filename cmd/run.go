@@ -27,6 +27,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
+	"time"
 )
 
 // runCmd represents the run command
@@ -38,6 +39,10 @@ var runCmd = &cobra.Command{
 		var rt RunTask
 		if len(args) == 0 {
 			cnt, _ := cmd.Flags().GetInt("count")
+			all, _ := cmd.Flags().GetBool("all")
+			if all {
+				cnt = -1
+			}
 			rt = GetTasksFromTaskDir(cnt)
 		} else {
 			rt = GetTasksFromFiles(args...)
@@ -61,53 +66,56 @@ var runCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(runCmd)
-	runCmd.Flags().IntP("count","n",1,"number of task")
-	runCmd.Flags().String("taskdir","","タスクファイルが保存されてるディレクトリへのパスです.省略すると設定ファイルにかかれている値と同じになります")
-	viper.BindPFlag("TaskDir",runCmd.Flags().Lookup("taskdir"))
+	runCmd.Flags().IntP("count", "n", 1, "number of task")
+	runCmd.Flags().Bool("all",false,"")
+	runCmd.Flags().String("taskdir", "", "タスクファイルが保存されてるディレクトリへのパスです.省略すると設定ファイルにかかれている値と同じになります")
+	viper.BindPFlag("TaskDir", runCmd.Flags().Lookup("taskdir"))
 }
 
 func (rt RunTask) Run(ctx context.Context) {
 	var tasks []ITask
 	for _, v := range rt {
-		tasks = append(tasks,SimulationTask{Task:v})
+		tasks = append(tasks, SimulationTask{Task: v})
 	}
+
+	begin := time.Now()
 
 	s, f, err := PipeLine{}.Start(ctx, tasks,
 		// HSPICE Pipe
 		Pipe{
-			Name:string(HSPICE),
-			Parallel:config.ParallelConfig.HSPICE,
-			RetryLimit:config.RetryConfig.HSPICE,
+			Name:       string(HSPICE),
+			Parallel:   config.ParallelConfig.HSPICE,
+			RetryLimit: config.RetryConfig.HSPICE,
 			Converter: func(task Task) ITask {
-				task.Stage=WaveView
-				return ExtractTask{Task:task}
+				task.Stage = WaveView
+				return ExtractTask{Task: task}
 			},
 		},
 		// WaveView Pipe
 		Pipe{
-			Name:"Extract",
-			Parallel:config.ParallelConfig.WaveView,
-			RetryLimit:config.RetryConfig.WaveView,
+			Name:       "Extract",
+			Parallel:   config.ParallelConfig.WaveView,
+			RetryLimit: config.RetryConfig.WaveView,
 			Converter: func(task Task) ITask {
-				task.Stage=CountUp
-				return CountTask{Task:task}
+				task.Stage = CountUp
+				return CountTask{Task: task}
 			},
 		},
 		// CountUp Pipe
 		Pipe{
-			Name:"CountUp",
-			Parallel:config.ParallelConfig.CountUp,
-			RetryLimit:config.RetryConfig.CountUp,
+			Name:       "CountUp",
+			Parallel:   config.ParallelConfig.CountUp,
+			RetryLimit: config.RetryConfig.CountUp,
 			Converter: func(task Task) ITask {
-				task.Stage=DBAccess
-				return DBAccessTask{Task:task}
+				task.Stage = DBAccess
+				return DBAccessTask{Task: task}
 			},
 		},
 		// DB Access Pipe
 		Pipe{
-			Name:"DB Access",
-			Parallel:config.ParallelConfig.DB,
-			RetryLimit:config.ParallelConfig.DB,
+			Name:       "DB Access",
+			Parallel:   config.ParallelConfig.DB,
+			RetryLimit: config.ParallelConfig.DB,
 			Converter: func(task Task) ITask {
 				task.Stage = "Finish"
 				return nil
@@ -116,12 +124,12 @@ func (rt RunTask) Run(ctx context.Context) {
 
 	length := len(s)
 	if len(f) > length {
-		length=len(f)
+		length = len(f)
 	}
 
 	fmt.Println("Success\tFailed")
 
-	for i:=0;i<length; i++ {
+	for i := 0; i < length; i++ {
 		if i < len(s) {
 			fmt.Print(s[i], "\t")
 		}
@@ -135,4 +143,11 @@ func (rt RunTask) Run(ctx context.Context) {
 	if err != nil {
 		log.WithError(err).Error("Failed run command")
 	}
+
+	end := time.Now()
+
+	config.SlackConfig.PostMessage(fmt.Sprintf(":seikou: %d\n:sippai: %d\n開始時間: %s\n終了時間: %s",
+		len(s), len(f),
+		begin.Format("2006/01/02/15:04:05"),
+		end.Format("2006/01/02/15:04:05")))
 }
