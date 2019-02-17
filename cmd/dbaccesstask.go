@@ -1,11 +1,13 @@
 package cmd
 
-import "context"
+import (
+	"context"
+	_ "github.com/mattn/go-sqlite3"
+)
 
 type DBAccessTask struct {
 	Task Task
 }
-
 
 func (da DBAccessTask) Run(parent context.Context) TaskResult {
 	ctx, cancel := context.WithCancel(parent)
@@ -16,7 +18,7 @@ func (da DBAccessTask) Run(parent context.Context) TaskResult {
 	defer close(ch)
 	go func() {
 		err := rr.Insert(ctx, da.Task.Repository)
-		ch<- err
+		ch <- err
 	}()
 
 	select {
@@ -35,8 +37,8 @@ func (da DBAccessTask) Run(parent context.Context) TaskResult {
 		}
 	}
 	return TaskResult{
-		Task:da.Task,
-		Status:true,
+		Task:   da.Task,
+		Status: true,
 	}
 }
 
@@ -47,3 +49,4 @@ func (da DBAccessTask) Self() Task {
 func (DBAccessTask) String() string {
 	return ""
 }
+

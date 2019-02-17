@@ -132,7 +132,7 @@ func init() {
 	viper.BindPFlag("Default.SimulationDirectories.BaseDir", makeCmd.Flags().Lookup("basedir"))
 	viper.BindPFlag("LogDir", makeCmd.Flags().Lookup("logdir"))
 
-	makeCmd.Flags().StringP("DB","d", "", "path to Output DataBase's")
+	makeCmd.Flags().StringP("DB","d", "", "path to Output DataBase")
 	viper.BindPFlag("Default.Repository.Path",makeCmd.Flags().Lookup("DB"))
 
 }
@@ -156,6 +156,7 @@ func (m MakeRequest) MakeTaskFiles(ctx context.Context) error {
 		data := m.Task
 		data.SEED = seed
 		data.TaskId = tg.TaskId
+		data.Stage = HSPICE
 
 		if b, err := json.Marshal(data); err != nil {
 			return err

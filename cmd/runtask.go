@@ -4,23 +4,15 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 )
 
-type RunTask struct {
-	Tasks      []Task
-	RunSummary RunSummary
-}
 
 type SimulationResult struct {
 	Task   Task
 	Status bool
 }
 
-func (rt RunTask) Run() error {
-
-	return nil
-}
+type RunTask []Task
 
 // Read Task File
 // returns: Task struct, error
@@ -42,49 +34,49 @@ func ReadTaskFile(p string) (Task, error) {
 	return rt, nil
 }
 
-// Get Tasks
-// returns: error, []Task(ref)
-func (rt *RunTask) GetTasks(cnt int) error {
-	taskDir := ReserveDir()
-	files, err := ioutil.ReadDir(taskDir)
-	if err != nil {
-		return err
-	}
+func GetTasksFromFiles(p ...string) RunTask {
+	var rt RunTask
 
-	// Min(cnt,len(files))
-	if cnt > len(files) || cnt < 0 {
-		cnt = len(files)
-	}
-
-	for i := 0; i < cnt; i++ {
-		v := files[i]
-		fulPath := PathJoin(taskDir, v.Name())
-		if t, err := ReadTaskFile(fulPath); err != nil {
-			log.WithField("at", "RunTask.GetTasks").Error("Failed read task file: ", v.Name(), "This file will move to ", DustDir())
-			if err := os.Rename(fulPath, PathJoin(DustDir(), v.Name())); err != nil {
-				return err
-			}
+	for _,v := range p {
+		if t,err := ReadTaskFile(v); err != nil {
+			log.WithError(err).Fatal("Failed Unmarshal Task file: ",v)
 		} else {
-			rt.Tasks = append(rt.Tasks, t)
+			rt=append(rt, t)
+		}
+	}
+
+	return rt
+}
+
+func (rt RunTask) BackUp() error {
+
+	m := make(map[string]Repository)
+	for _,v := range rt {
+		m[v.Repository.Path]=v.Repository
+	}
+
+	for _,v:=range m {
+		if err := v.DBBackUp();err != nil {
+			return err
 		}
 	}
 
 	return nil
 }
 
-// Get Tasks
-// returns: error, []Task(ref)
-func (rt *RunTask) GetTaskFromFiles(f ...string) error {
+func GetTasksFromTaskDir(cnt int) RunTask {
+	files, err := ioutil.ReadDir(ReserveDir())
+	if err != nil {
+		log.WithError(err).Fatal("Can not open: ", ReserveDir())
+	}
 
-	for _, v := range f {
-		if t, err := ReadTaskFile(v); err != nil {
-			log.WithField("at", "RunTask.GetRunTaskFromFiles").Error("Failed read task file: ", v, "This file will move to", DustDir())
-			if err := os.Rename(v, PathJoin(DustDir(), filepath.Base(v))); err != nil {
-				return err
-			}
-		} else {
-			rt.Tasks = append(rt.Tasks, t)
+	var path []string
+	for _, v := range files {
+		path=append(path, PathJoin(ReserveDir(),v.Name()))
+		if cnt > 0 && len(path) < cnt {
+			break
 		}
 	}
-	return nil
+
+	return GetTasksFromFiles(path...)
 }

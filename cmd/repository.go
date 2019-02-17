@@ -1,11 +1,16 @@
 package cmd
 
 import (
+	"bufio"
 	"context"
 	"database/sql"
+	"fmt"
 	"github.com/go-gorp/gorp"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/sirupsen/logrus"
+	"io"
 	"os"
+	"time"
 )
 
 // New Repository struct
@@ -81,3 +86,33 @@ type (
 		Path string
 	}
 )
+func (r Repository) DBBackUp() error {
+
+	if !config.AutoDBBackUp {
+		logrus.Info("このタスクではDB(" + r.Path + ")にアクセスします。バックアップを作成しますか？")
+		fmt.Printf("[y] はい [n] いいえ\n>>> ")
+		s := bufio.NewScanner(os.Stdin)
+		s.Scan()
+		ans := s.Text()
+
+		if ans != "y" {
+			return nil
+		}
+	}
+
+	dst := PathJoin(config.BackUpDir, r.Path+time.Now().Format("2006-01-02-15-04-05"))
+
+	dfp, err := os.Open(dst)
+	if err != nil {
+		return err
+	}
+
+	sfp, err := os.Open(r.Path)
+	if err != nil {
+		return err
+	}
+
+	_, err = io.Copy(dfp,sfp)
+
+	return err
+}

@@ -15,12 +15,22 @@ type Config struct {
 	ParallelConfig   ParallelConfig
 	HSPICE           HSPICEConfig
 	WaveView         WaveViewConfig
+	RetryConfig      RetryConfig
 	AutoRetry        bool
+	AutoDBBackUp     bool
+	BackUpDir        string
 }
 
 type HSPICEConfig struct {
 	Command string
 	Option  string
+}
+
+type RetryConfig struct {
+	HSPICE   int
+	WaveView int
+	CountUp  int
+	DBAccess int
 }
 
 type WaveViewConfig struct {
