@@ -106,7 +106,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		m := make(map[int]bool)
 		for _, v := range rt {
 			tasks = append(tasks, SimulationTask{Task: v})
-			m[v.Self().TaskId] = true
+			m[v.TaskId] = true
 		}
 
 		logrus.Info("いくつかのTaskIdを発見しました。結果へアクセスする際に使うので控えておいてね")
