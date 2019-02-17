@@ -55,6 +55,7 @@ const (
 	WaveView Stage = "WaveView"
 	CountUp  Stage = "CountUp"
 	DBAccess Stage = "DBAccess"
+	Remove Stage = "Remove"
 )
 
 // GetWrapper Task.StageをもとにITaskなstructを返します
@@ -75,6 +76,10 @@ func (t Task) GetWrapper() ITask {
 	} else if t.Stage == DBAccess {
 		return DBAccessTask{
 			Task: t,
+		}
+	} else if t.Stage == Remove {
+		return RemoveTask{
+			Task:t,
 		}
 	}
 	return SimulationTask{}
