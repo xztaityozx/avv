@@ -38,13 +38,22 @@ import (
 // makeCmd represents the make command
 var makeCmd = &cobra.Command{
 	Use:   "make",
-	Short: "",
-	Long:  ``,
+	Short: "タスクを作ります",
+	Long: `パラメータを指定してタスクファイルを生成します
+SEEDごとに1つのファイルが生成されます
+生成先は設定ファイルの "TaskDir" です
+
+指定しなかった値は設定ファイルの値が使われます
+
+
+`,
 	Run: func(cmd *cobra.Command, args []string) {
+		// seed 開始値
 		start, err := cmd.Flags().GetInt("start")
 		if err != nil {
 			log.Fatal(err)
 		}
+		// seed 終了値
 		end, err := cmd.Flags().GetInt("end")
 		if err != nil {
 			log.Fatal(err)
@@ -58,9 +67,11 @@ var makeCmd = &cobra.Command{
 			TaskDir: config.TaskDir,
 		}
 
+		// cancel付きcontext
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
+		// SIGNALをトラップする
 		sigCh := make(chan os.Signal)
 		defer close(sigCh)
 		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGSTOP, syscall.SIGQUIT)
@@ -70,9 +81,11 @@ var makeCmd = &cobra.Command{
 			cancel()
 		}()
 
+		// 終了通知チャンネル
 		ch := make(chan struct{})
 		defer close(ch)
 
+		// DBにアクセスするのでちょっと重い
 		go func() {
 			clo := func() { ch <- struct{}{} }
 			defer clo()
@@ -81,6 +94,7 @@ var makeCmd = &cobra.Command{
 			}
 		}()
 
+		// 待機
 		select {
 		case <-ctx.Done():
 		case <-ch:
@@ -137,6 +151,7 @@ func init() {
 
 }
 
+// MakeRequest
 type MakeRequest struct {
 	Task    Task
 	SEED    SEED
