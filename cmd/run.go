@@ -69,7 +69,7 @@ var runCmd = &cobra.Command{
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
-		sigCh := mak(chan os.Signal)
+		sigCh := make(chan os.Signal)
 		defer close(sigCh)
 		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGSTOP, syscall.SIGSTOP)
 		go func() {
