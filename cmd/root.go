@@ -23,14 +23,15 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/mattn/go-colorable"
-	"github.com/sirupsen/logrus"
-	"github.com/snowzach/rotatefilehook"
 	"os"
 	"path/filepath"
 	"time"
 
-	"github.com/mitchellh/go-homedir"
+	colorable "github.com/mattn/go-colorable"
+	"github.com/sirupsen/logrus"
+	"github.com/snowzach/rotatefilehook"
+
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -41,8 +42,12 @@ var config = Config{}
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "avv",
-	Short: "avv: Advanced WaveView tool",
-	Long:  ``,
+	Short: "avv: AdVanced waVe extractor tool",
+	Long: `avv: AdVanced waVe extractor tool
+
+UHAコマンドの後継コマンドです
+各サブコマンドのヘルプを見ると使い方がわかります
+`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -58,7 +63,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
 
 	//Parallel Options
-	rootCmd.PersistentFlags().Int("pDB" , 0, "DB")
+	rootCmd.PersistentFlags().Int("pDB", 0, "DB")
 	rootCmd.PersistentFlags().Int("pHSPICE", 0, "HSPICEの並列数です")
 	rootCmd.PersistentFlags().Int("pWV", 0, "WaveViewの並列数です")
 	rootCmd.PersistentFlags().Int("pCountUp", 0, "数え上げの並列数です")
