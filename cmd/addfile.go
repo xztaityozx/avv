@@ -5,15 +5,25 @@ import (
 	"strings"
 )
 
+// AddFile Addfileを表すstruct
 type AddFile struct {
+	// VddVoltage Vddの電圧
 	VddVoltage float64
+	// GndVoltage Gndの電圧
 	GndVoltage float64
-	ICCommand  string
-	Options    []string
-	SEED       int
-	Path       string
+	// ICCommand
+	ICCommand string
+	// オプション
+	Options []string
+	// SEED Seed値
+	SEED int
+	// Path 出力先のパス
+	Path string
 }
 
+// NewAddFile 設定ファイルからAddFileを返す
+// args: s seed値
+// returns: AddFile
 func NewAddFile(s int) AddFile {
 	rt := config.Default.SimulationFiles.AddFile
 	rt.SEED = s
@@ -41,6 +51,8 @@ func (a AddFile) Compare(b AddFile) bool {
 		a.VddVoltage == b.VddVoltage
 }
 
+// Make AddFileを書き出す
+// args: 出力されるディレクトリを置く場所
 func (a *AddFile) Make(base string) {
 	data := fmt.Sprintf(`
 VDD VDD! 0 %.1fV
