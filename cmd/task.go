@@ -6,28 +6,48 @@ import (
 	"strings"
 )
 
+// ITask Dispatcherで扱いたいstructに実装するInterface
 type ITask interface {
+	// Run 実際の処理を記述する
 	Run(context.Context) TaskResult
+	// Self 基底クラス()のTaskを返す関数
 	Self() Task
+	// String Stringer
 	String() string
 }
 
+// Task タスクを定義するstructの基底クラス()
 type Task struct {
-	SimulationFiles       SimulationFiles
-	Vtn                   Transistor
-	Vtp                   Transistor
-	AutoRemove            bool
+	// SimulationFiles このタスクで扱うパラメータ情報のファイルです
+	SimulationFiles SimulationFiles
+	// Vtn Vtnのトランジスタ情報
+	Vtn Transistor
+	// Vtp Vtpのトランジスタ情報
+	Vtp Transistor
+	// TODO: AutoRemoveを実装しようね
+	// AutoRemove タスク終了時にゴミを掃除します
+	AutoRemove bool
+	// SimulationDirectories このタスクで扱うディレクトリ情報です
 	SimulationDirectories SimulationDirectories
-	PlotPoint             PlotPoint
-	SEED                  int
-	Times                 int
-	Stage                 Stage
-	ResultCSV             []string
-	Repository            Repository
-	TaskId                int64
-	Failure 			  int64
+	// PlotPoint
+	PlotPoint PlotPoint
+	// SEED このタスクのSEEDです
+	SEED int
+	// Times このタスクのMCSの回数です
+	Times int
+	// Stage このタスクがHSPICE、WaveView、CountUp、DBAccessのうちどれかを表します
+	Stage Stage
+	// ResultCSV 結果を書き出したCSVへのパスです
+	ResultCSV []string
+	// Repository このタスクの結果を書き込むDB情報です
+	Repository Repository
+	// TaskId このタスクのグループIDです
+	TaskId int64
+	// Failure このタスクの実行結果から得られた不良数です
+	Failure int64
 }
 
+// Stage
 type Stage string
 
 const (
@@ -37,6 +57,8 @@ const (
 	DBAccess Stage = "DBAccess"
 )
 
+// GetWrapper Task.StageをもとにITaskなstructを返します
+// returns: ITask
 func (t Task) GetWrapper() ITask {
 	if t.Stage == HSPICE {
 		return SimulationTask{
@@ -52,44 +74,56 @@ func (t Task) GetWrapper() ITask {
 		}
 	} else if t.Stage == DBAccess {
 		return DBAccessTask{
-			Task:t,
+			Task: t,
 		}
 	}
 	return SimulationTask{}
 }
 
+// Run ITask 実装用ダミー
 func (t Task) Run(ctx context.Context) TaskResult {
 	return TaskResult{}
 }
 
+// String
 func (t Task) String() string {
 	return fmt.Sprint("Task: ", t.Times, "-", t.Vtn.StringPrefix("Vtn"), "-", t.Vtp.StringPrefix("Vtp"))
 }
 
+// NewTask StageがHSPICEなTask structをconfigをもとに作ります
+// returns: Task
 func NewTask() Task {
 	config.Default.Stage = HSPICE
 	return config.Default
 }
 
+// ReserveDir 実行待ちなタスクファイルの置き場を返します
+// returns: /path/to/ReserveDir
 func ReserveDir() string {
 	return PathJoin(config.TaskDir, "reserve")
 }
 
+// DoneDir 実行後のタスクファイルの置き場を返します
+// returns: /path/to/DoneDir
 func DoneDir() string {
 	return PathJoin(config.TaskDir, "done")
 }
 
+// FailedDir 失敗したタスクファイルの置き場を返します
+// returns: /path/to/FailedDir
 func FailedDir() string {
 	return PathJoin(config.TaskDir, "failed")
 }
 
+// DustDir
 func DustDir() string {
 	return PathJoin(config.TaskDir, "dust")
 }
 
-// make DstDir
+// MkDir シミュレーションに必要なディレクトリを作成します
 func (t *Task) MkDir() {
 	log.Info("Task.Mkdir: Make Directories for simulations")
+	// HSPICEとかの出力先
 	dst := PathJoin(
 		t.SimulationDirectories.BaseDir,
 		fmt.Sprintf("Vtn%.4f-Sigma%.4f", t.Vtn.Threshold, t.Vtn.Sigma),
@@ -97,8 +131,10 @@ func (t *Task) MkDir() {
 		fmt.Sprintf("Times%05d", t.Times),
 		fmt.Sprintf("SEED%05d", t.SEED))
 
+	// 作成
 	FU.TryMkDir(dst)
 
+	// 結果を書き出すところ
 	resultDir := PathJoin(
 		t.SimulationDirectories.BaseDir,
 		fmt.Sprintf("Vtn%.4f-Sigma%.4f", t.Vtn.Threshold, t.Vtn.Sigma),
@@ -106,12 +142,15 @@ func (t *Task) MkDir() {
 		fmt.Sprintf("Times%05d", t.Times),
 		fmt.Sprintf("TaskResult"))
 
+	// 作成
 	FU.TryMkDir(resultDir)
 
+	// 設定
 	t.SimulationDirectories.DstDir = dst
 	t.SimulationDirectories.ResultDir = resultDir
 }
 
+// MkSimulationFiles シミュレーションに必要なパラメータファイルを生成します
 func (t *Task) MkSimulationFiles() {
 
 	// Make AddFile

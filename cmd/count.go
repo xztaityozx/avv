@@ -25,8 +25,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/mattn/go-pipeline"
-	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -37,57 +35,66 @@ import (
 	"strconv"
 	"strings"
 	"syscall"
+
+	pipeline "github.com/mattn/go-pipeline"
+	"github.com/spf13/cobra"
 )
 
 // countCmd represents the count command
 var countCmd = &cobra.Command{
 	Use:     "count",
 	Aliases: []string{"cnt"},
-	Short:   "",
-	Long: `avv count [file string] [queries strings]
-
-- [query string]
-各項の条件式をカンマ区切りで指定できます．条件はすべて && で連結されます
+	Short:   "数え上げします",
+	Long: `CSVを受け取って数え上げします
 
 ex)
 	avv count --input=file.csv --filter='>=0.4,>=0.4,>=0.4' --out=./out.txt
 	
 `,
 	Run: func(cmd *cobra.Command, args []string) {
+		// logger
 		l := log.WithField("at", "avv count")
 
+		// 入力ファイル
 		inputs, err := cmd.Flags().GetStringSlice("input")
 		if err != nil {
 			l.Fatal(err)
 		}
+		// 数え上げクエリ
 		query, err := cmd.Flags().GetStringSlice("filter")
 		if err != nil {
 			l.Fatal(err)
 		}
 
+		// クエリが空ならデフォルトを使う
 		if len(query) == 0 {
 			query = config.Default.PlotPoint.Filters[0].Status
 		}
 
+		//Filter struct
 		filter := Filter{
 			Status: query,
 		}
 
+		// 出力先ファイル
 		dst, err := cmd.Flags().GetString("out")
 		if err != nil {
 			l.Fatal(err)
 		}
 
+		// 累積和するかどうか
 		cum, err := cmd.Flags().GetBool("Cumulative")
 		if err != nil {
 			l.Fatal(err)
 		}
 
+		// ファイル名Validation用正規表現
 		reg, err := regexp.Compile("SEED[0-9]+.csv")
 		if err != nil {
 			l.Fatal(err)
 		}
 
+		// 入力ファイルが未指定かallならカレントのファイルを対象にする
 		if len(inputs) == 0 || inputs[0] == "all" {
 			inputs = []string{}
 			wd, _ := os.Getwd()
@@ -101,21 +108,29 @@ ex)
 		}
 
 		var cct []ITask
+		// AWKのスクリプト
 		script := "BEGIN{sum=0}" + filter.ToAwkStatement(1) + "{sum++}END{print sum}"
+
 		for _, v := range inputs {
+			// ファイル名Validation
 			base := filepath.Base(v)
 			if !reg.MatchString(base) {
 				l.Fatal("Does not match file name to `SEED[0-9].csv` regexp")
 			}
 
+			// シード値取り出し
 			seed, _ := strconv.Atoi(base[5:9])
 			cct = append(cct, CommandLineCountTask{SEED: seed, TargetFile: v, ColSize: len(query), Script: script})
 		}
 
+		// Dispatcher
 		d := NewDispatcher("avv count")
+
+		// キャンセル付きcontext
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
+		// SIGNALをトラップ
 		sigCh := make(chan os.Signal)
 		defer close(sigCh)
 		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGSTOP)
@@ -124,17 +139,20 @@ ex)
 			cancel()
 		}()
 
+		// 終了通知チャンネル
 		ch := make(chan struct{})
 		defer close(ch)
 
 		go func() {
-
+			// Start Task
 			res := d.Dispatch(ctx, config.ParallelConfig.CountUp, cct)
 
+			// 結果をSEED値でソート
 			sort.Slice(res, func(i, j int) bool {
 				return res[i].Task.SEED < res[j].Task.SEED
 			})
 
+			// 書き出す
 			fp, err := os.OpenFile(dst, os.O_APPEND|os.O_CREATE, 0644)
 			defer fp.Close()
 			if err != nil {

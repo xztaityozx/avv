@@ -24,10 +24,14 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os"
-	"time"
 )
 
 // runCmd represents the run command
@@ -61,21 +65,54 @@ var runCmd = &cobra.Command{
 		if err != nil {
 			log.WithError(err).Fatal("Failed DB Backup")
 		}
+
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
+		sigCh := make(chan os.Signal)
+		defer close(sigCh)
+		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGSTOP, syscall.SIGSTOP)
+		go func() {
+			<-sigCh
+			cancel()
+		}()
+
+		ch := make(chan struct{})
+		defer close(ch)
+
+		go func() {
+			rt.Run(ctx)
+			ch <- struct{}{}
+		}()
+
+		select {
+		case <-ctx.Done():
+		case <-ch:
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.Flags().IntP("count", "n", 1, "number of task")
-	runCmd.Flags().Bool("all",false,"")
+	runCmd.Flags().Bool("all", false, "")
 	runCmd.Flags().String("taskdir", "", "タスクファイルが保存されてるディレクトリへのパスです.省略すると設定ファイルにかかれている値と同じになります")
 	viper.BindPFlag("TaskDir", runCmd.Flags().Lookup("taskdir"))
 }
 
 func (rt RunTask) Run(ctx context.Context) {
 	var tasks []ITask
-	for _, v := range rt {
-		tasks = append(tasks, SimulationTask{Task: v})
+	{
+		m := make(map[int64]bool)
+		for _, v := range rt {
+			tasks = append(tasks, SimulationTask{Task: v})
+			m[v.TaskId] = true
+		}
+
+		logrus.Info("いくつかのTaskIdを発見しました。結果へアクセスする際に使うので控えておいてね")
+		for i, _ := range m {
+			fmt.Println(i)
+		}
 	}
 
 	begin := time.Now()

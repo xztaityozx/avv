@@ -24,12 +24,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/spf13/viper"
 
 	"github.com/spf13/cobra"
 )
@@ -37,13 +38,22 @@ import (
 // makeCmd represents the make command
 var makeCmd = &cobra.Command{
 	Use:   "make",
-	Short: "",
-	Long:  ``,
+	Short: "タスクを作ります",
+	Long: `パラメータを指定してタスクファイルを生成します
+SEEDごとに1つのファイルが生成されます
+生成先は設定ファイルの "TaskDir" です
+
+指定しなかった値は設定ファイルの値が使われます
+
+
+`,
 	Run: func(cmd *cobra.Command, args []string) {
+		// seed 開始値
 		start, err := cmd.Flags().GetInt("start")
 		if err != nil {
 			log.Fatal(err)
 		}
+		// seed 終了値
 		end, err := cmd.Flags().GetInt("end")
 		if err != nil {
 			log.Fatal(err)
@@ -57,9 +67,11 @@ var makeCmd = &cobra.Command{
 			TaskDir: config.TaskDir,
 		}
 
+		// cancel付きcontext
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
+		// SIGNALをトラップする
 		sigCh := make(chan os.Signal)
 		defer close(sigCh)
 		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGSTOP, syscall.SIGQUIT)
@@ -69,9 +81,11 @@ var makeCmd = &cobra.Command{
 			cancel()
 		}()
 
+		// 終了通知チャンネル
 		ch := make(chan struct{})
 		defer close(ch)
 
+		// DBにアクセスするのでちょっと重い
 		go func() {
 			clo := func() { ch <- struct{}{} }
 			defer clo()
@@ -80,11 +94,11 @@ var makeCmd = &cobra.Command{
 			}
 		}()
 
+		// 待機
 		select {
 		case <-ctx.Done():
 		case <-ch:
 		}
-
 
 	},
 }
@@ -92,9 +106,9 @@ var makeCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(makeCmd)
 
-	makeCmd.Flags().Float64P("PlotStart","a", 2.5, "プロットの始点[ns]")
-	makeCmd.Flags().Float64P("PlotStep", "b",7.5, "プロットの刻み幅[ns]")
-	makeCmd.Flags().Float64P("PlotStop", "c",17.5, "プロットの終点[ns]")
+	makeCmd.Flags().Float64P("PlotStart", "a", 2.5, "プロットの始点[ns]")
+	makeCmd.Flags().Float64P("PlotStep", "b", 7.5, "プロットの刻み幅[ns]")
+	makeCmd.Flags().Float64P("PlotStop", "c", 17.5, "プロットの終点[ns]")
 
 	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
 	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
@@ -132,11 +146,12 @@ func init() {
 	viper.BindPFlag("Default.SimulationDirectories.BaseDir", makeCmd.Flags().Lookup("basedir"))
 	viper.BindPFlag("LogDir", makeCmd.Flags().Lookup("logdir"))
 
-	makeCmd.Flags().StringP("DB","d", "", "path to Output DataBase")
-	viper.BindPFlag("Default.Repository.Path",makeCmd.Flags().Lookup("DB"))
+	makeCmd.Flags().StringP("DB", "d", "", "path to Output DataBase")
+	viper.BindPFlag("Default.Repository.Path", makeCmd.Flags().Lookup("DB"))
 
 }
 
+// MakeRequest
 type MakeRequest struct {
 	Task    Task
 	SEED    SEED

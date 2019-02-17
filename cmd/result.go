@@ -24,24 +24,27 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/briandowns/spinner"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/briandowns/spinner"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // resultCmd represents the result command
 var resultCmd = &cobra.Command{
-	Use:   "result",
-	Aliases:[]string{"db","rst"},
-	Short: "",
-	Long: ``,
+	Use:     "result",
+	Aliases: []string{"db", "rst"},
+	Short:   "DBから結果を取り出します",
+	Long: `
+DBにアクセスして不良数の結果を取り出します
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var rr ResultRecord
 		rr.TaskId, _ = cmd.Flags().GetInt64("TaskId")
@@ -50,42 +53,42 @@ var resultCmd = &cobra.Command{
 }
 
 var dbTransistorCmd = &cobra.Command{
-	Use:"tran",
-	Aliases:[]string{"tr"},
-	Short:"トランジスタIDを検索します",
+	Use:     "tran",
+	Aliases: []string{"tr"},
+	Short:   "トランジスタIDを検索します",
 	Run: func(cmd *cobra.Command, args []string) {
 		var t Transistor
 		t.Deviation, _ = cmd.Flags().GetFloat64("Deviation")
-		t.Sigma,_=cmd.Flags().GetFloat64("Sigma")
-		t.Threshold,_=cmd.Flags().GetFloat64("Threshold")
+		t.Sigma, _ = cmd.Flags().GetFloat64("Sigma")
+		t.Threshold, _ = cmd.Flags().GetFloat64("Threshold")
 
 		DBSearch(t)
 	},
 }
 
 var dbParameterCmd = &cobra.Command{
-	Use:"param",
-	Aliases:[]string{"pa"},
-	Short:"パラメータIDを検索します",
+	Use:     "param",
+	Aliases: []string{"pa"},
+	Short:   "パラメータIDを検索します",
 	Run: func(cmd *cobra.Command, args []string) {
 		p := Parameter{}
 		p.Times, _ = cmd.Flags().GetInt64("Times")
-		p.VtnId,_=cmd.Flags().GetInt64("VtnId")
-		p.VtpId,_=cmd.Flags().GetInt64("VtpId")
+		p.VtnId, _ = cmd.Flags().GetInt64("VtnId")
+		p.VtpId, _ = cmd.Flags().GetInt64("VtpId")
 
 		DBSearch(p)
 	},
 }
 
 var dbTaskGroupCmd = &cobra.Command{
-	Use:"task",
-	Aliases:[]string{"t"},
-	Short:"タスクIDを検索します",
+	Use:     "task",
+	Aliases: []string{"t"},
+	Short:   "タスクIDを検索します",
 	Run: func(cmd *cobra.Command, args []string) {
 		t := TaskGroup{}
-		t.ParamsId,_=cmd.Flags().GetInt64("ParamsId")
-		t.SeedEnd,_=cmd.Flags().GetInt64("SeedEnd")
-		t.SeedStart,_=cmd.Flags().GetInt64("SeedStart")
+		t.ParamsId, _ = cmd.Flags().GetInt64("ParamsId")
+		t.SeedEnd, _ = cmd.Flags().GetInt64("SeedEnd")
+		t.SeedStart, _ = cmd.Flags().GetInt64("SeedStart")
 
 		DBSearch(t)
 	},
@@ -103,25 +106,25 @@ func init() {
 	// Transistor Query
 	dbTransistorCmd.Flags().Float64("Threshold", -1, "検索したいトランジスタのしきい値です")
 	dbTransistorCmd.Flags().Float64("Deviation", -1, "検索したいトランジスタの偏差です")
-	dbTransistorCmd.Flags().Float64("Sigma",-1,"検索したいトランジスタのシグマです")
+	dbTransistorCmd.Flags().Float64("Sigma", -1, "検索したいトランジスタのシグマです")
 
 	// Parameter
 	dbParameterCmd.Flags().Int64("VtnID", 0, "検索したいパラメータIDのVtnのIDです")
 	dbParameterCmd.Flags().Int64("VtpID", 0, "検索したいパラメータIDのVtpのIDです")
-	dbParameterCmd.Flags().Int64("Times",0,"検索したいパラメータIDのMCSの回数です")
+	dbParameterCmd.Flags().Int64("Times", 0, "検索したいパラメータIDのMCSの回数です")
 
 	// TaskGroup
-	dbTaskGroupCmd.Flags().Int64("ParamsId",0,"検索したいタスクIDのパラメータのIDです")
-	dbTaskGroupCmd.Flags().Int64("SeedStart",0,"検索したいタスクIDのシードの初期値です")
-	dbTaskGroupCmd.Flags().Int64("SeedEnd",0,"検索したいタスクIDのシードの終了値です")
+	dbTaskGroupCmd.Flags().Int64("ParamsId", 0, "検索したいタスクIDのパラメータのIDです")
+	dbTaskGroupCmd.Flags().Int64("SeedStart", 0, "検索したいタスクIDのシードの初期値です")
+	dbTaskGroupCmd.Flags().Int64("SeedEnd", 0, "検索したいタスクIDのシードの終了値です")
 
 	// Result Record
 	resultCmd.Flags().Int64("TaskId", 0, "検索したい結果のタスクIDです")
 
-	resultCmd.PersistentFlags().String("db","","アクセスするDBへのパスです。指定しないならコンフィグのものが使われます")
-	viper.BindPFlag("Default.Repository.Path",resultCmd.PersistentFlags().Lookup("db"))
-	resultCmd.PersistentFlags().BoolVar(&DBtoJson, "json", false,"結果をJSON形式で出力します")
-	resultCmd.PersistentFlags().StringVarP(&DBtoOutFile,"out","o","","出力先のファイルです。指定しない場合STDOUTに出力されます")
+	resultCmd.PersistentFlags().String("db", "", "アクセスするDBへのパスです。指定しないならコンフィグのものが使われます")
+	viper.BindPFlag("Default.Repository.Path", resultCmd.PersistentFlags().Lookup("db"))
+	resultCmd.PersistentFlags().BoolVar(&DBtoJson, "json", false, "結果をJSON形式で出力します")
+	resultCmd.PersistentFlags().StringVarP(&DBtoOutFile, "out", "o", "", "出力先のファイルです。指定しない場合STDOUTに出力されます")
 }
 
 type (
@@ -134,7 +137,7 @@ func (t Transistor) DBQuery() (string, []interface{}) {
 	var param []interface{}
 	base := "select * from Transistor"
 	var when []string
-	if t.Threshold!= -1 {
+	if t.Threshold != -1 {
 		when = append(when, "Threshold = ?")
 		param = append(param, t.Threshold)
 	}
@@ -153,8 +156,8 @@ func (t Transistor) DBQuery() (string, []interface{}) {
 	return base, param
 }
 
-func  DBSearch(t IDBQuery){
-	db,err := config.Default.Repository.Connect()
+func DBSearch(t IDBQuery) {
+	db, err := config.Default.Repository.Connect()
 	defer db.Db.Close()
 	if err != nil {
 		log.Fatal(err)
@@ -173,29 +176,29 @@ func  DBSearch(t IDBQuery){
 	fns := make(chan struct{})
 	defer close(fns)
 
-	spin := spinner.New(spinner.CharSets[14],time.Millisecond*500)
-	spin.Suffix = "Accessing to "+config.Default.Repository.Path
+	spin := spinner.New(spinner.CharSets[14], time.Millisecond*500)
+	spin.Suffix = "Accessing to " + config.Default.Repository.Path
 	spin.FinalMSG = ""
-	spin.Writer=os.Stderr
+	spin.Writer = os.Stderr
 	spin.Start()
 
 	var box []interface{}
 	go func() {
-		q,p := t.DBQuery()
-		_, err = db.WithContext(ctx).Select(&box,q,p...)
+		q, p := t.DBQuery()
+		_, err = db.WithContext(ctx).Select(&box, q, p...)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fns<- struct{}{}
+		fns <- struct{}{}
 	}()
 
-	select{
+	select {
 	case <-ctx.Done():
 	case <-fns:
 	}
 
 	spin.Stop()
-	l:=logrus.New()
+	l := logrus.New()
 	l.SetOutput(os.Stderr)
 	l.Info("Finished Access to DB")
 
@@ -207,7 +210,7 @@ func PrintTo(box []interface{}) {
 	var b []byte
 	var err error
 	if DBtoJson {
-		b, err = json.MarshalIndent(box,"","  ")
+		b, err = json.MarshalIndent(box, "", "  ")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -215,9 +218,9 @@ func PrintTo(box []interface{}) {
 	} else {
 		var x []string
 		for _, v := range box {
-			x=append(x,fmt.Sprint(v))
+			x = append(x, fmt.Sprint(v))
 		}
-		text = strings.Join(x,"\n")
+		text = strings.Join(x, "\n")
 	}
 	if len(DBtoOutFile) == 0 {
 		fmt.Println(text)
@@ -241,11 +244,11 @@ func (p Parameter) DBQuery() (string, []interface{}) {
 	}
 	if p.Times != 0 {
 		when = append(when, "Times = ?")
-		param=append(param, p.Times)
+		param = append(param, p.Times)
 	}
 
 	if len(base) != 0 {
-		return base + " when "+strings.Join(when," and "), param
+		return base + " when " + strings.Join(when, " and "), param
 	}
 
 	return base, param
@@ -272,21 +275,20 @@ func (t TaskGroup) DBQuery() (string, []interface{}) {
 	var when []string
 	base := "select * from Group"
 	if t.ParamsId != 0 {
-		when=append(when, "ParamsId = ?")
-		param=append(param, t.ParamsId)
+		when = append(when, "ParamsId = ?")
+		param = append(param, t.ParamsId)
 	}
 	if t.SeedStart != 0 {
-		when=append(when, "SeedStart = ?")
-		param=append(param, t.SeedStart)
+		when = append(when, "SeedStart = ?")
+		param = append(param, t.SeedStart)
 	}
 	if t.SeedEnd != 0 {
-		when=append(when, "SeedEnd = ?")
-		param=append(param, t.SeedEnd)
+		when = append(when, "SeedEnd = ?")
+		param = append(param, t.SeedEnd)
 	}
 
 	if len(when) != 0 {
-		base += " when "+strings.Join(when," and ")
+		base += " when " + strings.Join(when, " and ")
 	}
 	return base, param
 }
-
