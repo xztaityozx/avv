@@ -24,12 +24,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/spf13/viper"
 
 	"github.com/spf13/cobra"
 )
@@ -85,16 +86,15 @@ var makeCmd = &cobra.Command{
 		case <-ch:
 		}
 
-
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(makeCmd)
 
-	makeCmd.Flags().Float64P("PlotStart","a", 2.5, "プロットの始点[ns]")
-	makeCmd.Flags().Float64P("PlotStep", "b",7.5, "プロットの刻み幅[ns]")
-	makeCmd.Flags().Float64P("PlotStop", "c",17.5, "プロットの終点[ns]")
+	makeCmd.Flags().Float64P("PlotStart", "a", 2.5, "プロットの始点[ns]")
+	makeCmd.Flags().Float64P("PlotStep", "b", 7.5, "プロットの刻み幅[ns]")
+	makeCmd.Flags().Float64P("PlotStop", "c", 17.5, "プロットの終点[ns]")
 
 	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
 	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
@@ -132,8 +132,8 @@ func init() {
 	viper.BindPFlag("Default.SimulationDirectories.BaseDir", makeCmd.Flags().Lookup("basedir"))
 	viper.BindPFlag("LogDir", makeCmd.Flags().Lookup("logdir"))
 
-	makeCmd.Flags().StringP("DB","d", "", "path to Output DataBase")
-	viper.BindPFlag("Default.Repository.Path",makeCmd.Flags().Lookup("DB"))
+	makeCmd.Flags().StringP("DB", "d", "", "path to Output DataBase")
+	viper.BindPFlag("Default.Repository.Path", makeCmd.Flags().Lookup("DB"))
 
 }
 
