@@ -45,7 +45,6 @@ func TestReadTaskFile(t *testing.T) {
 }
 
 func TestRunTask_GetTasks(t *testing.T) {
-	var rt RunTask
 	home, _ := homedir.Dir()
 	config.TaskDir = PathJoin(home, "TestDir", "Task")
 	FU.TryMkDir(config.TaskDir)
@@ -59,14 +58,11 @@ func TestRunTask_GetTasks(t *testing.T) {
 	}
 	as := assert.New(t)
 
-	err := rt.GetTasks(10)
-	if err != nil {
-		as.FailNow("failed GetTasks: ", err)
-	}
+	task := GetTasksFromTaskDir(10)
 
-	as.Equal(10, len(rt.Tasks))
+	as.Equal(10, len(task))
 
-	for _, v := range rt.Tasks {
+	for _, v := range task {
 		as.Equal(config.Default, v)
 	}
 }
@@ -83,13 +79,9 @@ func TestRunTask_GetTaskFromFiles(t *testing.T) {
 	ioutil.WriteFile(path, b, 0644)
 
 	as := assert.New(t)
-	var rt RunTask
-	err := rt.GetTaskFromFiles(path, path, path)
-	if err != nil {
-		as.FailNow("RunTask.GetTaskFromFiles", err)
-	}
+	rt := GetTasksFromFiles(path, path, path)
 
-	for _, v := range rt.Tasks {
+	for _, v := range rt {
 		as.Equal(config.Default, v)
 	}
 }
