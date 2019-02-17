@@ -103,7 +103,7 @@ func init() {
 func (rt RunTask) Run(ctx context.Context) {
 	var tasks []ITask
 	{
-		m := make(map[int]bool)
+		m := make(map[int64]bool)
 		for _, v := range rt {
 			tasks = append(tasks, SimulationTask{Task: v})
 			m[v.TaskId] = true
