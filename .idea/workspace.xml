@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cmd/runtask_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/runtask_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/runtask.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/runtask.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,11 +38,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
+            <state relative-caret-position="440">
+              <caret line="60" column="26" lean-forward="true" selection-start-line="60" selection-start-column="26" selection-end-line="60" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmd/runtask.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="616">
+              <caret line="75" column="34" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -136,11 +145,11 @@
         <option value="$PROJECT_DIR$/cmd/version.go" />
         <option value="$PROJECT_DIR$/cmd/dbaccesstask.go" />
         <option value="$PROJECT_DIR$/cmd/repository.go" />
-        <option value="$PROJECT_DIR$/cmd/runtask.go" />
         <option value="$PROJECT_DIR$/cmd/make.go" />
         <option value="$PROJECT_DIR$/cmd/config.go" />
         <option value="$PROJECT_DIR$/cmd/run.go" />
         <option value="$PROJECT_DIR$/cmd/runtask_test.go" />
+        <option value="$PROJECT_DIR$/cmd/runtask.go" />
       </list>
     </option>
   </component>
@@ -218,18 +227,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestShapingCSV in github.com/xztaityozx/avv/cmd">
-    <configuration name="TestFilter_ToAwkStatement in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/cmd" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/cmd" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestFilter_ToAwkStatement$" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Go Test.TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd">
     <configuration name="TestGetPasteCommand in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
@@ -263,6 +261,17 @@
       <pattern value="^TestPlotPoint_GetPasteCommand$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="avv" />
+      <working_directory value="$PROJECT_DIR$/cmd" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/xztaityozx/avv/cmd" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestRunTask_GetTasks$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
@@ -275,26 +284,23 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Test.TestFilter_ToAwkStatement in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestPlotPoint_GetPasteCommand in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestGetPasteCommand in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestShapingCSV in github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestShapingCSV in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestGetPasteCommand in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestPlotPoint_GetPasteCommand in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestPlotPoint_GetAwkScript in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestFilter_ToAwkStatement in github.com/xztaityozx/avv/cmd" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 39m 31s.xml">
-      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 39m 52s.xml">
       <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -321,6 +327,9 @@
     </history-entry>
     <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 15h 04m 06s.xml">
       <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestRunTask_GetTasks_in_github_com_xztaityozx_avv_cmd - 2019.02.17 at 07h 06m 52s.xml">
+      <configuration name="TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -670,13 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/runtask.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="679">
-          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/root.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -724,8 +726,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
+        <state relative-caret-position="440">
+          <caret line="60" column="26" lean-forward="true" selection-start-line="60" selection-start-column="26" selection-end-line="60" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/runtask.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="75" column="34" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
         </state>
       </provider>
     </entry>

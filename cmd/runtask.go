@@ -73,7 +73,7 @@ func GetTasksFromTaskDir(cnt int) RunTask {
 	var path []string
 	for _, v := range files {
 		path=append(path, PathJoin(ReserveDir(),v.Name()))
-		if cnt > 0 && len(path) < cnt {
+		if cnt > 0 && len(path) >=cnt {
 			break
 		}
 	}
