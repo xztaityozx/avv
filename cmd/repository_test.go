@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
@@ -41,4 +42,21 @@ func TestRepository_Connect(t *testing.T) {
 	as.NoError(err)
 	as.NotNil(db)
 	//os.Remove(p)
+}
+
+func TestRepository_DBBackUp(t *testing.T) {
+	as := assert.New(t)
+	home, _ := homedir.Dir()
+	p := PathJoin(home,"TestDir")
+	FU.TryMkDir(p)
+	p=PathJoin(p,"db","database")
+	fp,err := os.Create(p)
+	fp.Close()
+	as.NoError(err)
+
+	r := Repository{Path:p}
+
+	err = r.DBBackUp()
+	as.NoError(err)
+
 }
