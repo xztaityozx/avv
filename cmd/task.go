@@ -213,6 +213,7 @@ func (t *Task) MakeSPIScript() {
 	FU.WriteFile(path, data)
 	// set script path to Task struct
 	t.SimulationFiles.SPIScript = path
+	log.WithField("at","MakeSPIScript").Info("Write SPI script to ", path)
 }
 
 // Generate simulation command

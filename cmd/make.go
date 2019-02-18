@@ -48,22 +48,12 @@ SEEDごとに1つのファイルが生成されます
 
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		// seed 開始値
-		start, err := cmd.Flags().GetInt("start")
-		if err != nil {
-			log.Fatal(err)
-		}
-		// seed 終了値
-		end, err := cmd.Flags().GetInt("end")
-		if err != nil {
-			log.Fatal(err)
-		}
 
 		mr := MakeRequest{
 			Task: NewTask(),
 			SEED: SEED{
-				Start: start,
-				End:   end},
+				Start: config.DefaultSEEDRange.Start,
+				End:   config.DefaultSEEDRange.End},
 			TaskDir: config.TaskDir,
 		}
 

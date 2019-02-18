@@ -83,7 +83,7 @@ func (p PlotPoint) PlotSteps() int {
 func (p PlotPoint) MkACEScript(dst string) (string, error) {
 	rt := fmt.Sprintf(`set xml [ sx_open_wdf "resultsMap.xml" ]
 sx_export_csv on
-sx_export_range %.2fns %.2fns %.2fns`, p.Start, p.Step, p.Stop)
+sx_export_range %.2fns %.2fns %.2fns`, p.Start, p.Stop, p.Step)
 
 	for _, v := range p.Filters {
 		rt = fmt.Sprintf(`%s
