@@ -37,6 +37,8 @@ type (
 )
 
 func (p PipeLine) Start(ctx context.Context, input []ITask, pipe ...Pipe) (success []Task, failed []Task, err error) {
+	success = []Task{}
+	failed = []Task{}
 
 	ch := make(chan error)
 	defer close(ch)

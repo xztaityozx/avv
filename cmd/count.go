@@ -365,6 +365,8 @@ func ShapingCSV(p, signalName string, n int) (string, error) {
 		return "", err
 	}
 
+	tmpavv := PathJoin("/tmp/avv")
+	FU.TryMkDir(tmpavv)
 	tmp, err := ioutil.TempFile("/tmp/avv", signalName+".*.csv")
 	if err != nil {
 		return "", err

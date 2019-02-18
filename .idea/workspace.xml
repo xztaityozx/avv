@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/iohook.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/make.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/make.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/count.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/count.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/dispatcher.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/dispatcher.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +31,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmd/count.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="368" column="23" selection-start-line="368" selection-start-column="23" selection-end-line="368" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="748">
+              <caret line="61" column="64" selection-start-line="61" selection-start-column="64" selection-end-line="61" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask.go">
           <provider selected="true" editor-type-id="text-editor">
@@ -53,8 +70,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/task.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="143" column="16" selection-start-line="143" selection-start-column="16" selection-end-line="143" selection-end-column="16" />
+            <state relative-caret-position="402">
+              <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -77,11 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/root.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="96" column="6" lean-forward="true" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="6" />
+            <state relative-caret-position="644">
+              <caret line="109" column="33" selection-start-line="109" selection-start-column="33" selection-end-line="109" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -103,24 +120,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="261">
               <caret line="80" column="27" selection-start-line="80" selection-start-column="27" selection-end-line="80" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/FileUtils.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/run.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2922">
-              <caret line="164" column="39" selection-start-line="164" selection-start-column="39" selection-end-line="164" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -156,7 +155,6 @@
         <option value="$PROJECT_DIR$/cmd/extract_test.go" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/.travis.yml" />
-        <option value="$PROJECT_DIR$/cmd/dispatcher.go" />
         <option value="$PROJECT_DIR$/cmd/parameter_test.go" />
         <option value="$PROJECT_DIR$/cmd/transistor_test.go" />
         <option value="$USER_HOME$/.ideavimrc" />
@@ -171,7 +169,6 @@
         <option value="$PROJECT_DIR$/cmd/dbaccesstask_test.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint_test.go" />
         <option value="$PROJECT_DIR$/cmd/count_test.go" />
-        <option value="$PROJECT_DIR$/cmd/count.go" />
         <option value="$PROJECT_DIR$/cmd/result.go" />
         <option value="$PROJECT_DIR$/cmd/dbaccesstask.go" />
         <option value="$PROJECT_DIR$/cmd/runtask_test.go" />
@@ -187,11 +184,13 @@
         <option value="$PROJECT_DIR$/cmd/repository_test.go" />
         <option value="$PROJECT_DIR$/cmd/FileUtils.go" />
         <option value="$PROJECT_DIR$/cmd/repository.go" />
-        <option value="$PROJECT_DIR$/cmd/task.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint.go" />
         <option value="$PROJECT_DIR$/cmd/make.go" />
         <option value="$PROJECT_DIR$/cmd/iohook.go" />
         <option value="$PROJECT_DIR$/cmd/root.go" />
+        <option value="$PROJECT_DIR$/cmd/task.go" />
+        <option value="$PROJECT_DIR$/cmd/dispatcher.go" />
+        <option value="$PROJECT_DIR$/cmd/count.go" />
       </list>
     </option>
   </component>
@@ -425,7 +424,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add: FileUtils" />
     <MESSAGE value="Remove: TestUtils" />
     <MESSAGE value="設計難しい" />
     <MESSAGE value="Bug: コンフィグファイルがUnmarshalできない" />
@@ -450,7 +448,8 @@
     <MESSAGE value="Travis ci" />
     <MESSAGE value="TravisCI: ちょっとテスト" />
     <MESSAGE value="Bakuretu!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bakuretu!" />
+    <MESSAGE value="[ci skip] #18" />
+    <option name="LAST_COMMIT_MESSAGE" value="[ci skip] #18" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/cmd/resultsxml_test.go">
@@ -604,13 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="32" column="21" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/dispatcher_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
@@ -667,13 +659,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/count.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1162">
-          <caret line="335" column="8" selection-start-line="335" selection-start-column="8" selection-end-line="335" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -747,13 +732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/task.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="143" column="16" selection-start-line="143" selection-start-column="16" selection-end-line="143" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/simulationfile.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -787,8 +765,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/root.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="96" column="6" lean-forward="true" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="6" />
+        <state relative-caret-position="644">
+          <caret line="109" column="33" selection-start-line="109" selection-start-column="33" selection-end-line="109" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/task.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/dispatcher.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="61" column="64" selection-start-line="61" selection-start-column="64" selection-end-line="61" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/count.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="368" column="23" selection-start-line="368" selection-start-column="23" selection-end-line="368" selection-end-column="23" />
         </state>
       </provider>
     </entry>
