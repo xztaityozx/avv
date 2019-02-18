@@ -55,7 +55,7 @@ const (
 	WaveView Stage = "WaveView"
 	CountUp  Stage = "CountUp"
 	DBAccess Stage = "DBAccess"
-	Remove Stage = "Remove"
+	Remove   Stage = "Remove"
 )
 
 // GetWrapper Task.StageをもとにITaskなstructを返します
@@ -79,7 +79,7 @@ func (t Task) GetWrapper() ITask {
 		}
 	} else if t.Stage == Remove {
 		return RemoveTask{
-			Task:t,
+			Task: t,
 		}
 	}
 	return SimulationTask{}
@@ -93,6 +93,10 @@ func (t Task) Run(ctx context.Context) TaskResult {
 // String
 func (t Task) String() string {
 	return fmt.Sprint("Task: ", t.Times, "-", t.Vtn.StringPrefix("Vtn"), "-", t.Vtp.StringPrefix("Vtp"))
+}
+
+func (t Task) Self() Task {
+	return t
 }
 
 // NewTask StageがHSPICEなTask structをconfigをもとに作ります
@@ -213,7 +217,7 @@ func (t *Task) MakeSPIScript() {
 	FU.WriteFile(path, data)
 	// set script path to Task struct
 	t.SimulationFiles.SPIScript = path
-	log.WithField("at","MakeSPIScript").Info("Write SPI script to ", path)
+	log.WithField("at", "MakeSPIScript").Info("Write SPI script to ", path)
 }
 
 // Generate simulation command
