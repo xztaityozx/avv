@@ -3,33 +3,10 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"os"
 	"os/exec"
 	"strings"
 )
-
-var extractCmd = &cobra.Command{
-	Use:     "extract",
-	Aliases: []string{"ext"},
-	Short:   ``,
-	Long:    ``,
-	Run: func(cmd *cobra.Command, args []string) {
-	},
-}
-
-func init() {
-	rootCmd.AddCommand(extractCmd)
-
-	extractCmd.Flags().Float64("start", 0, "プロットの開始時間")
-	extractCmd.Flags().Float64("step", 0, "プロットの刻み幅")
-	extractCmd.Flags().Float64("stop", 0, "プロットの終了時間")
-
-	viper.BindPFlag("Default.PlotPoint.Start", extractCmd.Flags().Lookup("start"))
-	viper.BindPFlag("Default.PlotPoint.Step", extractCmd.Flags().Lookup("step"))
-	viper.BindPFlag("Default.PlotPoint.Stop", extractCmd.Flags().Lookup("stop"))
-}
 
 type ExtractTask struct {
 	Task Task

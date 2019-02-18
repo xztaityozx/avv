@@ -23,42 +23,8 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/spf13/cobra"
 	"os/exec"
 )
-
-// simulateCmd represents the simulate command
-var simulateCmd = &cobra.Command{
-	Use:   "simulate",
-	Short: "",
-	Long:  ``,
-	Run: func(cmd *cobra.Command, args []string) {
-		//if len(args[0]) == 0 {
-		//	log.WithField("command", "simulate").Fatal("Invalid file path")
-		//}
-		//
-		//task, err := ReadTaskFile(args[0])
-		//if err != nil {
-		//	log.WithField("command", "simulate").Fatal(err)
-		//}
-		//
-		//log.WithField("command", "simulate").Info("Start Simulation at ", time.Now().Format(time.RFC3339))
-		//s := spinner.New(spinner.CharSets[36], time.Millisecond*500)
-		//s.FinalMSG = "Finished!!"
-		//s.Suffix = "Running..."
-		//s.Start()
-		//err = SimulationTask{Task:task}.Run()
-		//if err != nil {
-		//	log.WithField("command", "simulate").Fatal(err)
-		//}
-		//s.Stop()
-
-	},
-}
-
-func init() {
-	rootCmd.AddCommand(simulateCmd)
-}
 
 type SimulationTask struct {
 	Task Task

@@ -37,18 +37,18 @@ var versionCmd = &cobra.Command{
 }
 
 type AVVVersion struct {
-	Major int
-	Minor int
-	Build int
-	Date string
+	Major  int
+	Minor  int
+	Build  int
+	Date   string
 	Status string
 }
 
 var Version = AVVVersion{
-	Major: 0,
-	Minor: 1,
-	Build: 21,
-	Date: "2019/02/17",
+	Major:  0,
+	Minor:  1,
+	Build:  22,
+	Date:   "2019/02/17",
 	Status: "Development",
 }
 

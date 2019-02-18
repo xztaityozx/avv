@@ -54,7 +54,7 @@ var runCmd = &cobra.Command{
 
 		fmt.Println("全てのDBのバックアップを取りますか？")
 		fmt.Println("[y]:はい [n]:いいえ")
-		fmt.Println(">>> ")
+		fmt.Print(">>> ")
 
 		s := bufio.NewScanner(os.Stdin)
 		s.Scan()
@@ -101,6 +101,13 @@ func init() {
 }
 
 func (rt RunTask) Run(ctx context.Context) {
+
+	l := logrus.WithField("at","avv run")
+	l.Info(Version)
+	l.Info("Start run command")
+	l.Info("Number of Task=",len(rt))
+
+
 	var tasks []ITask
 	{
 		m := make(map[int64]bool)
@@ -110,7 +117,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		}
 
 		logrus.Info("いくつかのTaskIdを発見しました。結果へアクセスする際に使うので控えておいてね")
-		for i, _ := range m {
+		for i := range m {
 			fmt.Println(i)
 		}
 	}
@@ -123,6 +130,7 @@ func (rt RunTask) Run(ctx context.Context) {
 			Name:       string(HSPICE),
 			Parallel:   config.ParallelConfig.HSPICE,
 			RetryLimit: config.RetryConfig.HSPICE,
+			AutoRetry:true,
 			Converter: func(task Task) ITask {
 				task.Stage = WaveView
 				return ExtractTask{Task: task}
@@ -133,6 +141,7 @@ func (rt RunTask) Run(ctx context.Context) {
 			Name:       "Extract",
 			Parallel:   config.ParallelConfig.WaveView,
 			RetryLimit: config.RetryConfig.WaveView,
+			AutoRetry:true,
 			Converter: func(task Task) ITask {
 				task.Stage = CountUp
 				return CountTask{Task: task}
@@ -143,6 +152,7 @@ func (rt RunTask) Run(ctx context.Context) {
 			Name:       "CountUp",
 			Parallel:   config.ParallelConfig.CountUp,
 			RetryLimit: config.RetryConfig.CountUp,
+			AutoRetry:true,
 			Converter: func(task Task) ITask {
 				task.Stage = DBAccess
 				return DBAccessTask{Task: task}
@@ -152,9 +162,22 @@ func (rt RunTask) Run(ctx context.Context) {
 		Pipe{
 			Name:       "DB Access",
 			Parallel:   config.ParallelConfig.DB,
-			RetryLimit: config.ParallelConfig.DB,
+			RetryLimit: config.RetryConfig.DB,
+			AutoRetry:true,
 			Converter: func(task Task) ITask {
-				task.Stage = "Finish"
+				task.Stage = "Remove"
+				return RemoveTask{
+					Task:task,
+				}
+			},
+		},
+		// Remove Pipe
+		Pipe{
+			Name:"Remove",
+			Parallel:config.ParallelConfig.Remove,
+			RetryLimit:0,
+			AutoRetry:false,
+			Converter: func(task Task) ITask {
 				return nil
 			},
 		})
@@ -164,6 +187,8 @@ func (rt RunTask) Run(ctx context.Context) {
 		length = len(f)
 	}
 
+
+	// Print run summary
 	fmt.Println("Success\tFailed")
 
 	for i := 0; i < length; i++ {
@@ -178,7 +203,7 @@ func (rt RunTask) Run(ctx context.Context) {
 	}
 
 	if err != nil {
-		log.WithError(err).Error("Failed run command")
+		l.WithError(err).Error("Failed run command")
 	}
 
 	end := time.Now()

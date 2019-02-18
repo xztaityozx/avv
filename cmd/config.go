@@ -27,6 +27,7 @@ type RetryConfig struct {
 	WaveView int
 	CountUp  int
 	DBAccess int
+	DB int
 }
 
 type WaveViewConfig struct {
@@ -38,6 +39,7 @@ type ParallelConfig struct {
 	HSPICE   int
 	WaveView int
 	CountUp  int
+	Remove int
 }
 
 // Compare func for ParallelConfig struct
