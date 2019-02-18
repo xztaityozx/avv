@@ -102,12 +102,14 @@ func (r Repository) DBBackUp() error {
 
 	dst := PathJoin(config.BackUpDir, r.Path+time.Now().Format("2006-01-02-15-04-05"))
 
-	dfp, err := os.Open(dst)
+	dfp, err := os.OpenFile(dst,os.O_CREATE|os.O_WRONLY,0644)
+	defer dfp.Close()
 	if err != nil {
 		return err
 	}
 
 	sfp, err := os.Open(r.Path)
+	defer sfp.Close()
 	if err != nil {
 		return err
 	}
