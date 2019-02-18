@@ -89,7 +89,10 @@ func (RemoveTask) String() string {
 
 var removeCmd = &cobra.Command{
 	Use:   "remove",
-	Short: "Remove TaskFile",
+	Short: "タスクファイルを削除します",
+	Long:`TaskDir 以下のファイルを削除します
+何も指定しない場合、TaskDir/done, TaskDir/dust以下のファイルを削除します
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		remove := func(b, yes bool, p string) error {
 			if !b {
