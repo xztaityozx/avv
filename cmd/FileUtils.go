@@ -24,7 +24,7 @@ var FU = FileUtils{
 func (fu FileUtils) Cat(p string) string {
 	b, err := ioutil.ReadFile(p)
 	if err != nil {
-		fu.logger.Error("can not open", p)
+		fu.logger.WithField("at","Cat").Error("can not open", p)
 		fu.logger.Fatal(err)
 	}
 
@@ -35,7 +35,7 @@ func (fu FileUtils) Cat(p string) string {
 // Wrapper for ioutil.WriteFile
 func (fu FileUtils) WriteFile(p string, data string) {
 	if err := ioutil.WriteFile(p, []byte(data), 0644); err != nil {
-		fu.logger.Fatal(err)
+		fu.logger.WithField("at","WriteFile").Fatal(err)
 	}
 }
 
@@ -48,9 +48,9 @@ func (fu FileUtils) TryMkDir(p string) {
 		fu.logger.Warn(err)
 		// mkdir all
 		if err := os.MkdirAll(p, 0755); err != nil {
-			fu.logger.Fatal(err)
+			fu.logger.WithField("at","TryMkDir").Fatal(err)
 		} else {
-			fu.logger.Info(p, " had created")
+			fu.logger.WithField("at","TryMkDir").Info(p, " had created")
 		}
 	}
 }
@@ -63,14 +63,14 @@ func PathJoin(p ...string) string {
 // wrapper for os.ChDir
 func (fu FileUtils) TryChDir(p string) {
 	if _, err := os.Stat(p); err != nil {
-		log.Warn(err)
+		log.WithField("at","TryChDir").Warn(err)
 
 		// mkdir
 		fu.TryMkDir(p)
 	}
 
 	if err := os.Chdir(p); err != nil {
-		fu.logger.Fatal(err)
+		fu.logger.WithField("at","TryChDir").Fatal(err)
 	}
 }
 
@@ -78,18 +78,18 @@ func (fu FileUtils) TryChDir(p string) {
 func (fu FileUtils) Copy(src, dst string) {
 	sfp, err := os.Open(src)
 	if err != nil {
-		fu.logger.Fatal(err)
+		fu.logger.WithField("at","Copy").Fatal(err)
 	}
 	dfp, err := os.Open(dst)
 	if err != nil {
-		fu.logger.Fatal(err)
+		fu.logger.WithField("at","Copy").Fatal(err)
 	}
 
 	if _, err := io.Copy(dfp, sfp); err != nil {
-		fu.logger.Fatal(err)
+		fu.logger.WithField("at","Copy").Fatal(err)
 	}
 
-	fu.logger.Info("Copy: ", src, "copy to", dst)
+	fu.logger.WithField("at","Copy").Info("Copy: ", src, "copy to", dst)
 }
 
 func (fu FileUtils) WriteSlice(dst string, box []string, sep string) {
