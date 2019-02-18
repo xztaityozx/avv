@@ -49,7 +49,7 @@ func TestRepository_DBBackUp(t *testing.T) {
 	home, _ := homedir.Dir()
 	p := PathJoin(home,"TestDir")
 	FU.TryMkDir(p)
-	p=PathJoin(p,"db")
+	p=PathJoin(p,"db","database")
 	fp,err := os.Create(p)
 	fp.Close()
 	as.NoError(err)

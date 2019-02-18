@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/repository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/repository_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -88,8 +86,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cmd/repository_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1162">
-              <caret line="59" column="19" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
+            <state relative-caret-position="832">
+              <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -339,9 +337,6 @@
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 55m 29s.xml">
-      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 05h 56m 19s.xml">
       <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -369,6 +364,9 @@
     <history-entry file="TestSimulationFiles_Remove_in_github_com_xztaityozx_avv_cmd - 2019.02.17 at 13h 04m 07s.xml">
       <configuration name="TestSimulationFiles_Remove in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
+    <history-entry file="TestRepository_DBBackUp_in_github_com_xztaityozx_avv_cmd - 2019.02.18 at 13h 22m 41s.xml">
+      <configuration name="TestRepository_DBBackUp in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="34" width="2560" height="1406" extended-state="6" />
@@ -393,7 +391,7 @@
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Project" order="4" weight="0.16151386" />
-      <window_info anchor="right" auto_hide="true" id="Run" order="5" weight="0.52878463" />
+      <window_info anchor="right" auto_hide="true" id="Run" order="5" weight="0.52866244" />
       <window_info anchor="right" auto_hide="true" id="Terminal" order="6" weight="0.57995737" />
     </layout>
     <layout-to-restore>
@@ -783,8 +781,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/repository_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1162">
-          <caret line="59" column="19" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
+        <state relative-caret-position="832">
+          <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
         </state>
       </provider>
     </entry>
