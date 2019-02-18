@@ -365,7 +365,7 @@ func ShapingCSV(p, signalName string, n int) (string, error) {
 		return "", err
 	}
 
-	tmp, err := ioutil.TempFile("/tmp", signalName+".*.csv")
+	tmp, err := ioutil.TempFile("/tmp/avv", signalName+".*.csv")
 	if err != nil {
 		return "", err
 	}
@@ -397,5 +397,5 @@ func ShapingCSV(p, signalName string, n int) (string, error) {
 		}
 	}
 
-	return PathJoin("/tmp/avv", tmp.Name()), nil
+	return tmp.Name(), nil
 }

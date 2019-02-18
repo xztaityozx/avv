@@ -107,8 +107,8 @@ func initLogger() {
 		TimestampFormat: time.RFC3339,
 	})
 	log.AddHook(&IOHook{
-		LogLevels:[]logrus.Level{logrus.InfoLevel,logrus.WarnLevel,logrus.ErrorLevel,logrus.FatalLevel},
-		Writer:colorable.NewColorableStderr(),
+		LogLevels: []logrus.Level{logrus.WarnLevel, logrus.ErrorLevel, logrus.FatalLevel},
+		Writer:    colorable.NewColorableStderr(),
 	})
 
 	log.AddHook(filehook)
