@@ -353,7 +353,7 @@ func (ct CountTask) CountUp() (failure int64, err error) {
 		return -1, err
 	}
 
-	failure, err = strconv.ParseInt(string(out), 10, 64)
+	failure, err = strconv.ParseInt(strings.Trim(string(out), "\n"), 10, 64)
 	return
 }
 
