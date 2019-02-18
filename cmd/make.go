@@ -173,10 +173,10 @@ func (m MakeRequest) MakeTaskFiles(ctx context.Context) error {
 			// ファイル名[時間]-[Vtn]-[VtnSigma]-[Vtp]-[VtpSigma]-[回数]-[SEED].json
 			path = PathJoin(path, fmt.Sprintf("%s-Vtn%.4f-Sigma%.4f-Vtp%.4f-Sigma%.4f-Times%05d-SEED%05d.json",
 				time.Now().Format("20060102150405"),
-				m.Task.Vtn.Threshold, m.Task.Vtn.Sigma,
-				m.Task.Vtp.Threshold, m.Task.Vtp.Sigma,
-				m.Task.Times,
-				m.Task.SEED))
+				data.Vtn.Threshold, data.Vtn.Sigma,
+				data.Vtp.Threshold, data.Vtp.Sigma,
+				data.Times,
+				data.SEED))
 			err := ioutil.WriteFile(path, b, 0644)
 			if err != nil {
 				return err

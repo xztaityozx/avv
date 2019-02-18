@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/iohook.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/make.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/make.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/plotpoint.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/plotpoint.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/task.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/task.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,24 +32,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/config.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/addfile.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
-              <caret line="51" selection-start-line="51" selection-end-line="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/dbaccesstask.go">
           <provider selected="true" editor-type-id="text-editor">
@@ -86,11 +68,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/make.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="55" column="52" selection-start-line="55" selection-start-column="52" selection-end-line="55" selection-end-column="52" />
+            <state relative-caret-position="546">
+              <caret line="163" column="16" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmd/root.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="358">
+              <caret line="96" column="6" lean-forward="true" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/iohook.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+              <folding>
+                <element signature="e#13#59#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -138,7 +141,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cmd/resultsxml_test.go" />
         <option value="$PROJECT_DIR$/cmd/runsummary.go" />
         <option value="$PROJECT_DIR$/cmd/init.go" />
         <option value="$PROJECT_DIR$/cmd/simulationfile.go" />
@@ -175,7 +177,6 @@
         <option value="$PROJECT_DIR$/cmd/runtask_test.go" />
         <option value="$PROJECT_DIR$/cmd/runtask.go" />
         <option value="$PROJECT_DIR$/cmd/webhook.go" />
-        <option value="$PROJECT_DIR$/cmd/root.go" />
         <option value="$PROJECT_DIR$/cmd/version.go" />
         <option value="$PROJECT_DIR$/cmd/remove_test.go" />
         <option value="$PROJECT_DIR$/cmd/run.go" />
@@ -189,6 +190,8 @@
         <option value="$PROJECT_DIR$/cmd/task.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint.go" />
         <option value="$PROJECT_DIR$/cmd/make.go" />
+        <option value="$PROJECT_DIR$/cmd/iohook.go" />
+        <option value="$PROJECT_DIR$/cmd/root.go" />
       </list>
     </option>
   </component>
@@ -450,13 +453,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Bakuretu!" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cmd/init.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="38" column="5" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/resultsxml_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1232">
@@ -632,13 +628,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/root.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="86" column="22" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/version.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="518">
@@ -781,8 +770,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/make.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="55" column="52" selection-start-line="55" selection-start-column="52" selection-end-line="55" selection-end-column="52" />
+        <state relative-caret-position="546">
+          <caret line="163" column="16" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/iohook.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+          <folding>
+            <element signature="e#13#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/root.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="96" column="6" lean-forward="true" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="6" />
         </state>
       </provider>
     </entry>
