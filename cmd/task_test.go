@@ -71,8 +71,8 @@ monte=%d
 	read := FU.Cat(task.SimulationFiles.SPIScript)
 	assert.Equal(t, fmt.Sprintf(template,
 		task.SimulationDirectories.SearchDir,
-		task.Vtn.Threshold, task.Vtn.Deviation, task.Vtn.Sigma,
-		task.Vtp.Threshold, task.Vtp.Deviation, task.Vtp.Sigma,
+		task.Vtn.Threshold, task.Vtn.Sigma, task.Vtn.Deviation,
+		task.Vtp.Threshold, task.Vtp.Sigma, task.Vtp.Deviation,
 		task.SimulationFiles.AddFile.Path,
 		task.SimulationFiles.ModelFile,
 		task.Times), read)
