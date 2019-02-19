@@ -102,11 +102,10 @@ func init() {
 
 func (rt RunTask) Run(ctx context.Context) {
 
-	l := logrus.WithField("at","avv run")
+	l := logrus.WithField("at", "avv run")
 	l.Info(Version)
 	l.Info("Start run command")
-	l.Info("Number of Task=",len(rt))
-
+	l.Info("Number of Task=", len(rt))
 
 	var tasks []ITask
 	{
@@ -130,7 +129,7 @@ func (rt RunTask) Run(ctx context.Context) {
 			Name:       string(HSPICE),
 			Parallel:   config.ParallelConfig.HSPICE,
 			RetryLimit: config.RetryConfig.HSPICE,
-			AutoRetry:true,
+			AutoRetry:  true,
 			Converter: func(task Task) ITask {
 				task.Stage = WaveView
 				return ExtractTask{Task: task}
@@ -141,7 +140,7 @@ func (rt RunTask) Run(ctx context.Context) {
 			Name:       "Extract",
 			Parallel:   config.ParallelConfig.WaveView,
 			RetryLimit: config.RetryConfig.WaveView,
-			AutoRetry:true,
+			AutoRetry:  true,
 			Converter: func(task Task) ITask {
 				task.Stage = CountUp
 				return CountTask{Task: task}
@@ -152,7 +151,7 @@ func (rt RunTask) Run(ctx context.Context) {
 			Name:       "CountUp",
 			Parallel:   config.ParallelConfig.CountUp,
 			RetryLimit: config.RetryConfig.CountUp,
-			AutoRetry:true,
+			AutoRetry:  true,
 			Converter: func(task Task) ITask {
 				task.Stage = DBAccess
 				return DBAccessTask{Task: task}
@@ -163,22 +162,23 @@ func (rt RunTask) Run(ctx context.Context) {
 			Name:       "DB Access",
 			Parallel:   config.ParallelConfig.DB,
 			RetryLimit: config.RetryConfig.DB,
-			AutoRetry:true,
+			AutoRetry:  true,
 			Converter: func(task Task) ITask {
 				task.Stage = "Remove"
 				return RemoveTask{
-					Task:task,
+					Task: task,
 				}
 			},
 		},
 		// Remove Pipe
 		Pipe{
-			Name:"Remove",
-			Parallel:config.ParallelConfig.Remove,
-			RetryLimit:0,
-			AutoRetry:false,
+			Name:       "Remove",
+			Parallel:   config.ParallelConfig.Remove,
+			RetryLimit: 0,
+			AutoRetry:  false,
 			Converter: func(task Task) ITask {
-				return nil
+				task.Stage = "Finish"
+				return task
 			},
 		})
 
@@ -186,7 +186,6 @@ func (rt RunTask) Run(ctx context.Context) {
 	if len(f) > length {
 		length = len(f)
 	}
-
 
 	// Print run summary
 	fmt.Println("Success\tFailed")

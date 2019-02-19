@@ -23,15 +23,16 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"github.com/mattn/go-colorable"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
 
-	colorable "github.com/mattn/go-colorable"
 	"github.com/sirupsen/logrus"
 	"github.com/snowzach/rotatefilehook"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -98,13 +99,16 @@ func initLogger() {
 		logrus.Fatal(err)
 	}
 
-	log.SetLevel(logrus.FatalLevel)
-	log.SetOutput(colorable.NewColorableStderr())
+	log.SetOutput(ioutil.Discard)
 	// init logrus System
 	log.SetFormatter(&logrus.TextFormatter{
 		ForceColors:     true,
 		FullTimestamp:   true,
 		TimestampFormat: time.RFC3339,
+	})
+	log.AddHook(&IOHook{
+		LogLevels: []logrus.Level{logrus.WarnLevel, logrus.ErrorLevel, logrus.FatalLevel},
+		Writer:    colorable.NewColorableStderr(),
 	})
 
 	log.AddHook(filehook)

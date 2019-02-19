@@ -55,7 +55,7 @@ const (
 	WaveView Stage = "WaveView"
 	CountUp  Stage = "CountUp"
 	DBAccess Stage = "DBAccess"
-	Remove Stage = "Remove"
+	Remove   Stage = "Remove"
 )
 
 // GetWrapper Task.StageをもとにITaskなstructを返します
@@ -79,7 +79,7 @@ func (t Task) GetWrapper() ITask {
 		}
 	} else if t.Stage == Remove {
 		return RemoveTask{
-			Task:t,
+			Task: t,
 		}
 	}
 	return SimulationTask{}
@@ -93,6 +93,10 @@ func (t Task) Run(ctx context.Context) TaskResult {
 // String
 func (t Task) String() string {
 	return fmt.Sprint("Task: ", t.Times, "-", t.Vtn.StringPrefix("Vtn"), "-", t.Vtp.StringPrefix("Vtp"))
+}
+
+func (t Task) Self() Task {
+	return t
 }
 
 // NewTask StageがHSPICEなTask structをconfigをもとに作ります
@@ -190,7 +194,7 @@ func (t *Task) MkSimulationFiles() {
 func (t *Task) MakeSPIScript() {
 	tmp := FU.Cat(config.Templates.SPIScript)
 	// .option search='/path/to/SearchDir'
-	// .param vtn=AGAUSS(th,dev,sig) vtp=AGAUSS(th,dev,sig)
+	// .param vtn=AGAUSS(th,sig,dev) vtp=AGAUSS(th,sig,dev)
 	// .include '/path/to/AddFile'
 	// .include '/path/to/ModelFile'
 	// .tran 10p 20n start=0 uic sweep monte=Times firstrun=1
@@ -198,8 +202,8 @@ func (t *Task) MakeSPIScript() {
 	// make spi script from template string
 	data := fmt.Sprintf(tmp,
 		t.SimulationDirectories.SearchDir,
-		t.Vtn.Threshold, t.Vtn.Deviation, t.Vtn.Sigma,
-		t.Vtp.Threshold, t.Vtp.Deviation, t.Vtp.Sigma,
+		t.Vtn.Threshold, t.Vtn.Sigma, t.Vtn.Deviation,
+		t.Vtp.Threshold, t.Vtp.Sigma, t.Vtp.Deviation,
 		t.SimulationFiles.AddFile.Path,
 		t.SimulationFiles.ModelFile,
 		t.Times)
@@ -213,6 +217,7 @@ func (t *Task) MakeSPIScript() {
 	FU.WriteFile(path, data)
 	// set script path to Task struct
 	t.SimulationFiles.SPIScript = path
+	log.WithField("at", "MakeSPIScript").Info("Write SPI script to ", path)
 }
 
 // Generate simulation command

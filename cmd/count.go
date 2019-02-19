@@ -353,7 +353,7 @@ func (ct CountTask) CountUp() (failure int64, err error) {
 		return -1, err
 	}
 
-	failure, err = strconv.ParseInt(string(out), 10, 64)
+	failure, err = strconv.ParseInt(strings.Trim(string(out), "\n"), 10, 64)
 	return
 }
 
@@ -365,7 +365,9 @@ func ShapingCSV(p, signalName string, n int) (string, error) {
 		return "", err
 	}
 
-	tmp, err := ioutil.TempFile("/tmp", signalName+".*.csv")
+	tmpavv := PathJoin("/tmp/avv")
+	FU.TryMkDir(tmpavv)
+	tmp, err := ioutil.TempFile("/tmp/avv", signalName+".*.csv")
 	if err != nil {
 		return "", err
 	}
@@ -397,5 +399,5 @@ func ShapingCSV(p, signalName string, n int) (string, error) {
 		}
 	}
 
-	return PathJoin("/tmp/avv", tmp.Name()), nil
+	return tmp.Name(), nil
 }
