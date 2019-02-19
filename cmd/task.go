@@ -194,7 +194,7 @@ func (t *Task) MkSimulationFiles() {
 func (t *Task) MakeSPIScript() {
 	tmp := FU.Cat(config.Templates.SPIScript)
 	// .option search='/path/to/SearchDir'
-	// .param vtn=AGAUSS(th,dev,sig) vtp=AGAUSS(th,dev,sig)
+	// .param vtn=AGAUSS(th,sig,dev) vtp=AGAUSS(th,sig,dev)
 	// .include '/path/to/AddFile'
 	// .include '/path/to/ModelFile'
 	// .tran 10p 20n start=0 uic sweep monte=Times firstrun=1
@@ -202,8 +202,8 @@ func (t *Task) MakeSPIScript() {
 	// make spi script from template string
 	data := fmt.Sprintf(tmp,
 		t.SimulationDirectories.SearchDir,
-		t.Vtn.Threshold, t.Vtn.Deviation, t.Vtn.Sigma,
-		t.Vtp.Threshold, t.Vtp.Deviation, t.Vtp.Sigma,
+		t.Vtn.Threshold, t.Vtn.Sigma, t.Vtn.Deviation,
+		t.Vtp.Threshold, t.Vtp.Sigma, t.Vtp.Deviation,
 		t.SimulationFiles.AddFile.Path,
 		t.SimulationFiles.ModelFile,
 		t.Times)
