@@ -57,6 +57,7 @@ func TestSimulationFiles_Remove(t *testing.T) {
 		ResultsMapXML: PathJoin(testDir, "ResultsMapXML"),
 		ResultsXML:    PathJoin(testDir, "ResultsXML"),
 		SPIScript:     PathJoin(testDir, "SPIScript"),
+		Self:PathJoin(testDir,"self.json"),
 	}
 
 	os.Create(s.SPIScript)
@@ -65,6 +66,7 @@ func TestSimulationFiles_Remove(t *testing.T) {
 	os.Create(s.ModelFile)
 	os.Create(s.AddFile.Path)
 	os.Create(s.ACEScript)
+	os.Create(s.Self)
 
 	err := s.Remove()
 	as.NoError(err)
