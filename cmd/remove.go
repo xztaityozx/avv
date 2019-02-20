@@ -89,6 +89,7 @@ func (RemoveTask) String() string {
 
 var removeCmd = &cobra.Command{
 	Use:   "remove",
+	Aliases:[]string{"rm"},
 	Short: "タスクファイルを削除します",
 	Long:`TaskDir 以下のファイルを削除します
 何も指定しない場合、TaskDir/done, TaskDir/dust以下のファイルを削除します

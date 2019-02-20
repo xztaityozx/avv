@@ -146,6 +146,11 @@ func (d *Dispatcher) Worker(parent context.Context) {
 }
 
 func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []TaskResult {
+
+	if len(t) < workers {
+		workers=len(t)
+	}
+
 	d.WaitGroup = &sync.WaitGroup{}
 	ctx, cancel := context.WithCancel(parent)
 	defer cancel()
