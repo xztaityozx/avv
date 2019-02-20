@@ -3,6 +3,8 @@ package cmd
 import (
 	"context"
 	"errors"
+	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -146,6 +148,8 @@ func (d *Dispatcher) Worker(parent context.Context) {
 }
 
 func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []TaskResult {
+
+	fmt.Println(strings.Repeat("-",80))
 
 	if len(t) < workers {
 		workers=len(t)

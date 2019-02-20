@@ -26,6 +26,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -119,6 +120,9 @@ func (rt RunTask) Run(ctx context.Context) {
 		for i := range m {
 			fmt.Println(i)
 		}
+
+
+		fmt.Println(strings.Repeat("-",80))
 	}
 
 	begin := time.Now()
@@ -181,25 +185,6 @@ func (rt RunTask) Run(ctx context.Context) {
 				return task
 			},
 		})
-
-	length := len(s)
-	if len(f) > length {
-		length = len(f)
-	}
-
-	// Print run summary
-	fmt.Println("Success\tFailed")
-
-	for i := 0; i < length; i++ {
-		if i < len(s) {
-			fmt.Print(s[i], "\t")
-		}
-		if i < len(f) {
-			fmt.Print(f[i])
-		}
-
-		fmt.Println()
-	}
 
 	if err != nil {
 		l.WithError(err).Error("Failed run command")
