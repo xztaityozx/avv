@@ -3,6 +3,8 @@ package cmd
 import (
 	"context"
 	"errors"
+	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -30,6 +32,7 @@ type (
 	Pipe     struct {
 		Name       string
 		Converter  func(Task) ITask
+		FailedConverter func(Task) ITask
 		Parallel   int
 		RetryLimit int
 		AutoRetry  bool
@@ -88,7 +91,7 @@ func (p Pipe) Connect(ctx context.Context, input []ITask) (success []ITask, fail
 				if r.Status {
 					success = append(success, p.Converter(r.Task))
 				} else {
-					do = append(do, p.Converter(r.Task))
+					do = append(do, p.FailedConverter(r.Task))
 				}
 			}
 
@@ -146,6 +149,8 @@ func (d *Dispatcher) Worker(parent context.Context) {
 }
 
 func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []TaskResult {
+
+	fmt.Println(strings.Repeat("-",80))
 
 	if len(t) < workers {
 		workers=len(t)

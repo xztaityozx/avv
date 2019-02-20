@@ -24,6 +24,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -82,6 +83,7 @@ SEEDごとに1つのファイルが生成されます
 			if err := mr.MakeTaskFiles(ctx); err != nil {
 				log.Fatal("MakeTaskFiles: ", err)
 			}
+			logrus.Info("Task File Wrote to ",ReserveDir())
 		}()
 
 		// 待機

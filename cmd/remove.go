@@ -32,12 +32,15 @@ func (d SimulationDirectories) Remove() error {
 }
 
 func (s SimulationFiles) Remove() error {
-	err := os.Remove(s.SPIScript)
-	if err != nil {
-		return err
+	if _, err := os.Stat(s.SPIScript);err == nil {
+		err := os.Remove(s.SPIScript)
+		if err != nil {
+			return err
+		}
+
 	}
 
-	err = os.Remove(s.AddFile.Path)
+	err := os.Remove(s.AddFile.Path)
 	if err != nil {
 		return err
 	}
