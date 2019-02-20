@@ -30,7 +30,7 @@ func (sc SlackConfig) NewFatalLoggerHook() *lrhook.Hook {
 }
 
 func (sc SlackConfig) BaseMassage() string {
-	return fmt.Sprintf("<@%s>\nマシン名:%s",sc.User,config.MachineName)
+	return fmt.Sprintf("<@%s> こちらはavvコマンドです\nマシン名:%s で実行していたお仕事がおわりました",sc.User,config.MachineName)
 }
 
 func (sc SlackConfig) PostMessage(text string) {

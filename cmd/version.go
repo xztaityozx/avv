@@ -45,11 +45,11 @@ type AVVVersion struct {
 }
 
 var Version = AVVVersion{
-	Major:  0,
-	Minor:  1,
-	Build:  26,
+	Major:  1,
+	Minor:  0,
+	Build:  27,
 	Date:   "2019/02/20",
-	Status: "Development",
+	Status: "Beta",
 }
 
 func (av AVVVersion) String() string {

@@ -128,7 +128,7 @@ func (rt RunTask) Run(ctx context.Context) {
 	s, f, err := PipeLine{}.Start(ctx, tasks,
 		// HSPICE Pipe
 		Pipe{
-			Name:       string(HSPICE),
+			Name:       "HSPICE   ",
 			Parallel:   config.ParallelConfig.HSPICE,
 			RetryLimit: config.RetryConfig.HSPICE,
 			AutoRetry:  true,
@@ -142,7 +142,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		},
 		// WaveView Pipe
 		Pipe{
-			Name:       "Extract",
+			Name:       "Extract  ",
 			Parallel:   config.ParallelConfig.WaveView,
 			RetryLimit: config.RetryConfig.WaveView,
 			AutoRetry:  true,
@@ -156,7 +156,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		},
 		// CountUp Pipe
 		Pipe{
-			Name:       "CountUp",
+			Name:       "CountUp  ",
 			Parallel:   config.ParallelConfig.CountUp,
 			RetryLimit: config.RetryConfig.CountUp,
 			AutoRetry:  true,
@@ -186,7 +186,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		},
 		// Remove Pipe
 		Pipe{
-			Name:       "Remove",
+			Name:       "Remove   ",
 			Parallel:   config.ParallelConfig.Remove,
 			RetryLimit: 0,
 			AutoRetry:  false,
@@ -211,7 +211,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		end.Format("2006/01/02/15:04:05")))
 
 	{
-		b, err := json.MarshalIndent(s,""," ")
+		b, err := json.MarshalIndent(&s,""," ")
 		if err != nil {
 			l.Fatal(err)
 		}
@@ -221,7 +221,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		}
 	}
 	{
-		b,err := json.MarshalIndent(f,"","  ")
+		b,err := json.MarshalIndent(&f,"","  ")
 		if err != nil {
 			l.Fatal(err)
 		}
