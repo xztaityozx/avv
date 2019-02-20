@@ -84,6 +84,7 @@ func initLogger() {
 
 	// Hook to log file
 	path := PathJoin(config.LogDir, time.Now().Format("2006-01-02-15-04-05")+".log")
+	logrus.Info("LogFile: ", path)
 	filehook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
 		Filename: path,
 		MaxAge:   28,

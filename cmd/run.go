@@ -37,7 +37,7 @@ import (
 // runCmd represents the run command
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "",
+	Short: "シミュレーションを実行します",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		var rt RunTask

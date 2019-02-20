@@ -23,6 +23,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
 	"os/exec"
 )
 
@@ -44,6 +45,8 @@ func (s SimulationTask) Run(parent context.Context) TaskResult {
 	command := exec.Command("bash", "-c", cmdStr)
 
 	// Run Simulation
+	l := log.WithField("at","SimulationTask").WithField("seed",fmt.Sprint(t.SEED))
+	l.Info("Start Simulation")
 	out, err := command.Output()
 	if err != nil {
 		logfile := PathJoin(t.SimulationDirectories.DstDir, "hspice.log")
@@ -51,6 +54,26 @@ func (s SimulationTask) Run(parent context.Context) TaskResult {
 			WithError(err).
 			Error("Failed Simulation:" + string(out) + " hspice.log=" + FU.Cat(logfile))
 	}
+
+	l.Info("Simulation finished")
+
+	l.Info("Start File Check")
+	files, err := ioutil.ReadDir(t.SimulationDirectories.DstDir)
+	if err != nil {
+		l.Error(err)
+		return TaskResult{
+			Status:false,
+			Task:t,
+		}
+	}
+	if len(files) < t.Times {
+		l.Error("波形データが少なすぎます。")
+		return TaskResult{
+			Status:false,
+			Task:t,
+		}
+	}
+	l.Info("file check finished")
 
 	return TaskResult{
 		Task:   t,
