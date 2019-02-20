@@ -31,6 +31,8 @@ func ReadTaskFile(p string) (Task, error) {
 		return Task{}, err
 	}
 
+	rt.SimulationFiles.Self = p
+
 	return rt, nil
 }
 

@@ -23,7 +23,9 @@ package cmd
 import (
 	"bufio"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/signal"
 	"syscall"
@@ -126,7 +128,7 @@ func (rt RunTask) Run(ctx context.Context) {
 	s, f, err := PipeLine{}.Start(ctx, tasks,
 		// HSPICE Pipe
 		Pipe{
-			Name:       string(HSPICE),
+			Name:       "HSPICE   ",
 			Parallel:   config.ParallelConfig.HSPICE,
 			RetryLimit: config.RetryConfig.HSPICE,
 			AutoRetry:  true,
@@ -140,7 +142,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		},
 		// WaveView Pipe
 		Pipe{
-			Name:       "Extract",
+			Name:       "Extract  ",
 			Parallel:   config.ParallelConfig.WaveView,
 			RetryLimit: config.RetryConfig.WaveView,
 			AutoRetry:  true,
@@ -154,7 +156,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		},
 		// CountUp Pipe
 		Pipe{
-			Name:       "CountUp",
+			Name:       "CountUp  ",
 			Parallel:   config.ParallelConfig.CountUp,
 			RetryLimit: config.RetryConfig.CountUp,
 			AutoRetry:  true,
@@ -184,7 +186,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		},
 		// Remove Pipe
 		Pipe{
-			Name:       "Remove",
+			Name:       "Remove   ",
 			Parallel:   config.ParallelConfig.Remove,
 			RetryLimit: 0,
 			AutoRetry:  false,
@@ -207,4 +209,25 @@ func (rt RunTask) Run(ctx context.Context) {
 		len(s), len(f),
 		begin.Format("2006/01/02/15:04:05"),
 		end.Format("2006/01/02/15:04:05")))
+
+	{
+		b, err := json.MarshalIndent(&s,""," ")
+		if err != nil {
+			l.Fatal(err)
+		}
+
+		if err := ioutil.WriteFile(PathJoin(DoneDir(),time.Now().Format("2006-01-02-15-04-05.json")),b,0644); err != nil {
+			l.Fatal(err)
+		}
+	}
+	{
+		b,err := json.MarshalIndent(&f,"","  ")
+		if err != nil {
+			l.Fatal(err)
+		}
+
+		if err := ioutil.WriteFile(PathJoin(FailedDir(),time.Now().Format("2006-01-02-15-04-05.json")),b,0644); err != nil {
+			l.Fatal(err)
+		}
+	}
 }

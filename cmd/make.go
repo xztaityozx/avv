@@ -164,6 +164,7 @@ func (m MakeRequest) MakeTaskFiles(ctx context.Context) error {
 		data.SEED = seed
 		data.TaskId = tg.TaskId
 		data.Stage = HSPICE
+		data.SimulationFiles.AddFile.SEED = seed
 
 		if b, err := json.Marshal(data); err != nil {
 			return err

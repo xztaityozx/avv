@@ -45,6 +45,11 @@ func (s SimulationFiles) Remove() error {
 		return err
 	}
 
+	err = os.Remove(s.Self)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -77,7 +82,7 @@ func (r RemoveTask) Run(ctx context.Context) TaskResult {
 		}
 		return TaskResult{
 			Status:err == nil,
-			Task:Task{},
+			Task:r.Task,
 		}
 	}
 }

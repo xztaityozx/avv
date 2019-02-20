@@ -12,6 +12,7 @@ type SimulationFiles struct {
 	ResultsXML    string
 	ResultsMapXML string
 	ModelFile     string
+	Self          string
 }
 
 type SimulationDirectories struct {
