@@ -47,14 +47,14 @@ type AVVVersion struct {
 var Version = AVVVersion{
 	Major:  0,
 	Minor:  1,
-	Build:  22,
-	Date:   "2019/02/17",
+	Build:  23,
+	Date:   "2019/02/20",
 	Status: "Development",
 }
 
 func (av AVVVersion) String() string {
 	return fmt.Sprintf("avv v%d.%d.%d %s %s\n\nAuthor: xztaityozx\nRepository: https://github.com/xztaityozx/avv\nLicense: MIT",
-		av.Major, av.Major, av.Build, av.Date, av.Status)
+		av.Major, av.Minor, av.Build, av.Date, av.Status)
 }
 
 func init() {
