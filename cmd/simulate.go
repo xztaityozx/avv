@@ -45,8 +45,10 @@ func (s SimulationTask) Run(parent context.Context) TaskResult {
 	command := exec.Command("bash", "-c", cmdStr)
 
 	// Run Simulation
+
 	l := log.WithField("at","SimulationTask").WithField("seed",fmt.Sprint(t.SEED))
 	l.Info("Start Simulation")
+
 	out, err := command.Output()
 	if err != nil {
 		logfile := PathJoin(t.SimulationDirectories.DstDir, "hspice.log")
