@@ -136,22 +136,22 @@ type (
 func (t Transistor) DBQuery() (string, []interface{}) {
 	var param []interface{}
 	base := "select * from Transistor"
-	var when []string
+	var where []string
 	if t.Threshold != -1 {
-		when = append(when, "Threshold = ?")
+		where = append(where, "Threshold = ?")
 		param = append(param, t.Threshold)
 	}
 	if t.Sigma != -1 {
-		when = append(when, "Sigma = ?")
+		where = append(where, "Sigma = ?")
 		param = append(param, t.Sigma)
 	}
 	if t.Deviation != -1 {
-		when = append(when, "Deviation = ?")
+		where = append(where, "Deviation = ?")
 		param = append(param, t.Deviation)
 	}
 
-	if len(when) != 0 {
-		return base + " when " + strings.Join(when, " and "), param
+	if len(where) != 0 {
+		return base + " where " + strings.Join(where, " and "), param
 	}
 	return base, param
 }
@@ -233,22 +233,22 @@ func PrintTo(box []interface{}) {
 func (p Parameter) DBQuery() (string, []interface{}) {
 	var param []interface{}
 	base := "select * from Parameter"
-	var when []string
+	var where []string
 	if p.VtpId != 0 {
-		when = append(when, "VtpId = ?")
+		where = append(where, "VtpId = ?")
 		param = append(param, p.VtpId)
 	}
 	if p.VtnId != 0 {
-		when = append(when, "VtnId = ?")
+		where = append(where, "VtnId = ?")
 		param = append(param, p.VtnId)
 	}
 	if p.Times != 0 {
-		when = append(when, "Times = ?")
+		where = append(where, "Times = ?")
 		param = append(param, p.Times)
 	}
 
 	if len(base) != 0 {
-		return base + " when " + strings.Join(when, " and "), param
+		return base + " where " + strings.Join(where, " and "), param
 	}
 
 	return base, param
@@ -256,15 +256,15 @@ func (p Parameter) DBQuery() (string, []interface{}) {
 
 func (rr ResultRecord) DBQuery() (string, []interface{}) {
 	var param []interface{}
-	var when []string
+	var where []string
 	base := "select * from Results"
 	if rr.TaskId != 0 {
-		when = append(when, "TaskId = ?")
+		where = append(where, "TaskId = ?")
 		param = append(param, rr.TaskId)
 	}
 
-	if len(when) != 0 {
-		base += " when " + strings.Join(when, " and ")
+	if len(where) != 0 {
+		base += " where " + strings.Join(where, " and ")
 	}
 
 	return base, param
@@ -272,23 +272,23 @@ func (rr ResultRecord) DBQuery() (string, []interface{}) {
 
 func (t TaskGroup) DBQuery() (string, []interface{}) {
 	var param []interface{}
-	var when []string
-	base := "select * from Group"
+	var where []string
+	base := "select * from Groups"
 	if t.ParamsId != 0 {
-		when = append(when, "ParamsId = ?")
+		where = append(where, "ParamsId = ?")
 		param = append(param, t.ParamsId)
 	}
 	if t.SeedStart != 0 {
-		when = append(when, "SeedStart = ?")
+		where = append(where, "SeedStart = ?")
 		param = append(param, t.SeedStart)
 	}
 	if t.SeedEnd != 0 {
-		when = append(when, "SeedEnd = ?")
+		where = append(where, "SeedEnd = ?")
 		param = append(param, t.SeedEnd)
 	}
 
-	if len(when) != 0 {
-		base += " when " + strings.Join(when, " and ")
+	if len(where) != 0 {
+		base += " where " + strings.Join(where, " and ")
 	}
 	return base, param
 }
