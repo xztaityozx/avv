@@ -134,6 +134,9 @@ func (rt RunTask) Run(ctx context.Context) {
 				task.Stage = WaveView
 				return ExtractTask{Task: task}
 			},
+			FailedConverter: func(task Task) ITask {
+				return SimulationTask{Task:task}
+			},
 		},
 		// WaveView Pipe
 		Pipe{
@@ -145,6 +148,9 @@ func (rt RunTask) Run(ctx context.Context) {
 				task.Stage = CountUp
 				return CountTask{Task: task}
 			},
+			FailedConverter: func(task Task) ITask {
+				return ExtractTask{Task:task}
+			},
 		},
 		// CountUp Pipe
 		Pipe{
@@ -155,6 +161,9 @@ func (rt RunTask) Run(ctx context.Context) {
 			Converter: func(task Task) ITask {
 				task.Stage = DBAccess
 				return DBAccessTask{Task: task}
+			},
+			FailedConverter: func(task Task) ITask {
+				return CountTask{Task:task}
 			},
 		},
 		// DB Access Pipe
@@ -169,6 +178,9 @@ func (rt RunTask) Run(ctx context.Context) {
 					Task: task,
 				}
 			},
+			FailedConverter: func(task Task) ITask {
+				return DBAccessTask{Task:task}
+			},
 		},
 		// Remove Pipe
 		Pipe{
@@ -179,6 +191,9 @@ func (rt RunTask) Run(ctx context.Context) {
 			Converter: func(task Task) ITask {
 				task.Stage = "Finish"
 				return task
+			},
+			FailedConverter: func(task Task) ITask {
+				return RemoveTask{Task:task}
 			},
 		})
 
