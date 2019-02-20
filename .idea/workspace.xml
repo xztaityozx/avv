@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="Fixed: Change generating SPIScript algorithm #18">
-      <change beforePath="$PROJECT_DIR$/cmd/dispatcher.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/dispatcher.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/remove.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/remove.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/run.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/run.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/runtask.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/runtask.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/simulationfile.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/simulationfile.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/version.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/version.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/runtask_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/runtask_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,11 +47,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/remove.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="836">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="264">
+              <caret line="24" column="46" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1136">
+              <caret line="88" column="19" selection-start-line="88" selection-start-column="19" selection-end-line="88" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -115,15 +119,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/root.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-654">
-              <caret line="87" column="33" selection-start-line="87" selection-start-column="33" selection-end-line="87" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -169,7 +164,6 @@
         <option value="$PROJECT_DIR$/cmd/count_test.go" />
         <option value="$PROJECT_DIR$/cmd/result.go" />
         <option value="$PROJECT_DIR$/cmd/dbaccesstask.go" />
-        <option value="$PROJECT_DIR$/cmd/runtask_test.go" />
         <option value="$PROJECT_DIR$/cmd/remove_test.go" />
         <option value="$PROJECT_DIR$/cmd/extract.go" />
         <option value="$PROJECT_DIR$/cmd/config.go" />
@@ -191,6 +185,7 @@
         <option value="$PROJECT_DIR$/cmd/simulationfile.go" />
         <option value="$PROJECT_DIR$/cmd/runtask.go" />
         <option value="$PROJECT_DIR$/cmd/remove.go" />
+        <option value="$PROJECT_DIR$/cmd/runtask_test.go" />
       </list>
     </option>
   </component>
@@ -251,8 +246,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestSimulationTask_Run in github.com/xztaityozx/avv/cmd">
-    <configuration name="TestRepository_DBBackUp in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd">
+    <configuration name="TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
       <framework value="gotest" />
@@ -260,10 +255,10 @@
       <package value="github.com/xztaityozx/avv/cmd" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestRepository_DBBackUp$" />
+      <pattern value="^TestDBAccessTask_Run$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestSimulate_Run in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRunTask_GetTaskFromFiles in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
       <framework value="gotest" />
@@ -271,10 +266,10 @@
       <package value="github.com/xztaityozx/avv/cmd" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestSimulate_Run$" />
+      <pattern value="^TestRunTask_GetTaskFromFiles$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestSimulationDirectories_Remove in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/cmd" />
       <framework value="gotest" />
@@ -282,18 +277,7 @@
       <package value="github.com/xztaityozx/avv/cmd" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestSimulationDirectories_Remove$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestSimulationFiles_Remove in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/cmd" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/cmd" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestSimulationFiles_Remove$" />
+      <pattern value="^TestRunTask_GetTasks$" />
       <method v="2" />
     </configuration>
     <configuration name="TestSimulationTask_Run in github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -307,33 +291,34 @@
       <pattern value="^TestSimulationTask_Run$" />
       <method v="2" />
     </configuration>
+    <configuration name="go test github.com/xztaityozx/avv/cmd" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="avv" />
+      <working_directory value="$PROJECT_DIR$/cmd" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/xztaityozx/avv/cmd" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Go Test.TestSimulationDirectories_Remove in github.com/xztaityozx/avv/cmd" />
-      <item itemvalue="Go Test.TestSimulationFiles_Remove in github.com/xztaityozx/avv/cmd" />
-      <item itemvalue="Go Test.TestRepository_DBBackUp in github.com/xztaityozx/avv/cmd" />
-      <item itemvalue="Go Test.TestSimulate_Run in github.com/xztaityozx/avv/cmd" />
       <item itemvalue="Go Test.TestSimulationTask_Run in github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.TestRunTask_GetTaskFromFiles in github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.go test github.com/xztaityozx/avv/cmd" />
+      <item itemvalue="Go Test.TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestDBAccessTask_Run in github.com/xztaityozx/avv/cmd" />
+        <item itemvalue="Go Test.go test github.com/xztaityozx/avv/cmd" />
+        <item itemvalue="Go Test.TestRunTask_GetTaskFromFiles in github.com/xztaityozx/avv/cmd" />
+        <item itemvalue="Go Test.TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" />
         <item itemvalue="Go Test.TestSimulationTask_Run in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestSimulate_Run in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestRepository_DBBackUp in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestSimulationFiles_Remove in github.com/xztaityozx/avv/cmd" />
-        <item itemvalue="Go Test.TestSimulationDirectories_Remove in github.com/xztaityozx/avv/cmd" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 06h 04m 09s.xml">
-      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestShapingCSV_in_github_com_xztaityozx_avv_cmd - 2019.02.12 at 15h 04m 06s.xml">
-      <configuration name="TestShapingCSV in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestRunTask_GetTasks_in_github_com_xztaityozx_avv_cmd - 2019.02.17 at 07h 06m 52s.xml">
-      <configuration name="TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestRunTask_GetTasks_in_github_com_xztaityozx_avv_cmd - 2019.02.17 at 07h 09m 03s.xml">
       <configuration name="TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -354,6 +339,15 @@
     </history-entry>
     <history-entry file="TestSimulationTask_Run_in_github_com_xztaityozx_avv_cmd - 2019.02.20 at 15h 45m 26s.xml">
       <configuration name="TestSimulationTask_Run in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestRunTask_GetTasks_in_github_com_xztaityozx_avv_cmd - 2019.02.20 at 16h 22m 57s.xml">
+      <configuration name="TestRunTask_GetTasks in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestRunTask_GetTaskFromFiles_in_github_com_xztaityozx_avv_cmd - 2019.02.20 at 16h 23m 12s.xml">
+      <configuration name="TestRunTask_GetTaskFromFiles in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestRunTask_GetTaskFromFiles_in_github_com_xztaityozx_avv_cmd - 2019.02.20 at 16h 23m 58s.xml">
+      <configuration name="TestRunTask_GetTaskFromFiles in github.com/xztaityozx/avv/cmd" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -379,7 +373,7 @@
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Project" order="4" weight="0.16151386" />
-      <window_info anchor="right" auto_hide="true" id="Run" order="5" weight="0.52866244" />
+      <window_info active="true" anchor="right" auto_hide="true" id="Run" order="5" visible="true" weight="0.52866244" />
       <window_info anchor="right" auto_hide="true" id="Terminal" order="6" weight="0.57995737" />
     </layout>
     <layout-to-restore>
@@ -683,13 +677,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/extract.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-528">
@@ -769,8 +756,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/remove.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="264">
+          <caret line="24" column="46" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1136">
+          <caret line="88" column="19" selection-start-line="88" selection-start-column="19" selection-end-line="88" selection-end-column="19" />
         </state>
       </provider>
     </entry>
