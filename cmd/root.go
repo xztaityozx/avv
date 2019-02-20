@@ -90,7 +90,7 @@ func initLogger() {
 		MaxSize:  500,
 		Level:    logrus.InfoLevel,
 		Formatter: &logrus.TextFormatter{
-			DisableColors:   true,
+			ForceColors:     true,
 			TimestampFormat: time.RFC3339,
 			FullTimestamp:   true,
 		},
@@ -107,7 +107,7 @@ func initLogger() {
 		TimestampFormat: time.RFC3339,
 	})
 	log.AddHook(&IOHook{
-		LogLevels: []logrus.Level{ logrus.ErrorLevel, logrus.FatalLevel},
+		LogLevels: []logrus.Level{logrus.ErrorLevel, logrus.FatalLevel},
 		Writer:    colorable.NewColorableStderr(),
 	})
 

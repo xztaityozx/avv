@@ -26,7 +26,6 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 	"time"
 
@@ -120,9 +119,6 @@ func (rt RunTask) Run(ctx context.Context) {
 		for i := range m {
 			fmt.Println(i)
 		}
-
-
-		fmt.Println(strings.Repeat("-",80))
 	}
 
 	begin := time.Now()
