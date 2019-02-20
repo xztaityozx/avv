@@ -53,6 +53,11 @@ func (s SimulationTask) Run(parent context.Context) TaskResult {
 		log.WithField("at", "SimulationTask.Run()").
 			WithError(err).
 			Error("Failed Simulation:" + string(out) + " hspice.log=" + FU.Cat(logfile))
+
+		return TaskResult{
+			Status:false,
+			Task:t,
+		}
 	}
 
 	l.Info("Simulation finished")
