@@ -45,6 +45,11 @@ func (s SimulationFiles) Remove() error {
 		return err
 	}
 
+	err = os.Remove(s.Self)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
