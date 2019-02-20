@@ -82,7 +82,7 @@ func (r RemoveTask) Run(ctx context.Context) TaskResult {
 		}
 		return TaskResult{
 			Status:err == nil,
-			Task:Task{},
+			Task:r.Task,
 		}
 	}
 }
