@@ -5,13 +5,14 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/go-gorp/gorp"
-	_ "github.com/mattn/go-sqlite3"
-	"github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/go-gorp/gorp"
+	_ "github.com/mattn/go-sqlite3"
+	"github.com/sirupsen/logrus"
 )
 
 // New Repository struct
@@ -87,6 +88,7 @@ type (
 		Path string
 	}
 )
+
 func (r Repository) DBBackUp() error {
 
 	if !config.AutoDBBackUp {
@@ -103,7 +105,7 @@ func (r Repository) DBBackUp() error {
 
 	dst := PathJoin(config.BackUpDir, filepath.Base(r.Path)+time.Now().Format("2006-01-02-15-04-05"))
 
-	dfp, err := os.OpenFile(dst,os.O_CREATE|os.O_WRONLY,0644)
+	dfp, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY, 0644)
 	defer dfp.Close()
 	if err != nil {
 		return err
@@ -115,7 +117,13 @@ func (r Repository) DBBackUp() error {
 		return err
 	}
 
-	_, err = io.Copy(dfp,sfp)
+	_, err = io.Copy(dfp, sfp)
 
 	return err
+}
+
+func DBWriter(ctx context.Context, job chan DBAccessTask) {
+	for j := range job {
+		j.Run(ctx)
+	}
 }

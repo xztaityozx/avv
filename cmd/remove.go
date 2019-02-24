@@ -4,8 +4,9 @@ import (
 	"bufio"
 	"context"
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 func (rt RunTask) GarbageCollect() error {
@@ -25,20 +26,13 @@ func (t Task) Remove() error {
 func (d SimulationDirectories) Remove() error {
 	err := os.RemoveAll(d.DstDir)
 	if err != nil {
-		log.WithError(err).Error("Failed Remove Directory: ",d.DstDir)
+		log.WithError(err).Error("Failed Remove Directory: ", d.DstDir)
 		return err
 	}
 	return nil
 }
 
 func (s SimulationFiles) Remove() error {
-	if _, err := os.Stat(s.SPIScript);err == nil {
-		err := os.Remove(s.SPIScript)
-		if err != nil {
-			return err
-		}
-
-	}
 
 	err := os.Remove(s.AddFile.Path)
 	if err != nil {
@@ -63,26 +57,26 @@ func (r RemoveTask) Run(ctx context.Context) TaskResult {
 	go func() {
 		err := r.Task.SimulationDirectories.Remove()
 		if err != nil {
-			ch<-err
+			ch <- err
 			return
 		}
 		err = r.Task.SimulationFiles.Remove()
-		ch<-err
+		ch <- err
 	}()
 
 	select {
 	case <-ctx.Done():
 		return TaskResult{
-			Task:r.Task,
-			Status:false,
+			Task:   r.Task,
+			Status: false,
 		}
 	case err := <-ch:
 		if err != nil {
 			log.WithError(err).Error("Failed Remove")
 		}
 		return TaskResult{
-			Status:err == nil,
-			Task:r.Task,
+			Status: err == nil,
+			Task:   r.Task,
 		}
 	}
 }
@@ -96,10 +90,10 @@ func (RemoveTask) String() string {
 }
 
 var removeCmd = &cobra.Command{
-	Use:   "remove",
-	Aliases:[]string{"rm"},
-	Short: "タスクファイルを削除します",
-	Long:`TaskDir 以下のファイルを削除します
+	Use:     "remove",
+	Aliases: []string{"rm"},
+	Short:   "タスクファイルを削除します",
+	Long: `TaskDir 以下のファイルを削除します
 何も指定しない場合、TaskDir/done, TaskDir/dust以下のファイルを削除します
 `,
 	Run: func(cmd *cobra.Command, args []string) {
