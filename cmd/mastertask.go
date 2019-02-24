@@ -4,7 +4,6 @@ import "context"
 
 type MasterTask struct {
 	Task   Task
-	DBPipe chan DBAccessTask
 }
 
 func (mt MasterTask) Self() Task {
@@ -26,26 +25,44 @@ func (mt MasterTask) Run(ctx context.Context) TaskResult {
 			t.Stage = CountUp
 			return CountTask{Task: t}
 		} else if t.Stage == CountUp {
-			t.Stage = DBAccess
-			return DBAccessTask{Task: t}
-		} else {
 			t.Stage = Remove
 			return RemoveTask{Task: t}
+		} else {
+			t.Stage = DBAccess
+			return DBAccessTask{Task: t}
 		}
+	}
+
+	retry := map[string]int {
+		string(HSPICE): config.RetryConfig.HSPICE,
+		string(WaveView): config.RetryConfig.WaveView,
+		string(CountUp): config.RetryConfig.CountUp,
+		string(Remove): 0,
 	}
 
 	for t.Self().Stage != DBAccess {
-		res := t.Run(ctx)
-		if !res.Status {
-			return res
+		var res TaskResult
+		var cnt int
+		for ok := true; ok; ok = !res.Status && cnt < retry[string(t.Self().Stage)] {
+			res = t.Run(ctx)
+			if !res.Status {
+				log.WithField("at","MasterTask.Run").Warn("Failed Task Step at: ", t.Self().Stage, " Retry...(",cnt,")")
+				cnt++
+			}
 		}
 
-		t = next(res.Task)
+		if !res.Status {
+			return TaskResult{
+				Task:t.Self(),
+				Status:false,
+			}
+		}
+
+		t = next(t.Self())
 	}
 
-	mt.DBPipe <- DBAccessTask{Task: t.Self()}
-
-	res := RemoveTask{Task: t.Self()}.Run(ctx)
-
-	return res
+	return TaskResult{
+		Task:t.Self(),
+		Status:true,
+	}
 }

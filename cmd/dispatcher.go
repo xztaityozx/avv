@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"errors"
 	"sync"
 	"time"
 
@@ -26,96 +25,8 @@ type (
 		ProgressBar *mpb.Bar
 	}
 
-	PipeLine struct{}
-	Pipe     struct {
-		Name       string
-		Converter  func(Task) ITask
-		FailedConverter  func(Task) ITask
-		Parallel   int
-		RetryLimit int
-		AutoRetry  bool
-	}
 )
 
-func (p PipeLine) Start(ctx context.Context, input []ITask, pipe ...Pipe) (success []Task, failed []Task, err error) {
-	success = []Task{}
-	failed = []Task{}
-
-	ch := make(chan error)
-	defer close(ch)
-
-	go func() {
-		for _, pi := range pipe {
-			rt, f, err := pi.Connect(ctx, input)
-			if err != nil {
-				log.Error(err)
-			}
-
-			failed = append(failed, f...)
-			input = rt
-		}
-		ch <- nil
-	}()
-
-	select {
-	case <-ctx.Done():
-		return nil, nil, errors.New("PipeLine: canceled by context")
-	case err = <-ch:
-	}
-
-	for _, t := range input {
-		success = append(success, t.Self())
-	}
-
-	return
-}
-
-func (p Pipe) Connect(ctx context.Context, input []ITask) (success []ITask, failed []Task, err error) {
-	tasks := len(input)
-	var do = input
-
-	ch := make(chan struct{})
-	defer close(ch)
-
-	cnt := 0
-	go func() {
-
-		for ok := true; ok; ok = len(success) != tasks && (p.AutoRetry || config.AutoRetry) {
-			dis := NewDispatcher(p.Name)
-			res := dis.Dispatch(ctx, p.Parallel, do)
-			do = []ITask{}
-			for _, r := range res {
-				if r.Status {
-					success = append(success, p.Converter(r.Task))
-				} else {
-					do = append(do, p.FailedConverter(r.Task))
-				}
-			}
-
-			if len(do) != 0 && cnt >= p.RetryLimit {
-				err = errors.New("Retry Limit Exceeded ")
-				ch <- struct{}{}
-				return
-			} else if len(do) != 0 {
-				cnt++
-				log.Warn("Pipe.Connect: Retry(", cnt, ")")
-			}
-
-		}
-		ch <- struct{}{}
-	}()
-
-	select {
-	case <-ctx.Done():
-		return nil, nil, nil
-	case <-ch:
-	}
-
-	for _, t := range do {
-		failed = append(failed, t.Self())
-	}
-	return
-}
 
 func NewDispatcher(name string) Dispatcher {
 	return Dispatcher{

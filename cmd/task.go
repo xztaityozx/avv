@@ -12,8 +12,6 @@ type ITask interface {
 	Run(context.Context) TaskResult
 	// Self 基底クラス()のTaskを返す関数
 	Self() Task
-	// String Stringer
-	String() string
 }
 
 // Task タスクを定義するstructの基底クラス()

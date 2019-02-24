@@ -72,7 +72,7 @@ func TestSimulationFiles_Remove(t *testing.T) {
 	as.NoError(err)
 
 	_, err = os.Stat(s.SPIScript)
-	as.Error(err)
+	as.NoError(err)
 	_, err = os.Stat(s.ModelFile)
 	as.NoError(err)
 	_, err = os.Stat(s.AddFile.Path)
