@@ -41,6 +41,7 @@ func (t ExtractTask) Run(parent context.Context) TaskResult {
 
 	// make ace script
 	ace, err := t.Task.PlotPoint.MkACEScript(t.Task.SimulationDirectories.DstDir)
+	l.Info(t.Task.SimulationDirectories.DstDir)
 	if err != nil {
 		l.WithError(err).Error("Failed make ACEScript")
 		return TaskResult{

@@ -26,8 +26,6 @@ type RetryConfig struct {
 	HSPICE   int
 	WaveView int
 	CountUp  int
-	DBAccess int
-	DB int
 }
 
 type WaveViewConfig struct {
@@ -35,14 +33,6 @@ type WaveViewConfig struct {
 }
 
 type ParallelConfig struct {
-	DB       int
-	HSPICE   int
-	WaveView int
-	CountUp  int
-	Remove int
+	Master int
 }
 
-// Compare func for ParallelConfig struct
-func (s ParallelConfig) Compare(t ParallelConfig) bool {
-	return s.HSPICE == t.HSPICE && s.WaveView == t.WaveView && s.CountUp == t.CountUp && s.DB == t.DB
-}
