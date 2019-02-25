@@ -155,6 +155,9 @@ func (t *Task) MkDir() {
 	// 設定
 	t.SimulationDirectories.DstDir = dst
 	t.SimulationDirectories.ResultDir = resultDir
+
+	log.Info("dst: ",dst)
+	log.Info("resultDir: ",resultDir)
 }
 
 // MkSimulationFiles シミュレーションに必要なパラメータファイルを生成します
