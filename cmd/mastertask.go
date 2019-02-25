@@ -58,7 +58,7 @@ func (mt MasterTask) Run(ctx context.Context) TaskResult {
 			}
 		}
 
-		t = next(t.Self())
+		t = next(res.Task)
 	}
 
 	return TaskResult{
