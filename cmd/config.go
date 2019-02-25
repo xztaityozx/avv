@@ -26,8 +26,6 @@ type RetryConfig struct {
 	HSPICE   int
 	WaveView int
 	CountUp  int
-	DBAccess int
-	DB int
 }
 
 type WaveViewConfig struct {
