@@ -23,11 +23,12 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/mattn/go-colorable"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/mattn/go-colorable"
 
 	"github.com/sirupsen/logrus"
 	"github.com/snowzach/rotatefilehook"
@@ -64,7 +65,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
 
 	//Parallel Options
-	rootCmd.PersistentFlags().IntP("Parallel", "P", 1, "シミュレーションの並列数です")
+	rootCmd.PersistentFlags().IntP("Parallel", "p", 1, "シミュレーションの並列数です")
 
 	// BindFlags
 	viper.BindPFlag("ParallelConfig.Master", rootCmd.PersistentFlags().Lookup("Parallel"))
