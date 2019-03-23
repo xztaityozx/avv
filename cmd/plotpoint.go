@@ -37,7 +37,7 @@ func (p PlotPoint) ToFilterStrings() map[string][]string {
 
 	out, err := exec.Command("seq", fmt.Sprint(p.Start, p.Step, p.Stop)).Output()
 	if err != nil {
-		log.Fatal(err)
+		log.WithError(err).Fatal("Failed seq command: ", fmt.Sprint(p.Start, p.Step, p.Stop))
 	}
 
 	seq := strings.Split(string(out), "\n")
