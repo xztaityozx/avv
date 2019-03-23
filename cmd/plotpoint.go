@@ -35,7 +35,7 @@ func (p PlotPoint) ToJson() (string, error) {
 func (p PlotPoint) ToFilterStrings() map[string][]string {
 	var rt = map[string][]string{}
 
-	out, err := exec.Command("seq", fmt.Sprint(p.Start, p.Step, p.Stop)).Output()
+	out, err := exec.Command("seq", fmt.Sprint(p.Start), fmt.Sprint(p.Step),fmt.Sprint(p.Stop)).Output()
 	if err != nil {
 		log.WithError(err).Fatal("Failed seq command: ", fmt.Sprint(p.Start, p.Step, p.Stop))
 	}
