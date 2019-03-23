@@ -6,7 +6,7 @@ import (
 )
 
 type IOHook struct {
-	Writer io.Writer
+	Writer    io.Writer
 	LogLevels []logrus.Level
 }
 
@@ -23,4 +23,3 @@ func (hook *IOHook) Fire(entry *logrus.Entry) error {
 func (hook *IOHook) Levels() []logrus.Level {
 	return hook.LogLevels
 }
-

@@ -63,15 +63,15 @@ func TestMakeRequest_NewTaskGroup(t *testing.T) {
 	r := NewRepositoryFromFile(p)
 
 	mt := MakeRequest{
-		SEED:SEED{
-			Start:1,
-			End:2000,
+		SEED: SEED{
+			Start: 1,
+			End:   2000,
 		},
-		Task:Task{Repository:r},
+		Task: Task{Repository: r},
 	}
 
-	tg,err := mt.NewTaskGroup(context.Background())
+	tg, err := mt.NewTaskGroup(context.Background())
 	as.NoError(err)
-	as.Equal(int64(1),tg.TaskId)
+	as.Equal(int64(1), tg.TaskId)
 
 }

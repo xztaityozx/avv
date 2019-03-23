@@ -52,11 +52,9 @@ func init() {
 	//rootCmd.AddCommand(countCmd)
 }
 
-
 type CountTask struct {
 	Task Task
 }
-
 
 func (ct CountTask) Run(parent context.Context) TaskResult {
 	ctx, cancel := context.WithCancel(parent)
@@ -125,18 +123,18 @@ func (ct CountTask) CountUp() (failure int64, err error) {
 			return -1, err
 		}
 
-		csv,err := wvparser.WVParser{FilePath:p}.Parse()
+		csv, err := wvparser.WVParser{FilePath: p}.Parse()
 		if err != nil {
-			return -1, xerrors.Errorf("Failed Parse: %w",err)
+			return -1, xerrors.Errorf("Failed Parse: %w", err)
 		}
 
-		res,err := wvparser.NewCounter(filters[v.SignalName]...).GetStatuses(csv)
+		res, err := wvparser.NewCounter(filters[v.SignalName]...).GetStatuses(csv)
 		if err != nil {
-			return -1, xerrors.Errorf("Failed GetStatuses: %w",err)
+			return -1, xerrors.Errorf("Failed GetStatuses: %w", err)
 		}
 
-		for i,v := range res {
-			box[i] = box[i]&&v
+		for i, v := range res {
+			box[i] = box[i] && v
 		}
 	}
 

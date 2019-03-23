@@ -35,19 +35,19 @@ func (p PlotPoint) ToJson() (string, error) {
 func (p PlotPoint) ToFilterStrings() map[string][]string {
 	var rt = map[string][]string{}
 
-	out,err := exec.Command("seq", fmt.Sprint(p.Start,p.Step,p.Stop)).Output()
+	out, err := exec.Command("seq", fmt.Sprint(p.Start, p.Step, p.Stop)).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	seq := strings.Split(string(out),"\n")
+	seq := strings.Split(string(out), "\n")
 
-	for _,f := range p.Filters {
+	for _, f := range p.Filters {
 		var box []string
 		for i, v := range f.Status {
 			box = append(box, fmt.Sprintf("%s:%s", seq[i], v))
 		}
-		rt[f.SignalName]=box
+		rt[f.SignalName] = box
 	}
 
 	return rt

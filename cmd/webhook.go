@@ -21,31 +21,31 @@ func (sc SlackConfig) NewFatalLoggerHook() *lrhook.Hook {
 		Message: chat.Message{
 			Text:      sc.BaseMassage(),
 			Channel:   sc.Channel,
-			Username:"avv fatal logger",
+			Username:  "avv fatal logger",
 			IconEmoji: ":avvfatal:",
-			AsUser:true,
+			AsUser:    true,
 		},
 	}
 	return lrhook.New(cfg, sc.WebHookURL)
 }
 
 func (sc SlackConfig) BaseMassage() string {
-	return fmt.Sprintf("<@%s> こちらはavvコマンドです\nマシン名:%s で実行していたお仕事がおわりました",sc.User,config.MachineName)
+	return fmt.Sprintf("<@%s> こちらはavvコマンドです\nマシン名:%s で実行していたお仕事がおわりました", sc.User, config.MachineName)
 }
 
 func (sc SlackConfig) PostMessage(text string) {
 	hook := webhook.New(sc.WebHookURL)
 	m := &chat.Message{
-		Text: sc.BaseMassage() + "\n" + text,
-		Channel:sc.Channel,
-		Username:"avv",
-		IconEmoji:":avv:",
-		AsUser:true,
+		Text:      sc.BaseMassage() + "\n" + text,
+		Channel:   sc.Channel,
+		Username:  "avv",
+		IconEmoji: ":avv:",
+		AsUser:    true,
 	}
 	res, err := m.Send(hook)
 	if err != nil || !res.Ok() {
 		logrus.WithError(err).Error("Failed post message to slack")
 	} else {
-		logrus.Info("Post Message to ",sc.Channel)
+		logrus.Info("Post Message to ", sc.Channel)
 	}
 }

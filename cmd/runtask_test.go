@@ -64,7 +64,7 @@ func TestRunTask_GetTasks(t *testing.T) {
 
 	for i, v := range task {
 		t := config.Default
-		t.SimulationFiles.Self=PathJoin(ReserveDir(),fmt.Sprintf("%d.json",i))
+		t.SimulationFiles.Self = PathJoin(ReserveDir(), fmt.Sprintf("%d.json", i))
 		as.Equal(t, v)
 	}
 }
@@ -85,7 +85,7 @@ func TestRunTask_GetTaskFromFiles(t *testing.T) {
 
 	for _, v := range rt {
 		t := config.Default
-		t.SimulationFiles.Self=PathJoin(config.TaskDir,"test.json")
+		t.SimulationFiles.Self = PathJoin(config.TaskDir, "test.json")
 		as.Equal(t, v)
 	}
 }

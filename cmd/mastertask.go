@@ -3,7 +3,7 @@ package cmd
 import "context"
 
 type MasterTask struct {
-	Task   Task
+	Task Task
 }
 
 func (mt MasterTask) Self() Task {
@@ -33,11 +33,11 @@ func (mt MasterTask) Run(ctx context.Context) TaskResult {
 		}
 	}
 
-	retry := map[string]int {
-		string(HSPICE): config.RetryConfig.HSPICE,
+	retry := map[string]int{
+		string(HSPICE):   config.RetryConfig.HSPICE,
 		string(WaveView): config.RetryConfig.WaveView,
-		string(CountUp): config.RetryConfig.CountUp,
-		string(Remove): 0,
+		string(CountUp):  config.RetryConfig.CountUp,
+		string(Remove):   0,
 	}
 
 	for t.Self().Stage != DBAccess {
@@ -46,15 +46,15 @@ func (mt MasterTask) Run(ctx context.Context) TaskResult {
 		for ok := true; ok; ok = !res.Status && cnt < retry[string(t.Self().Stage)] {
 			res = t.Run(ctx)
 			if !res.Status {
-				log.WithField("at","MasterTask.Run").Warn("Failed Task Step at: ", t.Self().Stage, " Retry...(",cnt,")")
+				log.WithField("at", "MasterTask.Run").Warn("Failed Task Step at: ", t.Self().Stage, " Retry...(", cnt, ")")
 				cnt++
 			}
 		}
 
 		if !res.Status {
 			return TaskResult{
-				Task:t.Self(),
-				Status:false,
+				Task:   t.Self(),
+				Status: false,
 			}
 		}
 
@@ -62,7 +62,7 @@ func (mt MasterTask) Run(ctx context.Context) TaskResult {
 	}
 
 	return TaskResult{
-		Task:t.Self(),
-		Status:true,
+		Task:   t.Self(),
+		Status: true,
 	}
 }

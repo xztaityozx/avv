@@ -47,14 +47,14 @@ func TestRepository_Connect(t *testing.T) {
 func TestRepository_DBBackUp(t *testing.T) {
 	as := assert.New(t)
 	home, _ := homedir.Dir()
-	p := PathJoin(home,"TestDir")
+	p := PathJoin(home, "TestDir")
 	FU.TryMkDir(p)
-	p=PathJoin(p,"db","database")
-	fp,err := os.Create(p)
+	p = PathJoin(p, "db", "database")
+	fp, err := os.Create(p)
 	fp.Close()
 	as.NoError(err)
 
-	r := Repository{Path:p}
+	r := Repository{Path: p}
 
 	err = r.DBBackUp()
 	as.NoError(err)

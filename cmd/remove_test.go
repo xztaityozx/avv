@@ -8,7 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestSimulationDirectories_Remove(t *testing.T) {
 	as := assert.New(t)
 
@@ -57,7 +56,7 @@ func TestSimulationFiles_Remove(t *testing.T) {
 		ResultsMapXML: PathJoin(testDir, "ResultsMapXML"),
 		ResultsXML:    PathJoin(testDir, "ResultsXML"),
 		SPIScript:     PathJoin(testDir, "SPIScript"),
-		Self:PathJoin(testDir,"self.json"),
+		Self:          PathJoin(testDir, "self.json"),
 	}
 
 	os.Create(s.SPIScript)

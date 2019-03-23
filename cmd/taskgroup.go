@@ -15,12 +15,12 @@ type TaskGroup struct {
 
 func (m MakeRequest) NewTaskGroup(ctx context.Context) (TaskGroup, error) {
 	repository := m.Task.Repository
-	p,err := m.Task.NewParameter(ctx, repository)
+	p, err := m.Task.NewParameter(ctx, repository)
 	if err != nil {
-		return TaskGroup{},err
+		return TaskGroup{}, err
 	}
 
-	err = p.Insert(ctx,repository)
+	err = p.Insert(ctx, repository)
 	if err != nil {
 		return TaskGroup{}, err
 	}
@@ -31,17 +31,17 @@ func (m MakeRequest) NewTaskGroup(ctx context.Context) (TaskGroup, error) {
 	}
 
 	tg := TaskGroup{
-		SeedEnd:int64(m.SEED.End),
-		SeedStart:int64(m.SEED.Start),
-		ParamsId:p.ParamsId,
-		Date:time.Now(),
+		SeedEnd:   int64(m.SEED.End),
+		SeedStart: int64(m.SEED.Start),
+		ParamsId:  p.ParamsId,
+		Date:      time.Now(),
 	}
 	err = tg.Insert(ctx, repository)
 	if err != nil {
 		return TaskGroup{}, err
 	}
 
-	return tg.Select(ctx,repository)
+	return tg.Select(ctx, repository)
 }
 
 func (t TaskGroup) Compare(s TaskGroup) bool {

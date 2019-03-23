@@ -6,7 +6,6 @@ import (
 	"os"
 )
 
-
 type SimulationResult struct {
 	Task   Task
 	Status bool
@@ -39,11 +38,11 @@ func ReadTaskFile(p string) (Task, error) {
 func GetTasksFromFiles(p ...string) RunTask {
 	var rt RunTask
 
-	for _,v := range p {
-		if t,err := ReadTaskFile(v); err != nil {
-			log.WithError(err).Fatal("Failed Unmarshal Task file: ",v)
+	for _, v := range p {
+		if t, err := ReadTaskFile(v); err != nil {
+			log.WithError(err).Fatal("Failed Unmarshal Task file: ", v)
 		} else {
-			rt=append(rt, t)
+			rt = append(rt, t)
 		}
 	}
 
@@ -53,12 +52,12 @@ func GetTasksFromFiles(p ...string) RunTask {
 func (rt RunTask) BackUp() error {
 
 	m := make(map[string]Repository)
-	for _,v := range rt {
-		m[v.Repository.Path]=v.Repository
+	for _, v := range rt {
+		m[v.Repository.Path] = v.Repository
 	}
 
-	for _,v:=range m {
-		if err := v.DBBackUp();err != nil {
+	for _, v := range m {
+		if err := v.DBBackUp(); err != nil {
 			return err
 		}
 	}
@@ -74,8 +73,8 @@ func GetTasksFromTaskDir(cnt int) RunTask {
 
 	var path []string
 	for _, v := range files {
-		path=append(path, PathJoin(ReserveDir(),v.Name()))
-		if cnt > 0 && len(path) >=cnt {
+		path = append(path, PathJoin(ReserveDir(), v.Name()))
+		if cnt > 0 && len(path) >= cnt {
 			break
 		}
 	}
