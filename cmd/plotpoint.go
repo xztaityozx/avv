@@ -45,7 +45,7 @@ func (p PlotPoint) ToFilterStrings() map[string][]string {
 	for _, f := range p.Filters {
 		var box []string
 		for i, v := range f.Status {
-			box = append(box, fmt.Sprintf("%s:%s", seq[i], v))
+			box = append(box, fmt.Sprintf("%sn:%s", seq[i], v))
 		}
 		rt[f.SignalName] = box
 	}
