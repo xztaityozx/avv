@@ -81,7 +81,7 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 	}
 	defer close(d.Queue)
 
-	pb := mpb.New(mpb.WithContext(ctx), mpb.WithWaitGroup(d.WaitGroup))
+	pb := mpb.NewWithContext(ctx, mpb.WithWaitGroup(d.WaitGroup))
 
 	barName := color.New(color.FgHiYellow).Sprint("Dispatcher:") + d.Name
 
