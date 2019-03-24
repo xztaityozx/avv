@@ -44,12 +44,30 @@ ex)
 	
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Fatal("ごめんなさいできません")
+		path := args[0]
+		if _, err := os.Stat(path); err != nil {
+			log.WithError(err).Fatal("Failed count sub command")
+		}
+
+		filter, _ := cmd.Flags().GetStringSlice("filter")
+		ofile, _ := cmd.Flags().GetString("out")
+
+		csv, err := wvparser.WVParser{FilePath:path}.Parse()
+		if err != nil {
+			log.WithError(err).Fatal("Failed Parse")
+		}
+
+		c := wvparser.NewCounter(filter...)
+		result := c.Aggregate(csv)
+		log.Info(result)
+		ioutil.WriteFile(ofile,[]byte(fmt.Sprint(result)),0644)
 	},
 }
 
 func init() {
-	//rootCmd.AddCommand(countCmd)
+	rootCmd.AddCommand(countCmd)
+	countCmd.Flags().StringSlice("filter",[]string{}, "フィルター")
+	countCmd.Flags().StringP("out","o","./out.txt","出力ファイル")
 }
 
 type CountTask struct {
