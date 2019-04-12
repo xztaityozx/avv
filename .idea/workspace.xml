@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="Fixed: Change generating SPIScript algorithm #18">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5445a02f-4b17-4ff2-b208-0abddf656ee9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5445a02f-4b17-4ff2-b208-0abddf656ee9.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/count.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/count.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +48,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="$PROJECT_DIR$/../../../../../../linuxbrew/.linuxbrew/Cellar/go/1.12.1/libexec" />
+  <component name="GOROOT" path="$PROJECT_DIR$/../../../../../../linuxbrew/.linuxbrew/Cellar/go/1.12.2/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -134,6 +134,7 @@
     <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="GO_FMT" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="New&#9;ACTION&#9;NewGroup&#10;coun&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/count.go&#10;versi&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/version.go&#10;idea&#9;FILE&#9;file://C:/Users/sldl77/.ideavimrc&#10;Go Fmt&#9;ACTION&#9;GoFmtProjectAction&#10;simu&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/simulate.go&#10;MkACE&#9;null&#9;null&#10;task.&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task.go&#10;GetEx&#9;null&#9;null&#10;Settings&#9;ACTION&#9;WelcomeScreen.Settings&#10;ex&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/extract_test.go&#10;New &#9;ACTION&#9;NewGroup&#10;.idea&#9;FILE&#9;file://C:/Users/sldl77/.ideavimrc&#10;Goto&#9;ACTION&#9;VimGotoDeclaration&#10;sim&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/simulate_test.go&#10;travis&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/.travis.yml&#10;MakeSPI&#9;null&#9;null&#10;Comm&#9;ACTION&#9;CheckinProject&#10;new&#9;ACTION&#9;NewGroup&#10;simgo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/simulate.go&#10;task&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/task_test.go&#10;TestAdd&#9;null&#9;null&#10;Push&#9;ACTION&#9;Vcs.Push&#10;Task&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/task_test.go&#10;dispa&#9;FILE&#9;file:///home/xztaityozx/.go/src/github.com/xztaityozx/avv/cmd/dispatcher.go&#10;Termi&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Prog&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/progressbar.go&#10;Coun&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/count.go&#10;ext&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/extract.go&#10;root&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/root.go&#10;Dis&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/dispatcher.go&#10;Count&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/count.go&#10;NewTask&#9;null&#9;null&#10;task.go&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/task.go&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;ITask&#9;null&#9;null&#10;test&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/dispatcher_test.go&#10;Rena&#9;ACTION&#9;RenameElement&#10;Rename&#9;ACTION&#9;RenameElement&#10;config&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/config.go&#10;extr&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/extract.go&#10;RunSim&#9;null&#9;null&#10;run.go&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/run.go&#10;Spli&#9;ACTION&#9;SplitVertically&#10;run&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/runtask.go&#10;runta&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/runtask_test.go&#10;FU&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/FileUtils.go&#10;ACE&#9;null&#9;null&#10;Plo&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/plotpoint.go&#10;cou&#9;FILE&#9;file://C:/Users/sldl77/Development/go/src/github.com/xztaityozx/avv/cmd/count.go" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect" value="SQLite" />
@@ -142,6 +143,7 @@
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -273,7 +275,8 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="34" width="1920" height="1046" extended-state="6" />
+    <frame x="0" y="34" width="2560" height="1406" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" weight="0.32995737" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
