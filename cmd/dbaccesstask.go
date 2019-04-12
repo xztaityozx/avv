@@ -49,4 +49,3 @@ func (da DBAccessTask) Self() Task {
 func (DBAccessTask) String() string {
 	return ""
 }
-

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os/exec"
 	"strings"
 )
 
@@ -29,6 +30,27 @@ func (p PlotPoint) ToJson() (string, error) {
 	}
 
 	return string(out), nil
+}
+
+func (p PlotPoint) ToFilterStrings() map[string][]string {
+	var rt = map[string][]string{}
+
+	out, err := exec.Command("seq", fmt.Sprint(p.Start), fmt.Sprint(p.Step),fmt.Sprint(p.Stop)).Output()
+	if err != nil {
+		log.WithError(err).Fatal("Failed seq command: ", fmt.Sprint(p.Start, p.Step, p.Stop))
+	}
+
+	seq := strings.Split(string(out), "\n")
+
+	for _, f := range p.Filters {
+		var box []string
+		for i, v := range f.Status {
+			box = append(box, fmt.Sprintf("%sn:%s", seq[i], v))
+		}
+		rt[f.SignalName] = box
+	}
+
+	return rt
 }
 
 // compare func fof Filter struct
@@ -64,13 +86,12 @@ func (p PlotPoint) GetAwkScript() string {
 	var stmt []string
 	start := 1
 	for _, v := range p.Filters {
-		stmt =append(stmt, v.ToAwkStatement(start))
-		start+=len(v.Status)
+		stmt = append(stmt, v.ToAwkStatement(start))
+		start += len(v.Status)
 	}
 
-	return fmt.Sprintf("BEGIN{sum=0}%s{sum++}END{print sum}", strings.Join(stmt,"&&"))
+	return fmt.Sprintf("BEGIN{sum=0}%s{sum++}END{print sum}", strings.Join(stmt, "&&"))
 }
-
 
 // Get plot step
 //returns: Number of Plot Steps

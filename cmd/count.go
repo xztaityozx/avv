@@ -25,13 +25,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/mattn/go-pipeline"
 	"github.com/spf13/cobra"
+	"github.com/xztaityozx/go-wvparser"
+	"golang.org/x/xerrors"
 	"io/ioutil"
 	"os"
-	"os/exec"
-	"strconv"
-	"strings"
 )
 
 // countCmd represents the count command
@@ -46,88 +44,34 @@ ex)
 	
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Fatal("ごめんなさいできません")
+		path := args[0]
+		if _, err := os.Stat(path); err != nil {
+			log.WithError(err).Fatal("Failed count sub command")
+		}
+
+		filter, _ := cmd.Flags().GetStringSlice("filter")
+		ofile, _ := cmd.Flags().GetString("out")
+
+		csv, err := wvparser.WVParser{FilePath:path}.Parse()
+		if err != nil {
+			log.WithError(err).Fatal("Failed Parse")
+		}
+
+		c := wvparser.NewCounter(filter...)
+		result := c.Aggregate(csv)
+		log.Info(result)
+		ioutil.WriteFile(ofile,[]byte(fmt.Sprint(result)),0644)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(countCmd)
-
-	countCmd.Flags().StringP("out", "o", "result", "specify output file")
-	countCmd.Flags().BoolP("Cumulative", "c", false, "累積和で出力します")
-	countCmd.Flags().StringSliceP("filter", "f", []string{}, "Query string")
-	countCmd.Flags().StringSliceP("input", "i", []string{}, "Input files. if set 'all' or empty, avv pick up all csv file in current directory")
+	countCmd.Flags().StringSlice("filter",[]string{}, "フィルター")
+	countCmd.Flags().StringP("out","o","./out.txt","出力ファイル")
 }
 
 type CountTask struct {
 	Task Task
-}
-
-type CommandLineCountTask struct {
-	TargetFile string
-	ColSize    int
-	SignalName string
-	Script     string
-	SEED       int
-}
-
-// Run for CommandLine Interface Task
-func (cct CommandLineCountTask) Run(parent context.Context) TaskResult {
-	ctx, cancel := context.WithCancel(parent)
-	defer cancel()
-
-	ch := make(chan int64)
-	defer close(ch)
-	ech := make(chan error)
-	defer close(ech)
-
-	go func() {
-		p, err := ShapingCSV(cct.TargetFile, cct.SignalName, cct.ColSize)
-		if err != nil {
-			ech <- err
-			return
-		}
-		out, err := exec.Command("awk", cct.Script, p).Output()
-		if err != nil {
-			ech <- err
-			return
-		}
-
-		f, err := strconv.Atoi(string(out))
-		if err != nil {
-			ech <- err
-			return
-		}
-
-		ch <- int64(f)
-	}()
-
-	l := log.WithField("at", "CommandLineCountTask.Run")
-	select {
-	case <-ctx.Done():
-		l.Warn("Canceled By Context")
-		return TaskResult{Status: false}
-	case err := <-ech:
-		l.Error(err)
-		return TaskResult{Status: false}
-	case f := <-ch:
-		return TaskResult{
-			Task: Task{
-				SEED:    cct.SEED,
-				Failure: int64(f),
-			},
-			Status: true,
-		}
-	}
-
-}
-
-func (cct CommandLineCountTask) Self() Task {
-	return Task{}
-}
-
-func (CommandLineCountTask) String() string {
-	return ""
 }
 
 func (ct CountTask) Run(parent context.Context) TaskResult {
@@ -188,33 +132,36 @@ func (ct CountTask) CountUp() (failure int64, err error) {
 		return -1, err
 	}
 
-	// find target files
-	var targets []string
+	box := make([]bool, ct.Task.Times)
+
+	filters := ct.Task.PlotPoint.ToFilterStrings()
 	for _, v := range ct.Task.PlotPoint.Filters {
 		p := PathJoin(resultDir, v.SignalName, fmt.Sprintf("SEED%05d.csv", ct.Task.SEED))
 		if _, err := os.Stat(p); err != nil {
 			return -1, err
 		}
 
-		// Convert file format
-		out, err := ShapingCSV(p, v.SignalName, len(v.Status))
+		csv, err := wvparser.WVParser{FilePath: p}.Parse()
 		if err != nil {
-			return -1, err
+			return -1, xerrors.Errorf("Failed Parse: %w", err)
 		}
 
-		targets = append(targets, out)
+		res, err := wvparser.NewCounter(filters[v.SignalName]...).GetStatuses(csv)
+		if err != nil {
+			return -1, xerrors.Errorf("Failed GetStatuses: %w", err)
+		}
+
+		for i, v := range res {
+			box[i] = box[i] && v
+		}
 	}
 
-	out, err := pipeline.Output(
-		[]string{"paste", strings.Join(targets, " ")},
-		[]string{"awk", ct.Task.PlotPoint.GetAwkScript()})
-
-	if err != nil {
-		log.WithField("at", "CountTask.CountUp").Error(string(out))
-		return -1, err
+	failure = 0
+	for _, v := range box {
+		if v {
+			failure++
+		}
 	}
-
-	failure, err = strconv.ParseInt(strings.Trim(string(out), "\n"), 10, 64)
 	return
 }
 

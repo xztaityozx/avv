@@ -36,7 +36,6 @@ func (d DummyTask) Self() Task {
 	return d.Task
 }
 
-
 func TestDispatcher_Dispatch(t *testing.T) {
 	d := NewDispatcher("")
 	ctx, can := context.WithCancel(context.Background())
@@ -61,4 +60,3 @@ func TestDispatcher_Dispatch(t *testing.T) {
 	}
 
 }
-

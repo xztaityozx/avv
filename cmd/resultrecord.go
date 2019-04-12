@@ -28,19 +28,19 @@ func (rr ResultRecord) Select(ctx context.Context, r Repository) ([]ResultRecord
 		return nil, err
 	}
 
-	_, err = db.WithContext(ctx).Select(&rt,rr.SelectQuery(),rr.TaskId)
+	_, err = db.WithContext(ctx).Select(&rt, rr.SelectQuery(), rr.TaskId)
 
 	return rt, nil
 }
 
 func (rr ResultRecord) Insert(ctx context.Context, repository Repository) error {
-	db, err :=repository.Connect()
+	db, err := repository.Connect()
 	defer db.Db.Close()
 	if err != nil {
 		return err
 	}
 
-	_, err = db.WithContext(ctx).Exec(rr.InsertQuery(), rr.TaskId,rr.Seed,rr.Failure,rr.Date)
+	_, err = db.WithContext(ctx).Exec(rr.InsertQuery(), rr.TaskId, rr.Seed, rr.Failure, rr.Date)
 	return err
 }
 
@@ -53,10 +53,9 @@ func (ResultRecord) SelectQuery() string {
 // returns: ResultRecord struct not inserted yet
 func NewResultRecord(result Task) ResultRecord {
 	return ResultRecord{
-		TaskId:result.TaskId,
-		Date:time.Now(),
-		Seed:int64(result.SEED),
-		Failure:result.Failure,
+		TaskId:  result.TaskId,
+		Date:    time.Now(),
+		Seed:    int64(result.SEED),
+		Failure: result.Failure,
 	}
 }
-

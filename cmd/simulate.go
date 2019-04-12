@@ -46,7 +46,7 @@ func (s SimulationTask) Run(parent context.Context) TaskResult {
 
 	// Run Simulation
 
-	l := log.WithField("at","SimulationTask").WithField("seed",fmt.Sprint(t.SEED))
+	l := log.WithField("at", "SimulationTask").WithField("seed", fmt.Sprint(t.SEED))
 	l.Info("Start Simulation")
 
 	out, err := command.Output()
@@ -57,8 +57,8 @@ func (s SimulationTask) Run(parent context.Context) TaskResult {
 			Error("Failed Simulation:" + string(out) + " hspice.log=" + FU.Cat(logfile))
 
 		return TaskResult{
-			Status:false,
-			Task:t,
+			Status: false,
+			Task:   t,
 		}
 	}
 
@@ -69,15 +69,15 @@ func (s SimulationTask) Run(parent context.Context) TaskResult {
 	if err != nil {
 		l.Error(err)
 		return TaskResult{
-			Status:false,
-			Task:t,
+			Status: false,
+			Task:   t,
 		}
 	}
 	if len(files) < t.Times {
 		l.Error("波形データが少なすぎます。")
 		return TaskResult{
-			Status:false,
-			Task:t,
+			Status: false,
+			Task:   t,
 		}
 	}
 	l.Info("file check finished")

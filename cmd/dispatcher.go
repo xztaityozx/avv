@@ -24,9 +24,7 @@ type (
 		Name        string
 		ProgressBar *mpb.Bar
 	}
-
 )
-
 
 func NewDispatcher(name string) Dispatcher {
 	return Dispatcher{
@@ -59,7 +57,7 @@ func (d *Dispatcher) Worker(parent context.Context) {
 func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []TaskResult {
 
 	if len(t) < workers {
-		workers=len(t)
+		workers = len(t)
 	}
 
 	d.WaitGroup = &sync.WaitGroup{}
@@ -81,7 +79,7 @@ func (d *Dispatcher) Dispatch(parent context.Context, workers int, t []ITask) []
 	}
 	defer close(d.Queue)
 
-	pb := mpb.New(mpb.WithContext(ctx), mpb.WithWaitGroup(d.WaitGroup))
+	pb := mpb.NewWithContext(ctx, mpb.WithWaitGroup(d.WaitGroup))
 
 	barName := color.New(color.FgHiYellow).Sprint("Dispatcher:") + d.Name
 

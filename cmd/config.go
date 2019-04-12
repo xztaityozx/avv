@@ -35,4 +35,3 @@ type WaveViewConfig struct {
 type ParallelConfig struct {
 	Master int
 }
-

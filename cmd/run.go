@@ -117,22 +117,21 @@ func (rt RunTask) Run(ctx context.Context) {
 	p := NewPipeLine(t)
 	res := p.Start(ctx)
 	end := time.Now()
-	var s,f []Task
+	var s, f []Task
 
 	for _, v := range res {
 		if v.Status {
-			s=append(s, v.Task)
+			s = append(s, v.Task)
 		} else {
 			f = append(f, v.Task)
 		}
 	}
 
-
-	var sp,fp string
+	var sp, fp string
 	{
-		sp = PathJoin(DoneDir(),time.Now().Format("2006-01-02-15-04-05.json"))
-		l.Info("Write Success Tasks to file: ",sp)
-		b, err := json.MarshalIndent(&s, "","  ")
+		sp = PathJoin(DoneDir(), time.Now().Format("2006-01-02-15-04-05.json"))
+		l.Info("Write Success Tasks to file: ", sp)
+		b, err := json.MarshalIndent(&s, "", "  ")
 		if err != nil {
 			l.WithError(err).Fatal("Failed Marshal Success Tasks")
 		}
@@ -142,7 +141,7 @@ func (rt RunTask) Run(ctx context.Context) {
 		}
 	}
 	{
-		fp = PathJoin(FailedDir(),time.Now().Format("2006-01-02-15-04-05.json"))
+		fp = PathJoin(FailedDir(), time.Now().Format("2006-01-02-15-04-05.json"))
 		l.Info("Write Failed Tasks to file: ", fp)
 		b, err := json.MarshalIndent(&f, "", "  ")
 		if err != nil {
@@ -150,11 +149,11 @@ func (rt RunTask) Run(ctx context.Context) {
 		}
 		err = ioutil.WriteFile(sp, b, 0644)
 		if err != nil {
-			l.WithError(err).Fatal("Failed Write to ",fp)
+			l.WithError(err).Fatal("Failed Write to ", fp)
 		}
 	}
 
 	config.SlackConfig.PostMessage(fmt.Sprintf(":seikou: %d\n:sippai: %d\n開始時間：%s\n終了時間：%s",
-		len(s),len(f),begin.Format(time.ANSIC),end.Format(time.ANSIC)))
+		len(s), len(f), begin.Format(time.ANSIC), end.Format(time.ANSIC)))
 
 }
