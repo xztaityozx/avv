@@ -25,11 +25,12 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/xztaityozx/go-wvparser"
-	"golang.org/x/xerrors"
 	"io/ioutil"
 	"os"
+
+	"github.com/spf13/cobra"
+	wvparser "github.com/xztaityozx/go-wvparser"
+	"golang.org/x/xerrors"
 )
 
 // countCmd represents the count command
@@ -39,8 +40,6 @@ var countCmd = &cobra.Command{
 	Short:   "数え上げします",
 	Long: `CSVを受け取って数え上げします
 
-ex)
-	avv count --input=file.csv --filter='>=0.4,>=0.4,>=0.4' --out=./out.txt
 	
 `,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -52,22 +51,22 @@ ex)
 		filter, _ := cmd.Flags().GetStringSlice("filter")
 		ofile, _ := cmd.Flags().GetString("out")
 
-		csv, err := wvparser.WVParser{FilePath:path}.Parse()
+		csv, err := wvparser.WVParser{FilePath: path}.Parse()
 		if err != nil {
 			log.WithError(err).Fatal("Failed Parse")
 		}
 
 		c := wvparser.NewCounter(filter...)
 		result := c.Aggregate(csv)
-		log.Info(result)
-		ioutil.WriteFile(ofile,[]byte(fmt.Sprint(result)),0644)
+		fmt.Println(result)
+		ioutil.WriteFile(ofile, []byte(fmt.Sprint(result)), 0644)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(countCmd)
-	countCmd.Flags().StringSlice("filter",[]string{}, "フィルター")
-	countCmd.Flags().StringP("out","o","./out.txt","出力ファイル")
+	countCmd.Flags().StringSlice("filter", []string{}, "フィルター")
+	countCmd.Flags().StringP("out", "o", "./out.txt", "出力ファイル")
 }
 
 type CountTask struct {
