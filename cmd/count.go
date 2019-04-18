@@ -77,6 +77,8 @@ var countCmd = &cobra.Command{
 			}(v)
 		}
 
+		wg.Wait()
+
 		if len(ofile) == 0 {
 			for i, v := range box {
 				fmt.Println(i, ": ", v)
