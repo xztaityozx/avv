@@ -27,6 +27,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"sync"
 
 	"github.com/spf13/cobra"
 	wvparser "github.com/xztaityozx/go-wvparser"
@@ -45,6 +46,7 @@ var countCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ofile, _ := cmd.Flags().GetString("out")
 		filter, _ := cmd.Flags().GetStringSlice("filter")
+		parallel, _ := cmd.PersistentFlags().GetInt("Parallel")
 
 		f := func(path string) int64 {
 			if _, err := os.Stat(path); err != nil {
@@ -63,11 +65,19 @@ var countCmd = &cobra.Command{
 		}
 
 		var box = map[string]int64{}
+		var wg sync.WaitGroup
+		sem := make(chan struct{}, parallel)
 		for _, v := range args {
-			box[v] = f(v)
+			wg.Add(1)
+			go func(p string) {
+				defer wg.Done()
+				sem <- struct{}{}
+				box[p] = f(p)
+				<-sem
+			}(v)
 		}
 
-		if len(ofile) != 0 {
+		if len(ofile) == 0 {
 			for i, v := range box {
 				fmt.Println(i, ": ", v)
 			}
