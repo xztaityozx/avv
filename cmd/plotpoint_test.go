@@ -89,9 +89,8 @@ func TestPlotpoint_ToFilterString(t *testing.T) {
 		Stop:  17.5,
 	}
 
-	actual, err := pp.ToFilterStrings()
-	assert.NoError(t, err)
+	actual := pp.ToFilterStrings()
 
-	assert.Equal(t, "2.5n:>=:1 10n:<=:6 17.5n:>:1", actual)
+	assert.Equal(t, []string{"2.5n:>=:1", "10.0n:<=:6", "17.5n:>:1"}, actual["A"])
 
 }

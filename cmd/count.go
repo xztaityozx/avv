@@ -40,33 +40,48 @@ var countCmd = &cobra.Command{
 	Short:   "数え上げします",
 	Long: `CSVを受け取って数え上げします
 
-	
+
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		path := args[0]
-		if _, err := os.Stat(path); err != nil {
-			log.WithError(err).Fatal("Failed count sub command")
-		}
-
-		filter, _ := cmd.Flags().GetStringSlice("filter")
 		ofile, _ := cmd.Flags().GetString("out")
+		filter, _ := cmd.Flags().GetStringSlice("filter")
 
-		csv, err := wvparser.WVParser{FilePath: path}.Parse()
-		if err != nil {
-			log.WithError(err).Fatal("Failed Parse")
+		f := func(path string) int64 {
+			if _, err := os.Stat(path); err != nil {
+				log.WithError(err).Fatal("Failed count sub command")
+			}
+
+			csv, err := wvparser.WVParser{FilePath: path}.Parse()
+			if err != nil {
+				log.WithError(err).Fatal("Failed Parse")
+			}
+
+			c := wvparser.NewCounter(filter...)
+			result := c.Aggregate(csv)
+
+			return result
 		}
 
-		c := wvparser.NewCounter(filter...)
-		result := c.Aggregate(csv)
-		fmt.Println(result)
-		ioutil.WriteFile(ofile, []byte(fmt.Sprint(result)), 0644)
+		var box map[string]int64
+		for _, v := range args {
+			box[v] = f(v)
+		}
+
+		if len(ofile) != 0 {
+			for i, v := range box {
+				fmt.Println(i, ": ", v)
+			}
+		} else {
+			ioutil.WriteFile(ofile, []byte(fmt.Sprint(box)), 0644)
+		}
+
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(countCmd)
 	countCmd.Flags().StringSlice("filter", []string{}, "フィルター")
-	countCmd.Flags().StringP("out", "o", "./out.txt", "出力ファイル")
+	countCmd.Flags().StringP("out", "o", "", "出力ファイル")
 }
 
 type CountTask struct {
