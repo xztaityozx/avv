@@ -62,7 +62,7 @@ var countCmd = &cobra.Command{
 			return result
 		}
 
-		var box map[string]int64
+		var box = map[string]int64{}
 		for _, v := range args {
 			box[v] = f(v)
 		}
