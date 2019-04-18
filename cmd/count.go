@@ -77,7 +77,7 @@ var countCmd = &cobra.Command{
 		finishMSG := color.New(color.FgHiGreen).Sprint(" done!")
 		workingMSG := color.New(color.FgCyan).Sprint(" In progress...")
 		pb := mpb.New(mpb.WithWaitGroup(&wg))
-		bar := pb.Add(int64(len(args)),
+		bar := pb.AddBar(int64(len(args)),
 			mpb.BarStyle("┃██▒┃"),
 			mpb.BarWidth(50),
 			mpb.PrependDecorators(
@@ -102,6 +102,7 @@ var countCmd = &cobra.Command{
 			}(v)
 		}
 
+		pb.Wait()
 		wg.Wait()
 
 		if len(ofile) == 0 {
