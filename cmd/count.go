@@ -29,10 +29,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
-	"github.com/vbauerster/mpb"
-	"github.com/vbauerster/mpb/decor"
 	wvparser "github.com/xztaityozx/go-wvparser"
 	"golang.org/x/xerrors"
 )
@@ -71,29 +68,8 @@ var countCmd = &cobra.Command{
 		var wg sync.WaitGroup
 		sem := make(chan struct{}, parallel)
 
-		wg.Add(len(args))
-		barName := color.New(color.FgHiYellow).Sprint("Counter:")
-
-		finishMSG := color.New(color.FgHiGreen).Sprint(" done!")
-		workingMSG := color.New(color.FgCyan).Sprint(" In progress...")
-		pb := mpb.New(mpb.WithWaitGroup(&wg))
-		bar := pb.AddBar(int64(len(args)),
-			mpb.BarStyle("┃██▒┃"),
-			mpb.BarWidth(50),
-			mpb.PrependDecorators(
-				decor.Name(barName, decor.WC{W: len(barName) + 1, C: decor.DidentRight}),
-			),
-			mpb.AppendDecorators(
-				decor.Name("   "),
-				decor.Percentage(decor.WC{W: 5}),
-				decor.Name(" | "),
-				decor.CountersNoUnit("%d / %d", decor.WCSyncWidth),
-				decor.Name(" | "),
-				decor.OnComplete(decor.Name(workingMSG), finishMSG),
-			),
-		)
-
 		for _, v := range args {
+			wg.Add(1)
 			go func(p string) {
 				defer wg.Done()
 				sem <- struct{}{}
@@ -102,7 +78,6 @@ var countCmd = &cobra.Command{
 			}(v)
 		}
 
-		pb.Wait()
 		wg.Wait()
 
 		if len(ofile) == 0 {
