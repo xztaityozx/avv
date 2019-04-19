@@ -73,12 +73,15 @@ var countCmd = &cobra.Command{
 			wg.Add(1)
 			logrus.Info("Start Count: ", v)
 			go func(p string) {
-				defer wg.Done()
 				sem <- struct{}{}
 				box[p] = f(p)
 				<-sem
+				logrus.Info("finished: ", v)
+				wg.Done()
 			}(v)
 		}
+
+		logrus.Info("Waiting...")
 
 		wg.Wait()
 
