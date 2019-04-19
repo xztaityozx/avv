@@ -159,6 +159,7 @@ func (ct CountTask) CountUp() (failure int64, err error) {
 		}
 
 		res, err := wvparser.NewCounter(filters[v.SignalName]...).GetStatuses(csv)
+		log.Info("Counter Info: ", wvparser.NewCounter(filters[v.SignalName]...))
 		if err != nil {
 			return -1, xerrors.Errorf("Failed GetStatuses: %w", err)
 		}
