@@ -27,9 +27,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"sync"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	wvparser "github.com/xztaityozx/go-wvparser"
 	"golang.org/x/xerrors"
@@ -47,50 +45,32 @@ var countCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ofile, _ := cmd.Flags().GetString("out")
 		filter, _ := cmd.Flags().GetStringSlice("filter")
-		parallel, _ := cmd.PersistentFlags().GetInt("Parallel")
+		parallel, _ := rootCmd.PersistentFlags().GetInt("Parallel")
 
-		f := func(path string) int64 {
-			if _, err := os.Stat(path); err != nil {
-				log.WithError(err).Fatal("Failed count sub command")
-			}
-
-			csv, err := wvparser.WVParser{FilePath: path}.Parse()
-			if err != nil {
-				log.WithError(err).Fatal("Failed Parse")
-			}
-
-			c := wvparser.NewCounter(filter...)
-			result := c.Aggregate(csv)
-
-			return result
+		var task []ITask
+		for _, v := range args {
+			task = append(task, NewCountCLITask(v, filter))
 		}
+
+		d := NewDispatcher("Counter")
+		res := d.Dispatch(context.Background(), parallel, task)
 
 		var box = map[string]int64{}
-		var wg sync.WaitGroup
-		sem := make(chan struct{}, parallel)
 
-		for _, v := range args {
-			wg.Add(1)
-			logrus.Info("Start Count: ", v)
-			go func(p string) {
-				sem <- struct{}{}
-				box[p] = f(p)
-				<-sem
-				logrus.Info("finished: ", v)
-				wg.Done()
-			}(v)
+		for _, v := range res {
+			box[v.Task.SimulationFiles.Self] = v.Task.Failure
 		}
-
-		logrus.Info("Waiting...")
-
-		wg.Wait()
 
 		if len(ofile) == 0 {
 			for i, v := range box {
 				fmt.Println(i, ": ", v)
 			}
 		} else {
-			ioutil.WriteFile(ofile, []byte(fmt.Sprint(box)), 0644)
+			str := ""
+			for i, v := range box {
+				str = fmt.Sprintf("%s%s : %d\n", str, i, v)
+			}
+			ioutil.WriteFile(ofile, []byte(str), 0644)
 		}
 
 	},
