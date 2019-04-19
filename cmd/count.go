@@ -29,6 +29,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	wvparser "github.com/xztaityozx/go-wvparser"
 	"golang.org/x/xerrors"
@@ -70,6 +71,7 @@ var countCmd = &cobra.Command{
 
 		for _, v := range args {
 			wg.Add(1)
+			logrus.Info("Start Count: ", v)
 			go func(p string) {
 				defer wg.Done()
 				sem <- struct{}{}
