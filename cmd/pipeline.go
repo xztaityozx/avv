@@ -23,7 +23,6 @@ func NewPipeLine(tasks []ITask) PipeLine {
 }
 
 func (p PipeLine) Start(ctx context.Context) []TaskResult {
-	var rt []TaskResult
 
 	d := NewDispatcher("Master")
 	logrus.Info("Start Simulation PipeLine")
@@ -33,19 +32,5 @@ func (p PipeLine) Start(ctx context.Context) []TaskResult {
 	logrus.Info("Finished Simulation PipeLine")
 	logrus.Info("End: ", time.Now().Format(time.ANSIC))
 
-	var da []ITask
-	for _, v := range res {
-		if v.Status {
-			da = append(da, DBAccessTask{Task: v.Task})
-		} else {
-			rt = append(rt, v)
-		}
-	}
-
-	dd := NewDispatcher("DBAccess")
-	res = dd.Dispatch(ctx, 1, da)
-
-	rt = append(rt, res...)
-
-	return rt
+	return res
 }

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"os/exec"
 	"strings"
 )
 
@@ -12,7 +11,7 @@ type PlotPoint struct {
 	Start   float64
 	Step    float64
 	Stop    float64
-	Filters []Filter
+	Signals []string
 }
 
 // Signal Name and filter values for count up failure stage
@@ -30,27 +29,6 @@ func (p PlotPoint) ToJson() (string, error) {
 	}
 
 	return string(out), nil
-}
-
-func (p PlotPoint) ToFilterStrings() map[string][]string {
-	var rt = map[string][]string{}
-
-	out, err := exec.Command("seq", fmt.Sprint(p.Start), fmt.Sprint(p.Step),fmt.Sprint(p.Stop)).Output()
-	if err != nil {
-		log.WithError(err).Fatal("Failed seq command: ", fmt.Sprint(p.Start, p.Step, p.Stop))
-	}
-
-	seq := strings.Split(string(out), "\n")
-
-	for _, f := range p.Filters {
-		var box []string
-		for i, v := range f.Status {
-			box = append(box, fmt.Sprintf("%sn:%s", seq[i], v))
-		}
-		rt[f.SignalName] = box
-	}
-
-	return rt
 }
 
 // compare func fof Filter struct
@@ -79,20 +57,6 @@ func (f Filter) ToAwkStatement(start int) string {
 	return strings.Join(rt, "&&")
 }
 
-// GetAwkScript generate awk script for count up
-// returns: awk script string
-func (p PlotPoint) GetAwkScript() string {
-	// statement
-	var stmt []string
-	start := 1
-	for _, v := range p.Filters {
-		stmt = append(stmt, v.ToAwkStatement(start))
-		start += len(v.Status)
-	}
-
-	return fmt.Sprintf("BEGIN{sum=0}%s{sum++}END{print sum}", strings.Join(stmt, "&&"))
-}
-
 // Get plot step
 //returns: Number of Plot Steps
 func (p PlotPoint) PlotSteps() int {
@@ -106,10 +70,10 @@ func (p PlotPoint) MkACEScript(dst string) (string, error) {
 sx_export_csv on
 sx_export_range %.2fns %.2fns %.2fns`, p.Start, p.Stop, p.Step)
 
-	for _, v := range p.Filters {
+	for _, v := range p.Signals {
 		rt = fmt.Sprintf(`%s
 set www [ sx_find_wave_in_file $xml %s ]
-sx_export_data "%s.csv" $www`, rt, v.SignalName, v.SignalName)
+sx_export_data "%s.csv" $www`, rt, v, v)
 	}
 
 	path := PathJoin(dst, "extract.ace")
@@ -119,12 +83,12 @@ sx_export_data "%s.csv" $www`, rt, v.SignalName, v.SignalName)
 // Compare func for PlotPoint struct
 // return: compare result
 func (p PlotPoint) Compare(t PlotPoint) bool {
-	if len(p.Filters) != len(t.Filters) {
+	if len(p.Signals) != len(t.Signals) {
 		return false
 	}
 
-	for i, v := range p.Filters {
-		if v.Compare(t.Filters[i]) {
+	for i, v := range p.Signals {
+		if v != t.Signals[i] {
 			return false
 		}
 	}

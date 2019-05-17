@@ -85,11 +85,11 @@ func (t ExtractTask) Run(parent context.Context) TaskResult {
 		}
 	}
 
-	for _, v := range t.Task.PlotPoint.Filters {
+	for _, v := range t.Task.PlotPoint.Signals {
 		// csvをそれぞれの信号線のディレクトリに移動させる
-		oldPath := PathJoin(t.Task.SimulationDirectories.DstDir, v.SignalName+".csv")
-		FU.TryMkDir(PathJoin(t.Task.SimulationDirectories.ResultDir, v.SignalName))
-		newPath := PathJoin(t.Task.SimulationDirectories.ResultDir, v.SignalName, fmt.Sprintf("SEED%05d.csv", t.Task.SEED))
+		oldPath := PathJoin(t.Task.SimulationDirectories.DstDir, v+".csv")
+		FU.TryMkDir(PathJoin(t.Task.SimulationDirectories.ResultDir, v))
+		newPath := PathJoin(t.Task.SimulationDirectories.ResultDir, v, fmt.Sprintf("SEED%05d.csv", t.Task.SEED))
 
 		if err := os.Rename(oldPath, newPath); err != nil {
 			l.WithError(err).Error("Failed Rename ", oldPath, " to ", newPath)

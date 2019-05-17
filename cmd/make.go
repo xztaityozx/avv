@@ -154,15 +154,10 @@ type MakeRequest struct {
 // output task.json to [TaskDir/reserve]
 // return: error
 func (m MakeRequest) MakeTaskFiles(ctx context.Context) error {
-	tg, err := m.NewTaskGroup(ctx)
-	if err != nil {
-		return err
-	}
 
 	for seed := m.SEED.Start; seed <= m.SEED.End; seed++ {
 		data := m.Task
 		data.SEED = seed
-		data.TaskId = tg.TaskId
 		data.Stage = HSPICE
 		data.SimulationFiles.AddFile.SEED = seed
 

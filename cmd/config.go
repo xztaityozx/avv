@@ -1,5 +1,7 @@
 package cmd
 
+import "github.com/xztaityozx/avv/repository"
+
 type Config struct {
 	Default          Task
 	DefaultSEEDRange SEED
@@ -15,6 +17,7 @@ type Config struct {
 	AutoRetry        bool
 	AutoDBBackUp     bool
 	BackUpDir        string
+	Server           repository.Repository
 }
 
 type HSPICEConfig struct {

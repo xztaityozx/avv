@@ -24,12 +24,9 @@ func (mt MasterTask) Run(ctx context.Context) TaskResult {
 		} else if t.Stage == WaveView {
 			t.Stage = CountUp
 			return CountTask{Task: t}
-		} else if t.Stage == CountUp {
+		} else {
 			t.Stage = Remove
 			return RemoveTask{Task: t}
-		} else {
-			t.Stage = DBAccess
-			return DBAccessTask{Task: t}
 		}
 	}
 

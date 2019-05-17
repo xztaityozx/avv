@@ -37,10 +37,6 @@ type Task struct {
 	Stage Stage
 	// ResultCSV 結果を書き出したCSVへのパスです
 	ResultCSV []string
-	// Repository このタスクの結果を書き込むDB情報です
-	Repository Repository
-	// TaskId このタスクのグループIDです
-	TaskId int64
 	// Failure このタスクの実行結果から得られた不良数です
 	Failure int64
 }
@@ -69,10 +65,6 @@ func (t Task) GetWrapper() ITask {
 		}
 	} else if t.Stage == CountUp {
 		return CountTask{
-			Task: t,
-		}
-	} else if t.Stage == DBAccess {
-		return DBAccessTask{
 			Task: t,
 		}
 	} else if t.Stage == Remove {

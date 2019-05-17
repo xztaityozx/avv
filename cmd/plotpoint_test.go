@@ -58,39 +58,3 @@ func TestFilter_Compare(t *testing.T) {
 	assert.True(t, f.Compare(f))
 	assert.False(t, f.Compare(Filter{}))
 }
-
-func TestPlotPoint_GetAwkScript(t *testing.T) {
-	pp := PlotPoint{
-		Filters: []Filter{
-			{SignalName: "A", Status: []string{">=1", "<=6", ">1"}},
-			{SignalName: "B", Status: []string{">=2", "<=7", ">2"}},
-			{SignalName: "C", Status: []string{">=3", "<=8", ">3"}},
-			{SignalName: "D", Status: []string{">=4", "<=9", ">4"}},
-			{SignalName: "E", Status: []string{">=5", "<=0", ">5"}},
-		},
-		Start: 2.5,
-		Step:  7.5,
-		Stop:  17.5,
-	}
-
-	actual := pp.GetAwkScript()
-	expect := "BEGIN{sum=0}$1>=1&&$2<=6&&$3>1&&$4>=2&&$5<=7&&$6>2&&$7>=3&&$8<=8&&$9>3&&$10>=4&&$11<=9&&$12>4&&$13>=5&&$14<=0&&$15>5{sum++}END{print sum}"
-
-	assert.Equal(t, expect, actual)
-}
-
-func TestPlotpoint_ToFilterString(t *testing.T) {
-	pp := PlotPoint{
-		Filters: []Filter{
-			{SignalName: "A", Status: []string{">=:1", "<=:6", ">:1"}},
-		},
-		Start: 2.5,
-		Step:  7.5,
-		Stop:  17.5,
-	}
-
-	actual := pp.ToFilterStrings()
-
-	assert.Equal(t, []string{"2.5n:>=:1", "10.0n:<=:6", "17.5n:>:1"}, actual["A"])
-
-}

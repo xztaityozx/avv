@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
+	"time"
 )
 
 type SimulationResult struct {
@@ -51,18 +53,7 @@ func GetTasksFromFiles(p ...string) RunTask {
 
 func (rt RunTask) BackUp() error {
 
-	m := make(map[string]Repository)
-	for _, v := range rt {
-		m[v.Repository.Path] = v.Repository
-	}
-
-	for _, v := range m {
-		if err := v.DBBackUp(); err != nil {
-			return err
-		}
-	}
-
-	return nil
+	return config.Server.BackUp(PathJoin(config.BackUpDir, fmt.Sprintf("backup-%s", time.Now().Format("20060102150405"))))
 }
 
 func GetTasksFromTaskDir(cnt int) RunTask {
