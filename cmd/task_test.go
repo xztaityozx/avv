@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
+	"github.com/xztaityozx/avv/repository"
 	"os"
 	"testing"
 )
@@ -18,12 +19,12 @@ func TestAllTask(t *testing.T) {
 	FU.TryMkDir(config.Default.SimulationDirectories.NetListDir)
 
 	config.Default.SEED = 100
-	config.Default.Vtn = Transistor{
+	config.Default.Vtn = repository.Transistor{
 		Sigma:     0.046,
 		Threshold: 0.6,
 		Deviation: 1.0,
 	}
-	config.Default.Vtp = Transistor{
+	config.Default.Vtp = repository.Transistor{
 		Sigma:     0.046,
 		Threshold: -0.6,
 		Deviation: 1.0,

@@ -2,17 +2,21 @@ package repository
 
 import (
 	"github.com/globalsign/mgo"
-	"github.com/xztaityozx/avv/cmd"
+	"github.com/globalsign/mgo/bson"
 	"github.com/xztaityozx/go-wvparser"
 )
 
 type record struct {
-	Vtn    cmd.Transistor `bson:",inline"`
-	Vtp    cmd.Transistor `bson:",inline"`
-	Seed   int            `bson:"seed"`
-	Signal string         `bson:"signal"`
-	Values []float64      `bson:"values"`
-	Time   float64        `bson:"time"`
+	VtnDeviation float64   `bson:"vtn-dev"`
+	VtnSigma     float64   `bson:"vtn-sigma"`
+	VtnThreshold float64   `bson:"vtn-th"`
+	VtpDeviation float64   `bson:"vtp-dev"`
+	VtpSigma     float64   `bson:"vtp-sigma"`
+	VtpThreshold float64   `bson:"vtp-th"`
+	Seed         int       `bson:"seed"`
+	Signal       string    `bson:"signal"`
+	Values       []float64 `bson:"values"`
+	Time         float64   `bson:"time"`
 }
 
 type Repository struct {
@@ -34,7 +38,7 @@ func (r Repository) BackUp(file string) error {
 }
 
 //
-func (r Repository) Insert(vtn, vtp cmd.Transistor, seed int, csv *wvparser.WVCsv) error {
+func (r Repository) Insert(vtn, vtp Transistor, seed int, csv *wvparser.WVCsv) error {
 
 	session, err := mgo.Dial(r.Address)
 	if err != nil {
@@ -49,16 +53,16 @@ func (r Repository) Insert(vtn, vtp cmd.Transistor, seed int, csv *wvparser.WVCs
 	db := session.DB("result")
 	collection := db.C("records")
 
-	selector := record{
-		Vtn:    vtn,
-		Vtp:    vtp,
-		Signal: csv.Header.Signal,
-		Seed:   seed,
+	selector := bson.M{
+		"vtn-sigma": vtn.Sigma,
+		"vtn-dev":vtn.Deviation,
+		"vtn-th":vtn.Threshold,
+		"vtp-sigma": vtp.Sigma,
+		"vtp-dev":vtp.Deviation,
+		"vtp-th":vtp.Threshold,
 	}
 
 	data := record{
-		Vtn:    vtn,
-		Vtp:    vtp,
 		Signal: csv.Header.Signal,
 		Seed:   seed,
 	}

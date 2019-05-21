@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"github.com/xztaityozx/avv/repository"
 	"strings"
 )
 
@@ -19,9 +20,9 @@ type Task struct {
 	// SimulationFiles このタスクで扱うパラメータ情報のファイルです
 	SimulationFiles SimulationFiles
 	// Vtn Vtnのトランジスタ情報
-	Vtn Transistor
+	Vtn repository.Transistor
 	// Vtp Vtpのトランジスタ情報
-	Vtp Transistor
+	Vtp repository.Transistor
 	// TODO: AutoRemoveを実装しようね
 	// AutoRemove タスク終了時にゴミを掃除します
 	AutoRemove bool
