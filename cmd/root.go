@@ -23,23 +23,18 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
-	"time"
 
-	colorable "github.com/mattn/go-colorable"
 
 	"github.com/sirupsen/logrus"
-	"github.com/snowzach/rotatefilehook"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
-var config = Config{}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -76,42 +71,6 @@ func init() {
 var log = logrus.New()
 
 func initLogger() {
-
-	// Hook to log file
-	path := PathJoin(config.LogDir, time.Now().Format("2006-01-02-15-04-05")+".log")
-	//logrus.Info("LogFile: ", path)
-	filehook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
-		Filename: path,
-		MaxAge:   28,
-		MaxSize:  500,
-		Level:    logrus.InfoLevel,
-		Formatter: &logrus.TextFormatter{
-			ForceColors:     true,
-			TimestampFormat: time.RFC3339,
-			FullTimestamp:   true,
-		},
-	})
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	log.SetOutput(ioutil.Discard)
-	// init logrus System
-	log.SetFormatter(&logrus.TextFormatter{
-		ForceColors:     true,
-		FullTimestamp:   true,
-		TimestampFormat: time.RFC3339,
-	})
-	log.AddHook(&IOHook{
-		LogLevels: []logrus.Level{logrus.ErrorLevel, logrus.FatalLevel},
-		Writer:    colorable.NewColorableStderr(),
-	})
-
-	log.AddHook(filehook)
-
-	// Slack Hook
-	slackHook := config.SlackConfig.NewFatalLoggerHook()
-	log.AddHook(slackHook)
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -157,13 +116,4 @@ func initConfig() {
 	// init Logger System
 	initLogger()
 
-	// init Task Directories
-	initDirectories()
-}
-
-func initDirectories() {
-	FU.TryMkDir(ReserveDir())
-	FU.TryMkDir(DoneDir())
-	FU.TryMkDir(FailedDir())
-	FU.TryMkDir(DustDir())
 }

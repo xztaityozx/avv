@@ -1,4 +1,4 @@
-package cmd
+package hook
 
 import (
 	"fmt"
@@ -9,9 +9,10 @@ import (
 )
 
 type SlackConfig struct {
-	User       string
-	WebHookURL string
-	Channel    string
+	user        string
+	webHookURL  string
+	channel     string
+	machineName string
 }
 
 func (sc SlackConfig) NewFatalLoggerHook() *lrhook.Hook {
@@ -20,24 +21,24 @@ func (sc SlackConfig) NewFatalLoggerHook() *lrhook.Hook {
 		Async:    true,
 		Message: chat.Message{
 			Text:      sc.BaseMassage(),
-			Channel:   sc.Channel,
+			Channel:   sc.channel,
 			Username:  "avv fatal logger",
 			IconEmoji: ":avvfatal:",
 			AsUser:    true,
 		},
 	}
-	return lrhook.New(cfg, sc.WebHookURL)
+	return lrhook.New(cfg, sc.webHookURL)
 }
 
 func (sc SlackConfig) BaseMassage() string {
-	return fmt.Sprintf("<@%s> こちらはavvコマンドです\nマシン名:%s で実行していたお仕事がおわりました", sc.User, config.MachineName)
+	return fmt.Sprintf("<@%s> こちらはavvコマンドです\nマシン名:%s で実行していたお仕事がおわりました", sc.user, sc.machineName)
 }
 
 func (sc SlackConfig) PostMessage(text string) {
-	hook := webhook.New(sc.WebHookURL)
+	hook := webhook.New(sc.webHookURL)
 	m := &chat.Message{
 		Text:      sc.BaseMassage() + "\n" + text,
-		Channel:   sc.Channel,
+		Channel:   sc.channel,
 		Username:  "avv",
 		IconEmoji: ":avv:",
 		AsUser:    true,
@@ -46,6 +47,6 @@ func (sc SlackConfig) PostMessage(text string) {
 	if err != nil || !res.Ok() {
 		logrus.WithError(err).Error("Failed post message to slack")
 	} else {
-		logrus.Info("Post Message to ", sc.Channel)
+		logrus.Info("Post Message to ", sc.channel)
 	}
 }

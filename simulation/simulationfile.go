@@ -1,4 +1,4 @@
-package cmd
+package simulation
 
 type Templates struct {
 	SPIScript     string

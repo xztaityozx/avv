@@ -1,4 +1,4 @@
-package cmd
+package hook
 
 import (
 	"github.com/sirupsen/logrus"

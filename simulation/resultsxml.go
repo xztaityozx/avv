@@ -1,9 +1,11 @@
-package cmd
+package simulation
 
 import (
 	"encoding/xml"
 	"errors"
 	"fmt"
+	"github.com/xztaityozx/avv/cmd"
+	"github.com/xztaityozx/avv/task"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -61,7 +63,7 @@ type FileFormat struct {
 }
 
 type ResultsXML struct {
-	Task Task
+	Task task.Task
 }
 
 func (r ResultsXML) MakeResultsFilesCollection() Collection {
@@ -87,7 +89,7 @@ func (r ResultsXML) MakeResultsFilesCollection() Collection {
 					{Type: XMLgiString, Value: XMLtran, Name: XMLanalysisName},
 					{Type: XMLgiString, Value: "", Name: XMLfilename},
 					{Type: XMLgiString, Value: XMLpsf, Name: XMLformat},
-					{Type: XMLgiString, Value: mkIteration(r.Task.Times), Name: "iterations"},
+					{Type: XMLgiString, Value: mkIteration(cmd.Times), Name: "iterations"},
 					{Type: XMLgiString, Value: XMLtran, Name: XMLresultType},
 				},
 				Collections: []Collection{r.MakeSweepFilesCollections()},
@@ -133,7 +135,7 @@ func (r ResultsXML) MakeResultsFilesCollection() Collection {
 
 func (r ResultsXML) MakeSweepFileObjects() []Object {
 	var rt []Object
-	for i := 1; i <= r.Task.Times; i++ {
+	for i := 1; i <= r.Task.Sweeps; i++ {
 		obj := Object{
 			Version:    "1",
 			Type:       XMLsaSweepFile,
@@ -171,9 +173,9 @@ func (r ResultsXML) MakeSweepFilesCollections() Collection {
 	return rt
 }
 
-func (t *Task) MakeResultsXml() (string, error) {
-	netlist := t.SimulationDirectories.NetListDir
-	dst := t.SimulationDirectories.DstDir
+func (t *task.Task) MakeResultsXml() (string, error) {
+	netlist := cmd.NetListDir
+	dst := cmd.DstDir
 
 	if _, err := os.Stat(netlist); err != nil {
 		return "", errors.New(fmt.Sprint("can not found ", netlist, " dir (MakeResultsXml)"))
@@ -181,7 +183,7 @@ func (t *Task) MakeResultsXml() (string, error) {
 
 	rx := ResultsXML{Task: *t}
 
-	path := PathJoin(dst, "results.xml")
+	path := cmd.PathJoin(dst, "results.xml")
 
 	data := FileFormat{
 		Version: "1.0",
@@ -217,8 +219,8 @@ func (t *Task) MakeResultsXml() (string, error) {
 	return path, nil
 }
 
-func (t Task) MakeMapXml() (string, error) {
-	path := PathJoin(t.SimulationDirectories.DstDir, "resultsMap.xml")
+func (t task.Task) MakeMapXml() (string, error) {
+	path := cmd.PathJoin(cmd.DstDir, "resultsMap.xml")
 
 	saResultsMap := "saResultsMap"
 
@@ -247,7 +249,7 @@ func (t Task) MakeMapXml() (string, error) {
 								Type:    "saResultsInfo",
 								Name:    "resultsInfo",
 								Attributes: []Attribute{
-									{Type: XMLgiString, Value: t.SimulationDirectories.NetListDir, Name: "netlistDir"},
+									{Type: XMLgiString, Value: cmd.NetListDir, Name: "netlistDir"},
 									{Type: XMLgiString, Value: ".", Name: "resultsDir"},
 								},
 							},

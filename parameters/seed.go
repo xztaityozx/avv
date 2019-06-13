@@ -1,4 +1,4 @@
-package cmd
+package parameters
 
 type SEED struct {
 	Start int

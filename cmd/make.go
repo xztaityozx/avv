@@ -25,6 +25,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/sirupsen/logrus"
+	"github.com/xztaityozx/avv/parameters"
+	"github.com/xztaityozx/avv/task"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -51,8 +53,8 @@ SEEDごとに1つのファイルが生成されます
 	Run: func(cmd *cobra.Command, args []string) {
 
 		mr := MakeRequest{
-			Task: NewTask(),
-			SEED: SEED{
+			Task: task.NewTask(),
+			SEED: parameters.SEED{
 				Start: config.DefaultSEEDRange.Start,
 				End:   config.DefaultSEEDRange.End},
 			TaskDir: config.TaskDir,
@@ -83,7 +85,7 @@ SEEDごとに1つのファイルが生成されます
 			if err := mr.MakeTaskFiles(ctx); err != nil {
 				log.Fatal("MakeTaskFiles: ", err)
 			}
-			logrus.Info("Task File Wrote to ", ReserveDir())
+			logrus.Info("Task File Wrote to ", task.ReserveDir())
 		}()
 
 		// 待機
@@ -130,7 +132,7 @@ func init() {
 	viper.BindPFlag("DefaultSEEDRange.End", makeCmd.Flags().Lookup("end"))
 
 	makeCmd.Flags().IntP("times", "t", 0, "モンテカルロシミュレーション1回当たりの回数")
-	viper.BindPFlag("Default.Times", makeCmd.Flags().Lookup("times"))
+	viper.BindPFlag("Default.Sweeps", makeCmd.Flags().Lookup("times"))
 
 	makeCmd.Flags().String("basedir", "", "シミュレーションの結果を書き出す親ディレクトリ")
 	makeCmd.Flags().String("logdir", "", "ログを格納するディレクトリ")
@@ -145,8 +147,8 @@ func init() {
 
 // MakeRequest
 type MakeRequest struct {
-	Task    Task
-	SEED    SEED
+	Task    task.Task
+	SEED    parameters.SEED
 	TaskDir string
 }
 
@@ -158,22 +160,22 @@ func (m MakeRequest) MakeTaskFiles(ctx context.Context) error {
 	for seed := m.SEED.Start; seed <= m.SEED.End; seed++ {
 		data := m.Task
 		data.SEED = seed
-		data.Stage = HSPICE
+		data.Stage = task.HSPICE
 		data.SimulationFiles.AddFile.SEED = seed
 
 		if b, err := json.Marshal(data); err != nil {
 			return err
 		} else {
 			// 書き出し先
-			path := ReserveDir()
+			path := task.ReserveDir()
 			FU.TryMkDir(path)
 
 			// ファイル名[時間]-[Vtn]-[VtnSigma]-[Vtp]-[VtpSigma]-[回数]-[SEED].json
-			path = PathJoin(path, fmt.Sprintf("%s-Vtn%.4f-Sigma%.4f-Vtp%.4f-Sigma%.4f-Times%05d-SEED%05d.json",
+			path = PathJoin(path, fmt.Sprintf("%s-Vtn%.4f-Sigma%.4f-Vtp%.4f-Sigma%.4f-Sweeps%05d-SEED%05d.json",
 				time.Now().Format("20060102150405"),
 				data.Vtn.Threshold, data.Vtn.Sigma,
 				data.Vtp.Threshold, data.Vtp.Sigma,
-				data.Times,
+				data.Sweeps,
 				data.SEED))
 			err := ioutil.WriteFile(path, b, 0644)
 			if err != nil {
