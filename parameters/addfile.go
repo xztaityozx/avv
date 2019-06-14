@@ -1,4 +1,4 @@
-package simulation
+package parameters
 
 import (
 	"fmt"
@@ -22,7 +22,10 @@ type AddFile struct {
 
 // GenerateAddFile is generate addfile for hspice simulation
 // params:
-//  - path: path to addfile
+//  - path: path to dst dir
+// returns:
+//  - string: path to addfile
+//  - error : error
 func (a AddFile) GenerateAddFile(path string) error {
 	data := fmt.Sprintf(`VDD VDD! 0 %.1fV
 VGND GND! 0 %.1fV
@@ -30,6 +33,5 @@ VGND GND! 0 %.1fV
 %s
 .option SEED=%d`, a.VddVoltage, a.GndVoltage, a.ICCommand, strings.Join(a.Options, "\n"), a.SEED)
 
-	// Try make Directory
 	return fileutils.WriteFile(path, data)
 }

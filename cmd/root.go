@@ -23,10 +23,10 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"github.com/xztaityozx/avv/logger"
 	"github.com/xztaityozx/avv/parameters"
 	"os"
 	"path/filepath"
-
 
 	"github.com/sirupsen/logrus"
 
@@ -70,9 +70,10 @@ func init() {
 	cobra.OnInitialize(initConfig)
 }
 
-var log = logrus.New()
+var log *logrus.Logger
 
 func initLogger() {
+	log = logger.NewLogger(config.Default.BaseDir, config.SlackConfig)
 }
 
 // initConfig reads in config file and ENV variables if set.

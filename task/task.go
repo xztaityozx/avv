@@ -1,27 +1,109 @@
 package task
 
 import (
+	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/xztaityozx/avv/parameters"
 	"github.com/xztaityozx/avv/simulation"
+	"io/ioutil"
+	"os"
 )
 
 // Task タスクを定義するstructの基底クラス()
 type Task struct {
 	// SimulationFiles このタスクで扱うパラメータ情報のファイルです
 	Files simulation.Files
-	// Directories
-	Directories simulation.Directories
-	// Vtn Vtnのトランジスタ情報
-	Vtn parameters.Transistor
-	// Vtp Vtpのトランジスタ情報
-	Vtp parameters.Transistor
 	// AutoRemove タスク終了時にゴミを掃除します
 	AutoRemove bool
-	// PlotPoint
-	PlotPoint parameters.PlotPoint
-	// SEED このタスクのSEEDです
-	SEED int
-	// Sweeps このタスクのMCSの回数です
-	Sweeps int
+	// パラメータ
+	parameters.Parameters
 }
 
+// Generate is generate some Task struct
+func Generate(config parameters.Config) ([]Task, error) {
+	var rt []Task
+
+	stat := func(p string) error {
+		if _, err := os.Stat(p); err != nil {
+			return errors.New(fmt.Sprintf("%s not found", p))
+		}
+		return nil
+	}
+
+	// check dirs
+	if err := stat(config.Default.BaseDir); err != nil {
+		return nil, err
+	}
+
+	if err := stat(config.Default.NetListDir); err != nil {
+		return nil, err
+	}
+
+	if err := stat(config.Default.SearchDir); err != nil {
+		return nil, err
+	}
+
+	// generate parameters
+	for _, v := range parameters.GenerateParameters(config) {
+		f := simulation.Generate(config.Default.BaseDir, config.Default.NetListDir, config.Default.SearchDir, v)
+
+		rt = append(rt, Task{
+			Files:      f,
+			AutoRemove: config.AutoRemove,
+			Parameters: v,
+		})
+	}
+
+	return rt, nil
+}
+
+// Unmarshal is unmarshal task file
+// params:
+//  - path: path to task file
+// returns:
+//  - Task : Task struct
+//  - error: error
+func Unmarshal(path string) (Task, error) {
+	var rt Task
+	b, err := ioutil.ReadFile(path)
+	if err != nil {
+		return Task{}, err
+	}
+
+	err = json.Unmarshal(b, &rt)
+	return rt, err
+}
+
+// MakeFiles make files and directories for simulation
+func (t Task) MakeFiles(tmp simulation.Templates) error {
+	// AddFile
+	err := t.Parameters.AddFile.GenerateAddFile(t.Files.AddFile)
+	if err != nil {
+		return err
+	}
+
+	// SPIScript
+	err = tmp.GenerateSPIScript(t.Files.SPIScript, t.Files.Directories.SearchDir, t.Files.AddFile, t.Parameters)
+	if err != nil {
+		return err
+	}
+
+	// ACEScript
+	err = t.PlotPoint.GenerateACEScript(t.Files.ACEScript, t.Files.ResultFile)
+	if err != nil {
+		return err
+	}
+
+	//XML
+	{
+		xml := simulation.NewResultsXML(t.Sweeps, t.Files.Directories)
+		err := xml.Generate(t.Files.ResultsXML, t.Files.ResultsMapXML)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Directories
+	return t.Files.Directories.MakeDirectories()
+}

@@ -21,21 +21,12 @@
 package cmd
 
 import (
-	"context"
 	"encoding/json"
-	"fmt"
-	"github.com/sirupsen/logrus"
-	"github.com/xztaityozx/avv/parameters"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/task"
 	"io/ioutil"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
-
-	"github.com/spf13/viper"
-
-	"github.com/spf13/cobra"
+	"path/filepath"
 )
 
 // makeCmd represents the make command
@@ -51,49 +42,24 @@ SEEDごとに1つのファイルが生成されます
 
 `,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Info("avv make")
 
-		mr := MakeRequest{
-			Task: task.NewTask(),
-			SEED: parameters.SEED{
-				Start: config.DefaultSEEDRange.Start,
-				End:   config.DefaultSEEDRange.End},
-			TaskDir: config.TaskDir,
+		tasks, err := task.Generate(config)
+		if err != nil {
+			log.Fatal(err)
 		}
 
-		// cancel付きcontext
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-
-		// SIGNALをトラップする
-		sigCh := make(chan os.Signal)
-		defer close(sigCh)
-		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGSTOP, syscall.SIGQUIT)
-
-		go func() {
-			<-sigCh
-			cancel()
-		}()
-
-		// 終了通知チャンネル
-		ch := make(chan struct{})
-		defer close(ch)
-
-		// DBにアクセスするのでちょっと重い
-		go func() {
-			clo := func() { ch <- struct{}{} }
-			defer clo()
-			if err := mr.MakeTaskFiles(ctx); err != nil {
-				log.Fatal("MakeTaskFiles: ", err)
+		for _, v := range tasks {
+			b, err := json.Marshal(&v)
+			if err != nil {
+				log.WithError(err).Error("Failed make task json")
 			}
-			logrus.Info("Task File Wrote to ", task.ReserveDir())
-		}()
 
-		// 待機
-		select {
-		case <-ctx.Done():
-		case <-ch:
+			path := filepath.Join(config.Default.TaskDir(), v.Hash()+".json")
+			if err := ioutil.WriteFile(path, b, 0644); err != nil {
+				log.WithError(err).Error("Failed write task json")
+			}
 		}
-
 	},
 }
 
@@ -128,61 +94,14 @@ func init() {
 	makeCmd.Flags().Int("end", 0, "SEEDの終点")
 
 	viper.BindPFlag("Default.AutoRemove", makeCmd.Flags().Lookup("autoremove"))
-	viper.BindPFlag("DefaultSEEDRange.Start", makeCmd.Flags().Lookup("start"))
-	viper.BindPFlag("DefaultSEEDRange.End", makeCmd.Flags().Lookup("end"))
 
 	makeCmd.Flags().IntP("times", "t", 0, "モンテカルロシミュレーション1回当たりの回数")
 	viper.BindPFlag("Default.Sweeps", makeCmd.Flags().Lookup("times"))
+	viper.BindPFlag("Default.SEED.Start", makeCmd.Flags().Lookup("start"))
+	viper.BindPFlag("Default.SEED.End", makeCmd.Flags().Lookup("end"))
 
 	makeCmd.Flags().String("basedir", "", "シミュレーションの結果を書き出す親ディレクトリ")
-	makeCmd.Flags().String("logdir", "", "ログを格納するディレクトリ")
 
-	viper.BindPFlag("Default.SimulationDirectories.BaseDir", makeCmd.Flags().Lookup("basedir"))
-	viper.BindPFlag("LogDir", makeCmd.Flags().Lookup("logdir"))
+	viper.BindPFlag("Default.BaseDir", makeCmd.Flags().Lookup("basedir"))
 
-	makeCmd.Flags().StringP("DB", "d", "", "path to Output DataBase")
-	viper.BindPFlag("Default.Repository.Path", makeCmd.Flags().Lookup("DB"))
-
-}
-
-// MakeRequest
-type MakeRequest struct {
-	Task    task.Task
-	SEED    parameters.SEED
-	TaskDir string
-}
-
-// make Task file
-// output task.json to [TaskDir/reserve]
-// return: error
-func (m MakeRequest) MakeTaskFiles(ctx context.Context) error {
-
-	for seed := m.SEED.Start; seed <= m.SEED.End; seed++ {
-		data := m.Task
-		data.SEED = seed
-		data.Stage = task.HSPICE
-		data.SimulationFiles.AddFile.SEED = seed
-
-		if b, err := json.Marshal(data); err != nil {
-			return err
-		} else {
-			// 書き出し先
-			path := task.ReserveDir()
-			FU.TryMkDir(path)
-
-			// ファイル名[時間]-[Vtn]-[VtnSigma]-[Vtp]-[VtpSigma]-[回数]-[SEED].json
-			path = PathJoin(path, fmt.Sprintf("%s-Vtn%.4f-Sigma%.4f-Vtp%.4f-Sigma%.4f-Sweeps%05d-SEED%05d.json",
-				time.Now().Format("20060102150405"),
-				data.Vtn.Threshold, data.Vtn.Sigma,
-				data.Vtp.Threshold, data.Vtp.Sigma,
-				data.Sweeps,
-				data.SEED))
-			err := ioutil.WriteFile(path, b, 0644)
-			if err != nil {
-				return err
-			}
-		}
-	}
-	log.Info("Make Request: Write ", m.SEED.End, "task files")
-	return nil
 }

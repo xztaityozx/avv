@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/xztaityozx/awx/cmd"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -64,21 +63,23 @@ type FileFormat struct {
 type ResultsXML struct {
 	sweeps     int
 	netListDir string
-	dstDir     string
 }
 
-func (r ResultsXML) Generate() (string, string, error) {
-	resultsXML, err := r.makeResultsXml()
+func NewResultsXML(sweeps int, d Directories) ResultsXML {
+	return ResultsXML{
+		sweeps:     sweeps,
+		netListDir: d.NetListDir,
+	}
+}
+
+// Generate write xml files for simulations
+func (r ResultsXML) Generate(xml, mapXml string) error {
+	err := r.makeMapXml(xml)
 	if err != nil {
-		return "", "", err
+		return err
 	}
 
-	mapXML, err := r.makeMapXml()
-	if err != nil {
-		return "", "", err
-	}
-
-	return resultsXML, mapXML, nil
+	return r.makeMapXml(mapXml)
 }
 
 func (r ResultsXML) makeResultsFilesCollection() Collection {
@@ -188,15 +189,12 @@ func (r ResultsXML) makeSweepFilesCollections() Collection {
 	return rt
 }
 
-func (r ResultsXML) makeResultsXml() (string, error) {
+func (r ResultsXML) makeResultsXml(path string) error {
 	netList := r.netListDir
-	dst := r.dstDir
 
 	if _, err := os.Stat(netList); err != nil {
-		return "", errors.New(fmt.Sprint("can not found ", netList, " dir (makeResultsXml)"))
+		return errors.New(fmt.Sprint("can not found ", netList, " dir (makeResultsXml)"))
 	}
-
-	path := cmd.PathJoin(dst, "results.xml")
 
 	data := FileFormat{
 		Version: "1.0",
@@ -221,18 +219,14 @@ func (r ResultsXML) makeResultsXml() (string, error) {
 
 	b, err := xml.MarshalIndent(data, "", " ")
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	if err := ioutil.WriteFile(path, b, 0644); err != nil {
-		return "", err
-	}
+	return ioutil.WriteFile(path, b, 0644)
 
-	return path, nil
 }
 
-func (r ResultsXML) makeMapXml() (string, error) {
-	path := cmd.PathJoin(r.dstDir, "resultsMap.xml")
+func (r ResultsXML) makeMapXml(path string) error {
 
 	saResultsMap := "saResultsMap"
 
@@ -274,12 +268,9 @@ func (r ResultsXML) makeMapXml() (string, error) {
 
 	b, err := xml.MarshalIndent(data, "", " ")
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	if err := ioutil.WriteFile(path, b, 0644); err != nil {
-		return "", err
-	}
+	return ioutil.WriteFile(path, b, 0644)
 
-	return path, nil
 }

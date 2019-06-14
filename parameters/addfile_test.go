@@ -1,4 +1,4 @@
-package simulation
+package parameters
 
 import (
 	"bytes"
@@ -19,11 +19,11 @@ func TestAddFile_GenerateAddFile(t *testing.T) {
 
 	path = filepath.Join(path, "addfile")
 	a := AddFile{
-		SEED:1,
-		GndVoltage:0.0,
-		ICCommand:"ic command",
-		Options:[]string{"option1", "option2"},
-		VddVoltage:1.2,
+		SEED:       1,
+		GndVoltage: 0.0,
+		ICCommand:  "ic command",
+		Options:    []string{"option1", "option2"},
+		VddVoltage: 1.2,
 	}
 
 	err := a.GenerateAddFile(path)
@@ -31,7 +31,7 @@ func TestAddFile_GenerateAddFile(t *testing.T) {
 
 	as.NoError(err)
 
-	data,err := ioutil.ReadFile(path)
+	data, err := ioutil.ReadFile(path)
 	as.NoError(err)
 
 	expect := `VDD VDD! 0 1.2V
@@ -48,4 +48,3 @@ option2
 		logrus.Warn(err)
 	}
 }
-

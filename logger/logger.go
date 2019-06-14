@@ -9,7 +9,8 @@ import (
 	"time"
 )
 
-func NewLogger(logDir string, config SlackConfig) *logrus.Logger {
+func NewLogger(base string, config SlackConfig) *logrus.Logger {
+	logDir := filepath.Join(base, "log")
 	log := logrus.New()
 
 	// Hook to log logDir
