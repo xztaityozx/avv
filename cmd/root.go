@@ -23,6 +23,7 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"github.com/xztaityozx/avv/parameters"
 	"os"
 	"path/filepath"
 
@@ -35,6 +36,7 @@ import (
 )
 
 var cfgFile string
+var config parameters.Config
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{

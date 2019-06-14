@@ -4,8 +4,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/xztaityozx/avv/cmd"
-	"github.com/xztaityozx/avv/task"
+	"github.com/xztaityozx/awx/cmd"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -63,10 +62,26 @@ type FileFormat struct {
 }
 
 type ResultsXML struct {
-	Task task.Task
+	sweeps     int
+	netListDir string
+	dstDir     string
 }
 
-func (r ResultsXML) MakeResultsFilesCollection() Collection {
+func (r ResultsXML) Generate() (string, string, error) {
+	resultsXML, err := r.makeResultsXml()
+	if err != nil {
+		return "", "", err
+	}
+
+	mapXML, err := r.makeMapXml()
+	if err != nil {
+		return "", "", err
+	}
+
+	return resultsXML, mapXML, nil
+}
+
+func (r ResultsXML) makeResultsFilesCollection() Collection {
 
 	mkIteration := func(t int) string {
 		var rt []string
@@ -89,10 +104,10 @@ func (r ResultsXML) MakeResultsFilesCollection() Collection {
 					{Type: XMLgiString, Value: XMLtran, Name: XMLanalysisName},
 					{Type: XMLgiString, Value: "", Name: XMLfilename},
 					{Type: XMLgiString, Value: XMLpsf, Name: XMLformat},
-					{Type: XMLgiString, Value: mkIteration(cmd.Times), Name: "iterations"},
+					{Type: XMLgiString, Value: mkIteration(r.sweeps), Name: "iterations"},
 					{Type: XMLgiString, Value: XMLtran, Name: XMLresultType},
 				},
-				Collections: []Collection{r.MakeSweepFilesCollections()},
+				Collections: []Collection{r.makeSweepFilesCollections()},
 			},
 			{
 				Version: "1",
@@ -133,9 +148,9 @@ func (r ResultsXML) MakeResultsFilesCollection() Collection {
 	return rt
 }
 
-func (r ResultsXML) MakeSweepFileObjects() []Object {
+func (r ResultsXML) makeSweepFileObjects() []Object {
 	var rt []Object
-	for i := 1; i <= r.Task.Sweeps; i++ {
+	for i := 1; i <= r.sweeps; i++ {
 		obj := Object{
 			Version:    "1",
 			Type:       XMLsaSweepFile,
@@ -163,25 +178,23 @@ func (r ResultsXML) MakeSweepFileObjects() []Object {
 	return rt
 }
 
-func (r ResultsXML) MakeSweepFilesCollections() Collection {
+func (r ResultsXML) makeSweepFilesCollections() Collection {
 
 	rt := Collection{
 		Name:    XMLsweepFiles,
-		Objects: r.MakeSweepFileObjects(),
+		Objects: r.makeSweepFileObjects(),
 	}
 
 	return rt
 }
 
-func (t *task.Task) MakeResultsXml() (string, error) {
-	netlist := cmd.NetListDir
-	dst := cmd.DstDir
+func (r ResultsXML) makeResultsXml() (string, error) {
+	netList := r.netListDir
+	dst := r.dstDir
 
-	if _, err := os.Stat(netlist); err != nil {
-		return "", errors.New(fmt.Sprint("can not found ", netlist, " dir (MakeResultsXml)"))
+	if _, err := os.Stat(netList); err != nil {
+		return "", errors.New(fmt.Sprint("can not found ", netList, " dir (makeResultsXml)"))
 	}
-
-	rx := ResultsXML{Task: *t}
 
 	path := cmd.PathJoin(dst, "results.xml")
 
@@ -195,13 +208,13 @@ func (t *task.Task) MakeResultsXml() (string, error) {
 				Name:    XMLsaResults,
 				Attributes: []Attribute{
 					{Type: XMLgiString, Value: "resultsMap.xml", Name: "name"},
-					{Type: XMLgiString, Value: netlist, Name: "netlistDir"},
+					{Type: XMLgiString, Value: netList, Name: "netlistDir"},
 					{Type: XMLgiString, Value: ".", Name: "resultsDir"},
 					{Type: XMLgiString, Value: time.Now().Format(time.ANSIC), Name: "runTime"},
 					{Type: XMLgiString, Value: "HSPICE", Name: "simulator"},
 					{Type: XMLgiString, Value: "", Name: "version"},
 				},
-				Collections: []Collection{rx.MakeResultsFilesCollection()},
+				Collections: []Collection{r.makeResultsFilesCollection()},
 			},
 		},
 	}
@@ -211,7 +224,6 @@ func (t *task.Task) MakeResultsXml() (string, error) {
 		return "", err
 	}
 
-	log.Info("MakeResultsXml: Write to", path)
 	if err := ioutil.WriteFile(path, b, 0644); err != nil {
 		return "", err
 	}
@@ -219,8 +231,8 @@ func (t *task.Task) MakeResultsXml() (string, error) {
 	return path, nil
 }
 
-func (t task.Task) MakeMapXml() (string, error) {
-	path := cmd.PathJoin(cmd.DstDir, "resultsMap.xml")
+func (r ResultsXML) makeMapXml() (string, error) {
+	path := cmd.PathJoin(r.dstDir, "resultsMap.xml")
 
 	saResultsMap := "saResultsMap"
 
@@ -249,7 +261,7 @@ func (t task.Task) MakeMapXml() (string, error) {
 								Type:    "saResultsInfo",
 								Name:    "resultsInfo",
 								Attributes: []Attribute{
-									{Type: XMLgiString, Value: cmd.NetListDir, Name: "netlistDir"},
+									{Type: XMLgiString, Value: r.netListDir, Name: "netlistDir"},
 									{Type: XMLgiString, Value: ".", Name: "resultsDir"},
 								},
 							},

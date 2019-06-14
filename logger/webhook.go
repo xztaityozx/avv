@@ -1,4 +1,4 @@
-package hook
+package logger
 
 import (
 	"fmt"

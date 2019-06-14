@@ -5,17 +5,12 @@ import (
 )
 
 type Transistor struct {
-	TransistorId int64
+	name string
 	Threshold    float64
 	Sigma        float64
 	Deviation    float64
 }
 
-// Compare func for Transistor struct
-func (t Transistor) Compare(s Transistor) bool {
-	return t.Sigma == s.Sigma && t.Deviation == s.Deviation && t.Threshold == s.Threshold && t.TransistorId == s.TransistorId
-}
-
-func (t Transistor) StringPrefix(prefix string) string {
-	return fmt.Sprintf("%s%.4f-Sigma%.4f", prefix, t.Threshold, t.Sigma)
+func (t Transistor) String() string {
+	return fmt.Sprintf("%s%.4f-Deviation%.4f-Sigma%.4f", t.name, t.Threshold,t.Deviation, t.Sigma)
 }
