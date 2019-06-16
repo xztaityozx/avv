@@ -1,4 +1,4 @@
-package simulation
+package parameters
 
 import (
 	"encoding/xml"

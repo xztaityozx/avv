@@ -1,9 +1,8 @@
-package simulation
+package parameters
 
 import (
 	"fmt"
 	"github.com/xztaityozx/avv/fileutils"
-	"github.com/xztaityozx/avv/parameters"
 	"golang.org/x/xerrors"
 	"io/ioutil"
 	"path/filepath"
@@ -50,7 +49,7 @@ func (d Directories) MakeDirectories() error {
 	return nil
 }
 
-func Generate(base, net, search string, parameters parameters.Parameters) Files {
+func Generate(base, net, search string, parameters Parameters) Files {
 
 	sha := parameters.Hash()
 	d := Directories{
@@ -81,7 +80,7 @@ func Generate(base, net, search string, parameters parameters.Parameters) Files 
 //  - parameters: Parameters struct
 // returns:
 //  - error: error
-func (t Templates) GenerateSPIScript(path, search, add string, parameters parameters.Parameters) error {
+func (t Templates) GenerateSPIScript(path, search, add string, parameters Parameters) error {
 	b, err := ioutil.ReadFile(t.SPIScript)
 	if err != nil {
 		return err

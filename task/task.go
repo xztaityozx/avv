@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/xztaityozx/avv/parameters"
-	"github.com/xztaityozx/avv/simulation"
 	"io/ioutil"
 	"os"
 )
@@ -13,7 +12,7 @@ import (
 // Task タスクを定義するstructの基底クラス()
 type Task struct {
 	// SimulationFiles このタスクで扱うパラメータ情報のファイルです
-	Files simulation.Files
+	Files parameters.Files
 	// AutoRemove タスク終了時にゴミを掃除します
 	AutoRemove bool
 	// パラメータ
@@ -46,7 +45,7 @@ func Generate(config parameters.Config) ([]Task, error) {
 
 	// generate parameters
 	for _, v := range parameters.GenerateParameters(config) {
-		f := simulation.Generate(config.Default.BaseDir, config.Default.NetListDir, config.Default.SearchDir, v)
+		f := parameters.Generate(config.Default.BaseDir, config.Default.NetListDir, config.Default.SearchDir, v)
 
 		rt = append(rt, Task{
 			Files:      f,
@@ -76,7 +75,7 @@ func Unmarshal(path string) (Task, error) {
 }
 
 // MakeFiles make files and directories for simulation
-func (t Task) MakeFiles(tmp simulation.Templates) error {
+func (t Task) MakeFiles(tmp parameters.Templates) error {
 	// AddFile
 	err := t.Parameters.AddFile.GenerateAddFile(t.Files.AddFile)
 	if err != nil {
@@ -97,7 +96,7 @@ func (t Task) MakeFiles(tmp simulation.Templates) error {
 
 	//XML
 	{
-		xml := simulation.NewResultsXML(t.Sweeps, t.Files.Directories)
+		xml := parameters.NewResultsXML(t.Sweeps, t.Files.Directories)
 		err := xml.Generate(t.Files.ResultsXML, t.Files.ResultsMapXML)
 		if err != nil {
 			return err
