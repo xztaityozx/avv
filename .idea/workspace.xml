@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/push/push_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/simulation/simulate_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pipeline/pipeline_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extract/extract.go" beforeDir="false" afterPath="$PROJECT_DIR$/extract/extract.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extract/extract_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/extract/extract_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameters/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/parameters/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/init.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parameters/plotpoint_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/parameters/plotpoint_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipeline/pipeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/pipeline.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/push/push.go" beforeDir="false" afterPath="$PROJECT_DIR$/push/push.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation/resultsxml.go" beforeDir="false" afterPath="$PROJECT_DIR$/parameters/resultsxml.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation/simulate.go" beforeDir="false" afterPath="$PROJECT_DIR$/simulation/simulate.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation/simulationfile.go" beforeDir="false" afterPath="$PROJECT_DIR$/parameters/simulationfile.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/task.go" beforeDir="false" afterPath="$PROJECT_DIR$/task/task.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/push/push_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/push/push_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,50 +34,26 @@
     <favorites_list name="avv" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/simulation/simulate.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="31" column="75" selection-start-line="31" selection-start-column="75" selection-end-line="31" selection-end-column="75" />
-              <folding>
-                <element signature="e#20#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/simulation/simulate_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
-              <folding>
-                <element signature="e#20#47#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/push/push.go">
+        <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+            <state relative-caret-position="546">
+              <caret line="79" selection-start-line="79" selection-end-line="79" />
               <folding>
-                <element signature="e#14#42#0" expanded="true" />
+                <element signature="e#18#73#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/push/push_test.go">
+        <entry file="file://$PROJECT_DIR$/pipeline/pipeline_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="677">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="672">
+              <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
               <folding>
-                <element signature="e#14#41#0" expanded="true" />
+                <element signature="e#18#77#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,8 +75,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cmd/remove_test.go" />
-        <option value="$PROJECT_DIR$/cmd/FileUtils.go" />
         <option value="$PROJECT_DIR$/cmd/dispatcher.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint.go" />
         <option value="$PROJECT_DIR$/cmd/extract.go" />
@@ -133,7 +103,6 @@
         <option value="$PROJECT_DIR$/logger/iohook.go" />
         <option value="$PROJECT_DIR$/logger/webhook.go" />
         <option value="$PROJECT_DIR$/simulation/addfile.go" />
-        <option value="$PROJECT_DIR$/pipeline/pipeline.go" />
         <option value="$PROJECT_DIR$/logger/logger.go" />
         <option value="$PROJECT_DIR$/cmd/root.go" />
         <option value="$PROJECT_DIR$/cmd/make.go" />
@@ -144,7 +113,6 @@
         <option value="$PROJECT_DIR$/parameters/parameters.go" />
         <option value="$PROJECT_DIR$/task/task.go" />
         <option value="$PROJECT_DIR$/simulation/push.go" />
-        <option value="$PROJECT_DIR$/parameters/plotpoint_test.go" />
         <option value="$PROJECT_DIR$/parameters/config.go" />
         <option value="$PROJECT_DIR$/parameters/simulationfile.go" />
         <option value="$PROJECT_DIR$/parameters/resultsxml.go" />
@@ -152,8 +120,12 @@
         <option value="$PROJECT_DIR$/simulation/simulate.go" />
         <option value="$PROJECT_DIR$/extract/extract.go" />
         <option value="$PROJECT_DIR$/simulation/simulate_test.go" />
+        <option value="$PROJECT_DIR$/parameters/plotpoint_test.go" />
         <option value="$PROJECT_DIR$/push/push_test.go" />
         <option value="$PROJECT_DIR$/push/push.go" />
+        <option value="$PROJECT_DIR$/test/taa.exe" />
+        <option value="$PROJECT_DIR$/pipeline/pipeline_test.go" />
+        <option value="$PROJECT_DIR$/pipeline/pipeline.go" />
       </list>
     </option>
   </component>
@@ -177,7 +149,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -213,6 +184,11 @@
             <path>
               <item name="avv" type="b2602c69:ProjectViewProjectNode" />
               <item name="avv" type="462c0819:PsiDirectoryNode" />
+              <item name="pipeline" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
+              <item name="avv" type="462c0819:PsiDirectoryNode" />
               <item name="push" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -225,15 +201,11 @@
               <item name="avv" type="462c0819:PsiDirectoryNode" />
               <item name="task" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -279,16 +251,27 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestTaa_Invoke in github.com/xztaityozx/avv/push">
-    <configuration name="TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.go test github.com/xztaityozx/avv/pipeline">
+    <configuration name="TestNew in github.com/xztaityozx/avv/pipeline" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/simulation" />
+      <working_directory value="$PROJECT_DIR$/pipeline" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/simulation" />
+      <package value="github.com/xztaityozx/avv/pipeline" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestHSPICE_Invoke$" />
+      <pattern value="^TestNew$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPipeLine_AddStage in github.com/xztaityozx/avv/pipeline" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="avv" />
+      <working_directory value="$PROJECT_DIR$/pipeline" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/xztaityozx/avv/pipeline" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestPipeLine_AddStage$" />
       <method v="2" />
     </configuration>
     <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -302,114 +285,122 @@
       <pattern value="^TestTaa_Invoke$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestTask_GetCommand in github.com/xztaityozx/avv/extract" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestTaa_Invoke/ok in github.com/xztaityozx/avv/push" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/extract" />
+      <working_directory value="$PROJECT_DIR$/push" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/extract" />
+      <package value="github.com/xztaityozx/avv/push" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestTask_GetCommand$" />
+      <pattern value="^TestTaa_Invoke$/^ok$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestTask_getCommand in github.com/xztaityozx/avv/extract" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="go test github.com/xztaityozx/avv/pipeline" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/extract" />
+      <working_directory value="$PROJECT_DIR$/pipeline" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/extract" />
+      <package value="github.com/xztaityozx/avv/pipeline" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestTask_getCommand$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestWaveView_Invoke in github.com/xztaityozx/avv/extract" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/extract" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/extract" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestWaveView_Invoke$" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Test.TestTask_getCommand in github.com/xztaityozx/avv/extract" />
-      <item itemvalue="Go Test.TestTask_GetCommand in github.com/xztaityozx/avv/extract" />
-      <item itemvalue="Go Test.TestWaveView_Invoke in github.com/xztaityozx/avv/extract" />
-      <item itemvalue="Go Test.TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" />
       <item itemvalue="Go Test.TestTaa_Invoke in github.com/xztaityozx/avv/push" />
+      <item itemvalue="Go Test.TestTaa_Invoke/ok in github.com/xztaityozx/avv/push" />
+      <item itemvalue="Go Test.TestNew in github.com/xztaityozx/avv/pipeline" />
+      <item itemvalue="Go Test.TestPipeLine_AddStage in github.com/xztaityozx/avv/pipeline" />
+      <item itemvalue="Go Test.go test github.com/xztaityozx/avv/pipeline" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.go test github.com/xztaityozx/avv/pipeline" />
+        <item itemvalue="Go Test.TestPipeLine_AddStage in github.com/xztaityozx/avv/pipeline" />
+        <item itemvalue="Go Test.TestNew in github.com/xztaityozx/avv/pipeline" />
         <item itemvalue="Go Test.TestTaa_Invoke in github.com/xztaityozx/avv/push" />
-        <item itemvalue="Go Test.TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" />
-        <item itemvalue="Go Test.TestWaveView_Invoke in github.com/xztaityozx/avv/extract" />
-        <item itemvalue="Go Test.TestTask_GetCommand in github.com/xztaityozx/avv/extract" />
-        <item itemvalue="Go Test.TestTask_getCommand in github.com/xztaityozx/avv/extract" />
+        <item itemvalue="Go Test.TestTaa_Invoke/ok in github.com/xztaityozx/avv/push" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestTask_GetCommand_in_github_com_xztaityozx_avv_extract - 2019.06.15 at 01h 18m 09s.xml">
-      <configuration name="TestTask_GetCommand in github.com/xztaityozx/avv/extract" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestTask_GetCommand_in_github_com_xztaityozx_avv_extract - 2019.06.15 at 01h 20m 09s.xml">
-      <configuration name="TestTask_GetCommand in github.com/xztaityozx/avv/extract" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestTask_GetCommand_in_github_com_xztaityozx_avv_extract - 2019.06.15 at 01h 20m 25s.xml">
-      <configuration name="TestTask_GetCommand in github.com/xztaityozx/avv/extract" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestTask_GetCommand_in_github_com_xztaityozx_avv_extract - 2019.06.15 at 01h 34m 54s.xml">
-      <configuration name="TestTask_GetCommand in github.com/xztaityozx/avv/extract" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestWaveView_Invoke_in_github_com_xztaityozx_avv_extract - 2019.06.15 at 01h 39m 54s.xml">
-      <configuration name="TestWaveView_Invoke in github.com/xztaityozx/avv/extract" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestWaveView_Invoke_in_github_com_xztaityozx_avv_extract - 2019.06.15 at 01h 41m 50s.xml">
-      <configuration name="TestWaveView_Invoke in github.com/xztaityozx/avv/extract" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestHSPICE_Invoke_in_github_com_xztaityozx_avv_simulation - 2019.06.15 at 01h 51m 22s.xml">
-      <configuration name="TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestHSPICE_Invoke_in_github_com_xztaityozx_avv_simulation - 2019.06.15 at 01h 52m 59s.xml">
-      <configuration name="TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestHSPICE_Invoke_in_github_com_xztaityozx_avv_simulation - 2019.06.15 at 01h 53m 35s.xml">
-      <configuration name="TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.15 at 02h 11m 26s.xml">
+    <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.17 at 13h 34m 40s.xml">
       <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.17 at 13h 40m 46s.xml">
+      <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.17 at 13h 51m 51s.xml">
+      <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.17 at 13h 52m 14s.xml">
+      <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.17 at 14h 50m 52s.xml">
+      <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNew_in_github_com_xztaityozx_avv_pipeline - 2019.06.17 at 16h 07m 37s.xml">
+      <configuration name="TestNew in github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestNew_in_github_com_xztaityozx_avv_pipeline - 2019.06.17 at 16h 08m 35s.xml">
+      <configuration name="TestNew in github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestPipeLine_AddStage_in_github_com_xztaityozx_avv_pipeline - 2019.06.17 at 16h 24m 19s.xml">
+      <configuration name="TestPipeLine_AddStage in github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestPipeLine_AddStage_in_github_com_xztaityozx_avv_pipeline - 2019.06.17 at 16h 24m 33s.xml">
+      <configuration name="TestPipeLine_AddStage in github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="go_test_github_com_xztaityozx_avv_pipeline - 2019.06.17 at 16h 24m 43s.xml">
+      <configuration name="go test github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="31" width="1920" height="999" extended-state="6" />
+    <frame x="0" y="34" width="2560" height="1406" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" weight="0.32995737" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32414553" />
-      <window_info anchor="bottom" auto_hide="true" id="Run" order="2" weight="0.5273133" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3989305" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" weight="0.32941177" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.57961786" />
-      <window_info anchor="bottom" auto_hide="true" id="Messages" order="10" weight="0.32849163" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" auto_hide="true" id="Database Console" order="13" weight="0.32941177" />
+      <window_info anchor="bottom" id="Debug" order="2" weight="0.3989305" />
+      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="5" />
+      <window_info anchor="bottom" id="Database Changes" order="6" weight="0.32941177" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.57961786" />
+      <window_info anchor="bottom" auto_hide="true" id="Messages" order="9" weight="0.32849163" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" auto_hide="true" id="Database Console" order="12" weight="0.32941177" />
       <window_info anchor="right" id="Database" order="0" weight="0.32995737" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="4" visible="true" weight="0.116204694" />
+      <window_info anchor="right" auto_hide="true" content_ui="combo" id="Project" order="4" weight="0.1767516" />
+      <window_info anchor="right" auto_hide="true" id="Run" order="5" weight="0.34076434" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" auto_hide="true" id="Run" order="2" weight="0.2122588" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="right" id="Database" order="0" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="4" visible="true" weight="0.23221476" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -443,11 +434,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="循環参照のプロ" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cmd/dispatcher_test.go" />
-    <entry file="file://$PROJECT_DIR$/cmd/FileUtils.go" />
-    <entry file="file://$PROJECT_DIR$/cmd/init.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/hook/iohook.go" />
     <entry file="file://$PROJECT_DIR$/cmd/remove.go" />
     <entry file="file://$PROJECT_DIR$/cmd/remove_test.go" />
@@ -485,13 +471,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logger/iohook.go">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -511,25 +490,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logger/webhook.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="33" column="81" selection-start-line="33" selection-start-column="81" selection-end-line="33" selection-end-column="81" />
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parameters/seed.go">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/logger/logger.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parameters/plotpoint.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="29" column="40" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -553,16 +522,6 @@
           <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="8" />
           <folding>
             <element signature="e#1120#1329#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parameters/plotpoint_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-          <folding>
-            <element signature="e#20#86#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -594,27 +553,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parameters/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#20#160#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/parameters/parameters.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/task.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -628,16 +570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="70" column="21" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simulation/simulate.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="31" column="75" selection-start-line="31" selection-start-column="75" selection-end-line="31" selection-end-column="75" />
-          <folding>
-            <element signature="e#20#52#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -661,13 +593,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extract/extract_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="30" column="51" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simulation/simulate_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
@@ -678,22 +603,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/init.go" />
+    <entry file="file://$PROJECT_DIR$/extract/extract_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="537">
+          <caret line="30" column="51" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/push/push_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="728">
+          <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters/plotpoint_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1106">
+          <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
           <folding>
-            <element signature="e#14#41#0" expanded="true" />
+            <element signature="e#20#86#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/taa.exe">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/push/push.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+        <state relative-caret-position="1064">
+          <caret line="93" column="57" selection-start-line="93" selection-start-column="57" selection-end-line="93" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simulation/simulate.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/task/task.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters/config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters/plotpoint.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters/seed.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/pipeline_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
           <folding>
-            <element signature="e#14#42#0" expanded="true" />
+            <element signature="e#18#77#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="e#18#73#0" expanded="true" />
           </folding>
         </state>
       </provider>
