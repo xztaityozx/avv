@@ -20,12 +20,13 @@ func TestPipeLine_AddStage(t *testing.T) {
 
 	in := make(chan task.Task, 10)
 
-	out := p.AddStage(10, in, func(ctx context.Context, t task.Task) (i task.Task, e error) {
+	out := p.AddStage(10, in, "name", func(ctx context.Context, t task.Task) (i task.Task, e error) {
 		return task.Task{}, nil
 	})
 
 	assert.Equal(t, 10, p.Stages[0].Worker)
 	assert.Equal(t, in, p.Stages[0].input)
+	assert.Equal(t, "name", p.Stages[0].name)
 
 	close(out)
 	close(p.Stages[0].input)

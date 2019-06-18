@@ -10,6 +10,9 @@ type Config struct {
 	Default     Default
 	SlackConfig logger.SlackConfig
 	AutoRemove  bool
+	HSPICE      HSPICEConfig
+	WaveView    WaveViewConfig
+	Taa         TaaConfig
 }
 
 type Default struct {
@@ -22,4 +25,19 @@ type Default struct {
 
 func (d Default) TaskDir() string {
 	return filepath.Join(d.BaseDir, "task")
+}
+
+type HSPICEConfig struct {
+	Path    string
+	Options string
+}
+
+type TaaConfig struct {
+	Path       string
+	ConfigFile string
+	Parallel   int
+}
+
+type WaveViewConfig struct {
+	Path string
 }

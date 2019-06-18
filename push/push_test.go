@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
+	"github.com/xztaityozx/avv/parameters"
 	"os"
 	"path/filepath"
 	"testing"
@@ -19,14 +20,14 @@ func TestTaa_Invoke(t *testing.T) {
 	}
 
 	t.Run("unexpected file path", func(t *testing.T) {
-		err := taa.Invoke(context.Background(), []string{
+		err := taa.Invoke(context.Background(), parameters.Transistor{}, parameters.Transistor{}, 0, []string{
 			gopath, home})
 
 		assert.Error(t, err)
 	})
 
 	t.Run("ok", func(t *testing.T) {
-		err := taa.Invoke(context.Background(), []string{
+		err := taa.Invoke(context.Background(), parameters.Transistor{}, parameters.Transistor{}, 0, []string{
 			"/path/to/SEED00001.csv",
 			"/path/to/SEED00002.csv",
 			"/path/to/SEED00003.csv",

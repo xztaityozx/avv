@@ -8,6 +8,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
+	"github.com/xztaityozx/avv/parameters"
 	"os/exec"
 	"path/filepath"
 	"strconv"
@@ -23,11 +24,21 @@ type Taa struct {
 	Parallel int
 }
 
+type TaaResultKey struct {
+	Vtn    parameters.Transistor
+	Vtp    parameters.Transistor
+	Sweeps int
+}
+
 // getCommand generate command for pushing data to database with taa command
 // returns:
 //  - string: command string
-func (t Taa) getCommand(files []string) string {
-	return fmt.Sprintf("%s push --config %s --parallel %d %s", t.TaaPath, t.ConfigFile, t.Parallel,
+func (t Taa) getCommand(vtn, vtp parameters.Transistor, sweeps int, files []string) string {
+	return fmt.Sprintf("%s push --config %s --parallel %d --VtpVoltage %f --vtpSigma %f --vtpDeviation %f --VtnVoltage %f --vtnSigma %f --vtnDeviation %f --sweeps %d %s",
+		t.TaaPath, t.ConfigFile, t.Parallel,
+		vtp.Threshold, vtp.Sigma, vtp.Deviation,
+		vtn.Threshold, vtn.Sigma, vtn.Deviation,
+		sweeps,
 		strings.Join(files, " "))
 }
 
@@ -37,7 +48,7 @@ func (t Taa) getCommand(files []string) string {
 //  - files: files of data, these filename must be `SEED%05d.csv` format
 // returns:
 //  - error: error
-func (t Taa) Invoke(ctx context.Context, files []string) error {
+func (t Taa) Invoke(ctx context.Context, vtn, vtp parameters.Transistor, sweeps int, files []string) error {
 	// check filename
 	for _, v := range files {
 		base := filepath.Base(v)
@@ -77,7 +88,7 @@ func (t Taa) Invoke(ctx context.Context, files []string) error {
 	)
 
 	go func() {
-		cmd := exec.Command("bash", "-c", t.getCommand(files))
+		cmd := exec.Command("bash", "-c", t.getCommand(vtn, vtp, sweeps, files))
 
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {

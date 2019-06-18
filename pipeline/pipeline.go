@@ -3,7 +3,11 @@ package pipeline
 import (
 	"context"
 	"errors"
+	"github.com/fatih/color"
+	"github.com/vbauerster/mpb"
+	"github.com/vbauerster/mpb/decor"
 	"github.com/xztaityozx/avv/task"
+	"sync"
 )
 
 type (
@@ -15,6 +19,7 @@ type (
 	Action func(ctx context.Context, t task.Task) (task.Task, error)
 
 	Stage struct {
+		name      string
 		Worker    int
 		input     chan task.Task
 		output    chan task.Task
@@ -42,8 +47,9 @@ func New(t int) PipeLine {
 //  - act: function for this stage
 // returns:
 //  - chan task.Task: output chan
-func (p *PipeLine) AddStage(w int, s chan task.Task, act Action) chan task.Task {
+func (p *PipeLine) AddStage(w int, s chan task.Task, name string, act Action) chan task.Task {
 	st := Stage{
+		name:      name,
 		action:    act,
 		input:     s,
 		output:    make(chan task.Task, p.Total),
@@ -61,9 +67,59 @@ func (p *PipeLine) AddStage(w int, s chan task.Task, act Action) chan task.Task 
 //  - source: source tasks
 // returns:
 //  - error:
-func (p PipeLine) Start(ctx context.Context, source []task.Task) error {
+func (p PipeLine) Start(ctx context.Context) error {
+	var wg sync.WaitGroup
+	wg.Add(len(p.Stages))
 
-	return nil
+	pb := mpb.NewWithContext(ctx)
+
+	workingMSG := color.New(color.FgHiYellow).Sprint("processing...")
+	finishMSG := color.New(color.FgHiGreen).Sprint("done!")
+
+	ch := make(chan error)
+	defer close(ch)
+
+	for _, v := range p.Stages {
+		barName := color.New(color.FgHiCyan).Sprint(v.name)
+		bar := pb.AddBar(int64(p.Total),
+			mpb.BarStyle("┃██▒┃"),
+			mpb.BarWidth(50),
+			mpb.PrependDecorators(
+				decor.Name(barName, decor.WC{W: len(barName) + 1, C: decor.DidentRight}),
+			),
+			mpb.AppendDecorators(
+				decor.Name("   "),
+				decor.Percentage(decor.WC{W: 5}),
+				decor.Name(" | "),
+				decor.CountersNoUnit("%d / %d", decor.WCSyncWidth),
+				decor.Name(" | "),
+				decor.OnComplete(decor.Name(workingMSG), finishMSG)))
+		go func() {
+			defer wg.Done()
+			err := v.invoke(ctx, bar)
+			if err != nil {
+				ch <- err
+			}
+		}()
+	}
+
+	pb.Wait()
+	wg.Done()
+
+	c := func() {
+		for _, v := range p.Stages {
+			v.close()
+		}
+	}
+
+	select {
+	case <-ctx.Done():
+		c()
+		return errors.New("canceled")
+	case err := <-ch:
+		c()
+		return err
+	}
 }
 
 // close close input, output, errorPipe
@@ -74,12 +130,18 @@ func (s Stage) close() {
 }
 
 // invoke start stage task
+// params:
+//  - ctx: context
+//  - bar: mpb.Bar
 // returns:
 //  - error:
-func (s Stage) invoke(ctx context.Context) error {
+func (s Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
+	var wg sync.WaitGroup
 
 	for i := 0; i < s.Worker; i++ {
+		wg.Add(1)
 		go func() {
+			defer wg.Done()
 			for v := range s.input {
 				out, err := s.action(ctx, v)
 				if err != nil {
@@ -88,9 +150,12 @@ func (s Stage) invoke(ctx context.Context) error {
 				}
 
 				s.output <- out
+				bar.Increment()
 			}
 		}()
 	}
+
+	wg.Wait()
 
 	select {
 	case <-ctx.Done():
