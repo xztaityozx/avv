@@ -70,6 +70,7 @@ var runCmd = &cobra.Command{
 
 			source <- t
 		}
+		close(source)
 
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
