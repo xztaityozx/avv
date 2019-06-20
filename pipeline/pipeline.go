@@ -21,12 +21,12 @@ type (
 	Action func(ctx context.Context, t task.Task) (task.Task, error)
 
 	Stage struct {
-		name      string
-		Worker    int
-		input     chan task.Task
-		output    chan task.Task
-		errorPipe chan error
-		action    Action
+		name   string
+		Worker int
+		input  chan task.Task
+		output chan task.Task
+		error  chan error
+		action Action
 	}
 
 	Aggregator struct {
@@ -58,12 +58,12 @@ func New(t int) PipeLine {
 //  - chan task.Task: output chan
 func (p *PipeLine) AddStage(w int, s chan task.Task, name string, act Action) chan task.Task {
 	st := Stage{
-		name:      name,
-		action:    act,
-		input:     s,
-		output:    make(chan task.Task, p.Total),
-		errorPipe: make(chan error),
-		Worker:    w,
+		name:   name,
+		action: act,
+		input:  s,
+		output: make(chan task.Task, p.Total),
+		error:  make(chan error, p.Total),
+		Worker: w,
 	}
 	p.Stages = append(p.Stages, &st)
 
@@ -89,21 +89,13 @@ func (p *PipeLine) Start(ctx context.Context) error {
 	ch := make(chan error)
 	defer close(ch)
 
+	// Start Stages
 	for _, v := range p.Stages {
+		// make progressbar
 		barName := color.New(color.FgHiCyan).Sprint(v.name)
-		bar := pb.AddBar(int64(p.Total),
-			mpb.BarStyle("┃██▒┃"),
-			mpb.BarWidth(50),
-			mpb.PrependDecorators(
-				decor.Name(barName, decor.WC{W: len(barName) + 1, C: decor.DidentRight}),
-			),
-			mpb.AppendDecorators(
-				decor.Name("   "),
-				decor.Percentage(decor.WC{W: 5}),
-				decor.Name(" | "),
-				decor.CountersNoUnit("%d / %d", decor.WCSyncWidth),
-				decor.Name(" | "),
-				decor.OnComplete(decor.Name(workingMSG), finishMSG)))
+		bar := makeBar(p.Total, barName, workingMSG, finishMSG, pb)
+
+		// start stage
 		go func(x *Stage) {
 			defer wg.Done()
 			err := x.invoke(ctx, bar)
@@ -113,8 +105,21 @@ func (p *PipeLine) Start(ctx context.Context) error {
 		}(v)
 	}
 
+	// start aggregator. if contains aggregate stage
+	if !p.skip {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			barName := color.New(color.FgCyan).Sprint(p.Aggregator.name)
+			bar := makeBar(p.Total, barName, workingMSG, finishMSG, pb)
+			err :=  p.Aggregator.invoke(ctx, bar)
+			if err != nil {
+				ch<-err
+			}
+		}()
+	}
+
 	wch := make(chan struct{})
-	defer close(wch)
 
 	go func() {
 		pb.Wait()
@@ -123,11 +128,10 @@ func (p *PipeLine) Start(ctx context.Context) error {
 	}()
 
 	select {
-	case <-ctx.Done():
-		return errors.New("canceled")
 	case err := <-ch:
 		return err
 	case <-wch:
+		close(wch)
 		return nil
 	}
 }
@@ -141,8 +145,6 @@ func (p *PipeLine) Start(ctx context.Context) error {
 func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
 	var wg sync.WaitGroup
 
-	wch := make(chan struct{})
-	defer close(wch)
 
 	for i := 0; i < s.Worker; i++ {
 		wg.Add(1)
@@ -150,10 +152,8 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
 			defer wg.Done()
 			for v := range s.input {
 				out, err := s.action(ctx, v)
-				if err != nil {
-					s.errorPipe <- err
-					return
-				}
+
+				s.error <- err
 
 				s.output <- out
 				bar.Increment()
@@ -161,19 +161,23 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
 		}()
 	}
 
+	wch := make(chan struct{})
+	defer close(wch)
+
 	go func() {
 		wg.Wait()
 		close(s.output)
-		wch <- struct{}{}
+		wch<- struct{}{}
 	}()
 
 	select {
-	case <-ctx.Done():
-		return errors.New("canceled")
-	case err := <-s.errorPipe:
-		close(s.errorPipe)
-		return err
 	case <-wch:
+		close(s.error)
+		for err := range s.error {
+			if err != nil {
+				return err
+			}
+		}
 		return nil
 	}
 
@@ -202,8 +206,6 @@ func (a *Aggregator) invoke(ctx context.Context, bar *mpb.Bar) error {
 	}()
 
 	select {
-	case <-ctx.Done():
-		return errors.New("canceled")
 	case err := <-wch:
 		return err
 	}
@@ -229,4 +231,20 @@ func (p *PipeLine) AddAggregateStage(in chan task.Task, name string, act func(ct
 		action: act,
 	}
 	return nil
+}
+
+func makeBar(total int, barName, workingMSG, finishMSG string, pb *mpb.Progress) *mpb.Bar {
+	return pb.AddBar(int64(total),
+		mpb.BarStyle("┃██▒┃"),
+		mpb.BarWidth(50),
+		mpb.PrependDecorators(
+			decor.Name(barName, decor.WC{W: len(barName) + 1, C: decor.DidentRight}),
+		),
+		mpb.AppendDecorators(
+			decor.Name("   "),
+			decor.Percentage(decor.WC{W: 5}),
+			decor.Name(" | "),
+			decor.CountersNoUnit("%d / %d", decor.WCSyncWidth),
+			decor.Name(" | "),
+			decor.OnComplete(decor.Name(workingMSG), finishMSG)))
 }

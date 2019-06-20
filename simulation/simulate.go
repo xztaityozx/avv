@@ -2,6 +2,7 @@ package simulation
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/xztaityozx/avv/task"
 	"os/exec"
@@ -35,7 +36,7 @@ func (h HSPICE) Invoke(ctx context.Context, task task.Task) error {
 
 	select {
 	case <-ctx.Done():
-		return nil
+		return errors.New("canceled")
 	case err := <-ch:
 		return err
 

@@ -3,6 +3,7 @@ package push
 import (
 	"bufio"
 	"context"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"github.com/fatih/color"
@@ -28,6 +29,10 @@ type TaaResultKey struct {
 	Vtn    parameters.Transistor
 	Vtp    parameters.Transistor
 	Sweeps int
+}
+
+func (t TaaResultKey) Hash() string {
+	return fmt.Sprint(sha256.Sum256([]byte(fmt.Sprintf("%s%s%d", t.Vtn.String(),t.Vtp.String(),t.Sweeps))))
 }
 
 // getCommand generate command for pushing data to database with taa command
@@ -66,7 +71,6 @@ func (t Taa) Invoke(ctx context.Context, vtn, vtp parameters.Transistor, sweeps 
 		}
 	}
 
-	ch := make(chan error)
 	p := mpb.NewWithContext(ctx)
 	total := len(files)
 	name := color.New(color.FgHiYellow).Sprint("push")
@@ -87,12 +91,18 @@ func (t Taa) Invoke(ctx context.Context, vtn, vtp parameters.Transistor, sweeps 
 			decor.OnComplete(decor.Name(inProgressMSG), finishMSG)),
 	)
 
-	go func() {
+
+	ch := make(chan error)
+	act := func() error {
 		cmd := exec.Command("bash", "-c", t.getCommand(vtn, vtp, sweeps, files))
 
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
 			ch <- err
+		}
+		stderr, err := cmd.StderrPipe()
+		if err != nil {
+			ch<-err
 		}
 
 		err = cmd.Start()
@@ -100,18 +110,35 @@ func (t Taa) Invoke(ctx context.Context, vtn, vtp parameters.Transistor, sweeps 
 			ch <- err
 		}
 
-		scan := bufio.NewScanner(stdout)
-		for scan.Scan() {
-			bar.IncrBy(len(strings.Split(scan.Text(), "\n")))
-		}
+		box := [2]error{nil, nil}
+
+		go func() {
+			scan := bufio.NewScanner(stdout)
+			for scan.Scan() {
+				bar.IncrBy(len(strings.Split(scan.Text(), "\n")))
+			}
+
+		}()
+
+		go func() {
+			scan := bufio.NewScanner(stderr)
+			agg := ""
+			for scan.Scan() {
+				agg+=scan.Text()
+			}
+			ch <- errors.New(agg)
+		}()
+
 
 		p.Wait()
-		ch <- nil
-	}()
+
+	}
+
+
 
 	select {
 	case <-ctx.Done():
-		return errors.New("Canceled\n")
+		return errors.New("canceled")
 	case err := <-ch:
 		return err
 

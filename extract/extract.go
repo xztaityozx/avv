@@ -33,7 +33,7 @@ func (w WaveView) Invoke(ctx context.Context, task task.Task) error {
 
 	select {
 	case <-ctx.Done():
-		return errors.New("Canceled\n")
+		return errors.New("canceled")
 	case err :=<-ch:
 		return err
 	}

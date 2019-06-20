@@ -43,7 +43,6 @@ var runCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		n, _ := cmd.Flags().GetInt("count")
 		all, _ := cmd.Flags().GetBool("all")
-		skip, _ := cmd.Flags().GetBool("skip")
 
 		x, _ := cmd.Flags().GetInt("simulateParallel")
 		y, _ := cmd.Flags().GetInt("extractParallel")
@@ -60,7 +59,10 @@ var runCmd = &cobra.Command{
 			size = n
 		}
 
+
 		p := pipeline.New(size)
+
+		// Find task files
 		source := make(chan task.Task, p.Total)
 		for i := 0; i < len(files) && (i < n || all); i++ {
 			t, err := task.Unmarshal(filepath.Join(taskdir, files[i].Name()))
@@ -84,6 +86,7 @@ var runCmd = &cobra.Command{
 			cancel()
 		}()
 
+		// first stage -> simulation with hspice
 		first := p.AddStage(x, source, "simulation", func(ctx context.Context, t task.Task) (i task.Task, e error) {
 			h := simulation.HSPICE{
 				Path:    config.HSPICE.Path,
@@ -93,6 +96,7 @@ var runCmd = &cobra.Command{
 			return t, e
 		})
 
+		// second stage -> extract with waveview
 		second := p.AddStage(y, first, "extract", func(ctx context.Context, t task.Task) (i task.Task, e error) {
 			w := extract.WaveView{
 				Path: config.WaveView.Path,
@@ -100,6 +104,53 @@ var runCmd = &cobra.Command{
 			e = w.Invoke(ctx, t)
 			return t, e
 		})
+
+		// third stage -> push with taa
+		err = p.AddAggregateStage(second, "push", func(ctx context.Context, box []task.Task) error {
+			// map for result csv files
+			res := map[string][]string{}
+			// map for TaaResultKey
+			dic := map[string]push.TaaResultKey{}
+
+			// make maps
+			for _, v := range box {
+				r := push.TaaResultKey{
+					Vtn:    v.Vtn,
+					Vtp:    v.Vtp,
+					Sweeps: v.Sweeps,
+				}
+				h := r.Hash()
+				if res[h] == nil {
+					res[h] = []string{}
+				}
+
+				res[h] = append(res[h], v.Files.ResultFile)
+				dic[h] = r
+			}
+
+			taa := push.Taa{
+				ConfigFile:config.Taa.ConfigFile,
+				Parallel: config.Taa.Parallel,
+				TaaPath:config.Taa.Path,
+			}
+
+
+			// start push
+			log.Info("Start pushing")
+			for k,v := range res {
+				trk := dic[k]
+				err := taa.Invoke(ctx, trk.Vtn,trk.Vtp,trk.Sweeps,v)
+				if err != nil {
+					return err
+				}
+			}
+
+			return nil
+		})
+
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		// error channel
 		errCh := make(chan error)
@@ -119,40 +170,6 @@ var runCmd = &cobra.Command{
 			}
 		}
 
-		if skip {
-			log.Info("Skip push")
-			return
-		}
-
-		// push
-		results := map[push.TaaResultKey][]string{}
-		for v := range second {
-			key := push.TaaResultKey{
-				Vtn:    v.Parameters.Vtn,
-				Vtp:    v.Parameters.Vtp,
-				Sweeps: v.Sweeps,
-			}
-			if results[key] == nil {
-				results[key] = []string{}
-			}
-
-			results[key] = append(results[key], v.Files.ResultFile)
-		}
-
-		taa := push.Taa{
-			TaaPath:    config.Taa.Path,
-			ConfigFile: config.Taa.ConfigFile,
-			Parallel:   config.Taa.Parallel,
-		}
-
-		log.Info("Start pushing")
-		for key, val := range results {
-			err := taa.Invoke(ctx, key.Vtn, key.Vtp, key.Sweeps, val)
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-
 	},
 }
 
@@ -164,5 +181,4 @@ func init() {
 	runCmd.Flags().IntP("simulateParallel", "x", 1, "HSPICEの並列数です")
 	runCmd.Flags().IntP("extractParallel", "y", 1, "WaveViewの並列数です")
 
-	runCmd.Flags().Bool("skip", false, "pushをスキップします")
 }
