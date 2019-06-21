@@ -3,6 +3,7 @@ package parameters
 import (
 	"crypto/sha256"
 	"fmt"
+	"path/filepath"
 )
 
 type Parameters struct {
@@ -31,7 +32,9 @@ func GenerateParameters(config Config) []Parameters {
 
 // Hash generate hash string from parameters
 func (parameters Parameters) Hash() string {
-	return fmt.Sprint(sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d",
-		parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(),
-		parameters.Seed, parameters.Sweeps))))
+
+	head := sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d",
+		parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps)))
+
+	return filepath.Join(fmt.Sprint(head))
 }

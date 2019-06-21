@@ -59,7 +59,6 @@ var runCmd = &cobra.Command{
 			size = n
 		}
 
-
 		p := pipeline.New(size)
 
 		// Find task files
@@ -86,8 +85,15 @@ var runCmd = &cobra.Command{
 			cancel()
 		}()
 
+		first := p.AddStage(10, source, "write files", func(ctx context.Context, t task.Task) (i task.Task, e error) {
+
+			e = t.MakeFiles(config.Templates)
+
+			return i, e
+		})
+
 		// first stage -> simulation with hspice
-		first := p.AddStage(x, source, "simulation", func(ctx context.Context, t task.Task) (i task.Task, e error) {
+		second := p.AddStage(x, first, "simulation", func(ctx context.Context, t task.Task) (i task.Task, e error) {
 			h := simulation.HSPICE{
 				Path:    config.HSPICE.Path,
 				Options: config.HSPICE.Options,
@@ -97,7 +103,7 @@ var runCmd = &cobra.Command{
 		})
 
 		// second stage -> extract with waveview
-		second := p.AddStage(y, first, "extract", func(ctx context.Context, t task.Task) (i task.Task, e error) {
+		third := p.AddStage(y, second, "extract", func(ctx context.Context, t task.Task) (i task.Task, e error) {
 			w := extract.WaveView{
 				Path: config.WaveView.Path,
 			}
@@ -106,7 +112,7 @@ var runCmd = &cobra.Command{
 		})
 
 		// third stage -> push with taa
-		err = p.AddAggregateStage(second, "push", func(ctx context.Context, box []task.Task) error {
+		err = p.AddAggregateStage(third, "push", func(ctx context.Context, box []task.Task) error {
 			// map for result csv files
 			res := map[string][]string{}
 			// map for TaaResultKey
@@ -129,17 +135,16 @@ var runCmd = &cobra.Command{
 			}
 
 			taa := push.Taa{
-				ConfigFile:config.Taa.ConfigFile,
-				Parallel: config.Taa.Parallel,
-				TaaPath:config.Taa.Path,
+				ConfigFile: config.Taa.ConfigFile,
+				Parallel:   config.Taa.Parallel,
+				TaaPath:    config.Taa.Path,
 			}
-
 
 			// start push
 			log.Info("Start pushing")
-			for k,v := range res {
+			for k, v := range res {
 				trk := dic[k]
-				err := taa.Invoke(ctx, trk.Vtn,trk.Vtp,trk.Sweeps,v)
+				err := taa.Invoke(ctx, trk.Vtn, trk.Vtp, trk.Sweeps, v)
 				if err != nil {
 					return err
 				}

@@ -56,13 +56,13 @@ func Generate(base, net, search string, parameters Parameters) Files {
 		BaseDir:    base,
 		NetListDir: net,
 		SearchDir:  search,
-		DstDir:     filepath.Join(base, sha),
-		ResultDir:  filepath.Join(base, sha, "Result"),
+		DstDir:     filepath.Join(base, sha, fmt.Sprint(parameters.Seed), "sim"),
+		ResultDir:  filepath.Join(base, sha, fmt.Sprint(parameters.Seed), "res"),
 	}
 
 	return Files{
 		Directories:   d,
-		AddFile:       filepath.Join(d.DstDir, "addfile"),
+		AddFile:       filepath.Join(d.DstDir, "add"),
 		SPIScript:     filepath.Join(net, sha+".spi"),
 		ACEScript:     filepath.Join(d.DstDir, "ace"),
 		ResultsXML:    filepath.Join(d.DstDir, "results.xml"),

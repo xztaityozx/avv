@@ -9,7 +9,6 @@ import (
 	"os"
 )
 
-// Task タスクを定義するstructの基底クラス()
 type Task struct {
 	// SimulationFiles このタスクで扱うパラメータ情報のファイルです
 	Files parameters.Files
