@@ -21,7 +21,12 @@
 package cmd
 
 import (
-	"fmt"
+	"context"
+	"github.com/briandowns/spinner"
+	"github.com/fatih/color"
+	"github.com/spf13/viper"
+	"github.com/xztaityozx/avv/remove"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -33,7 +38,19 @@ var removeCmd = &cobra.Command{
 	Short:   "",
 	Long:    `remove temporally simulation files`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("remove called")
+		base := config.Default.BaseDir
+
+		s := spinner.New(spinner.CharSets[14], time.Millisecond*500)
+		s.FinalMSG = color.New(color.FgGreen).Sprint("Finished")
+		s.Suffix = color.New(color.FgHiYellow).Sprint("processing...")
+		s.Start()
+		defer s.Stop()
+
+		err := remove.Do(context.Background(), base)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 	},
 }
 
@@ -41,5 +58,5 @@ func init() {
 	rootCmd.AddCommand(removeCmd)
 
 	removeCmd.Flags().String("target", "", "/path/to/basedir")
-
+	viper.BindPFlag("Default.BaseDir", removeCmd.Flags().Lookup("target"))
 }

@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/remove/remove.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/remove/remove_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/run.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/run.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extract/extract.go" beforeDir="false" afterPath="$PROJECT_DIR$/extract/extract.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameters/parameters.go" beforeDir="false" afterPath="$PROJECT_DIR$/parameters/parameters.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameters/simulationfile.go" beforeDir="false" afterPath="$PROJECT_DIR$/parameters/simulationfile.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/task.go" beforeDir="false" afterPath="$PROJECT_DIR$/task/task.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/remove.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/remove.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +29,26 @@
     <favorites_list name="avv" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmd/remove.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="868">
+              <caret line="40" selection-start-line="40" selection-end-line="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/root.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1680">
+              <caret line="73" selection-start-line="73" selection-end-line="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -51,7 +64,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cmd/extract.go" />
         <option value="$PROJECT_DIR$/cmd/pipeline.go" />
         <option value="$PROJECT_DIR$/cmd/plotpoint_test.go" />
         <option value="$PROJECT_DIR$/cmd/runtask.go" />
@@ -102,6 +114,7 @@
         <option value="$PROJECT_DIR$/cmd/run.go" />
         <option value="$PROJECT_DIR$/extract/extract.go" />
         <option value="$PROJECT_DIR$/parameters/simulationfile.go" />
+        <option value="$PROJECT_DIR$/cmd/remove.go" />
       </list>
     </option>
   </component>
@@ -124,70 +137,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="cmd" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="extract" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="fileutils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="logger" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="parameters" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="pipeline" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="push" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="simulation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="task" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avv" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="postgresql" />
@@ -336,7 +286,8 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <frame x="0" y="31" width="1920" height="1009" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" weight="0.32995737" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -413,7 +364,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Fixed: push.invoke()" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cmd/runtask_test.go" />
     <entry file="file://$PROJECT_DIR$/repository/repository.go" />
     <entry file="file://$PROJECT_DIR$/parameters/transistor_test.go" />
     <entry file="file://$PROJECT_DIR$/task/task_test.go" />
@@ -460,13 +410,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/root.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -582,13 +525,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/write/write.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/write/write.go" />
     <entry file="file://$PROJECT_DIR$/../../../../../../linuxbrew/.linuxbrew/Cellar/go/1.12.5/libexec/src/runtime/memmove_linux_amd64_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -624,20 +561,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/run.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="110" column="19" selection-start-line="110" selection-start-column="19" selection-end-line="110" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parameters/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/make.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="481">
@@ -661,6 +584,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/remove/remove.go">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/run.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2716">
+          <caret line="110" column="19" selection-start-line="110" selection-start-column="19" selection-end-line="110" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters/config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="22" column="9" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/root.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/remove.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="868">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
