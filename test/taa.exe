@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "$@" | grep "err" &> /dev/null && seq 3 && echo -e "this is error messages: FAILED: 123456" >&2 && exit 1
+
+seq 10 | while read L; do 
+  echo "$L"
+  sleep 0.01s
+done
+
+
+exit 0
+
+

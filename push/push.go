@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 type Taa struct {
@@ -32,7 +33,7 @@ type TaaResultKey struct {
 }
 
 func (t TaaResultKey) Hash() string {
-	return fmt.Sprint(sha256.Sum256([]byte(fmt.Sprintf("%s%s%d", t.Vtn.String(),t.Vtp.String(),t.Sweeps))))
+	return fmt.Sprint(sha256.Sum256([]byte(fmt.Sprintf("%s%s%d", t.Vtn.String(), t.Vtp.String(), t.Sweeps))))
 }
 
 // getCommand generate command for pushing data to database with taa command
@@ -91,50 +92,57 @@ func (t Taa) Invoke(ctx context.Context, vtn, vtp parameters.Transistor, sweeps 
 			decor.OnComplete(decor.Name(inProgressMSG), finishMSG)),
 	)
 
-
-	ch := make(chan error)
-	act := func() error {
+	ch := make(chan error, 1)
+	ch <- func() error {
 		cmd := exec.Command("bash", "-c", t.getCommand(vtn, vtp, sweeps, files))
 
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
-			ch <- err
+			return err
 		}
 		stderr, err := cmd.StderrPipe()
 		if err != nil {
-			ch<-err
+			return err
 		}
 
 		err = cmd.Start()
 		if err != nil {
-			ch <- err
+			return err
 		}
 
-		box := [2]error{nil, nil}
+		var wg sync.WaitGroup
+		wg.Add(2)
 
 		go func() {
 			scan := bufio.NewScanner(stdout)
 			for scan.Scan() {
 				bar.IncrBy(len(strings.Split(scan.Text(), "\n")))
 			}
-
+			wg.Done()
+			p.Wait()
 		}()
 
 		go func() {
 			scan := bufio.NewScanner(stderr)
 			agg := ""
 			for scan.Scan() {
-				agg+=scan.Text()
+				agg += scan.Text()
 			}
-			ch <- errors.New(agg)
+
+			if len(agg) == 0 {
+				err = nil
+			} else {
+				err = errors.New(agg)
+			}
+
+			wg.Done()
 		}()
 
+		wg.Wait()
 
-		p.Wait()
-
-	}
-
-
+		return err
+	}()
+	close(ch)
 
 	select {
 	case <-ctx.Done():
