@@ -3,19 +3,19 @@
     "SPIScript": ""
   },
   "Default": {
-    "SearchDir": "/home/xztaityozx/TestDir/search",
-    "NetListDir": "/home/xztaityozx/TestDir/net",
-    "BaseDir": "/home/xztaityozx/TestDir/base",
+    "SearchDir": "トランジスタなどのモデルファイルが置かれているディレクトリへの絶対パス",
+    "NetListDir": "/home/user/simulation/name/sram/sram/HSPICE/monte_carlo/netlist/",
+    "BaseDir": "/home/user/Workspace/avv/base",
     "SEED": {
-      "Start": 0,
-      "End": 0
+      "Start": 1,
+      "End": 2000
     },
     "Parameters": {
       "PlotPoint": {
         "Start": 2.5E-09,
         "Step": 7.5E-09,
         "Stop": 17.5E-09,
-        "Signals": ["N1"]
+        "Signals": ["N1", "N2", "BL", "BLB"]
       },
       "Sweeps": 5000,
       "Vtn": {
@@ -31,29 +31,29 @@
       "AddFile": {
         "VddVoltage" : 0.8,
         "GndVoltage": 0.0,
-        "ICCommand": "",
+        "ICCommand": ".IC V(N1)=0.8V V(N2)=0.0V",
         "Options": []
       },
-      "ModelFile": ""
+      "ModelFile": "トランジスタなどのモデルファイルへの絶対パス"
     }
   },
   "SlackConfig": {
-    "user": "",
-    "webHookURL": "",
-    "channel": "",
-    "machineName": "architect"
+    "user": "@付きでメンションを飛ばすユーザー",
+    "webHookURL": "SlackBotのWebHookURL",
+    "channel": "投稿するチャンネル",
+    "machineName": "実行しているマシンの名前"
   },
   "AutoRemove": true,
   "HSPICE": {
-    "Path": "/home/xztaityozx/.go/src/github.com/xztaityozx/avv/test/hspice.sh",
-    "Options": ""
+    "Path": "hspiceへの絶対パス",
+    "Options": "hspiceのオプション。空でOK"
   },
   "WaveView": {
-    "Path": "/home/xztaityozx/.go/src/github.com/xztaityozx/avv/test/wv.sh"
+    "Path": "wvへの絶対パス"
   },
   "Taa": {
-    "Path": "/home/xztaityozx/.go/src/github.com/xztaityozx/avv/test/taa.exe",
-    "ConfigFile": "/home/xztaityozx/.config/taa/config.yml",
+    "Path": "taaへの絶対パス",
+    "ConfigFile": "taaのコンフィグファイルへの絶対パス",
     "Parallel": 10
   }
 }
