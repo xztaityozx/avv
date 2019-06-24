@@ -1,0 +1,60 @@
+{
+  "Templates": {
+    "SPIScript": ""
+  },
+  "Default": {
+    "SearchDir": "/home/xztaityozx/TestDir/search",
+    "NetListDir": "/home/xztaityozx/TestDir/net",
+    "BaseDir": "/home/xztaityozx/TestDir/base",
+    "SEED": {
+      "Start": 0,
+      "End": 0
+    },
+    "Parameters": {
+      "PlotPoint": {
+        "Start": 2.5E-09,
+        "Step": 7.5E-09,
+        "Stop": 17.5E-09,
+        "Signals": ["N1"]
+      },
+      "Sweeps": 5000,
+      "Vtn": {
+        "Threshold": 0.6,
+        "Sigma": 0.046,
+        "Deviation": 1.0
+      },
+      "Vtp": {
+        "Threshold": -0.6,
+        "Sigma": 0.046,
+        "Deviation": 1.0
+      },
+      "AddFile": {
+        "VddVoltage" : 0.8,
+        "GndVoltage": 0.0,
+        "ICCommand": "",
+        "Options": []
+      },
+      "ModelFile": ""
+    }
+  },
+  "SlackConfig": {
+    "user": "",
+    "webHookURL": "",
+    "channel": "",
+    "machineName": "architect"
+  },
+  "AutoRemove": true,
+  "HSPICE": {
+    "Path": "/home/xztaityozx/.go/src/github.com/xztaityozx/avv/test/hspice.sh",
+    "Options": ""
+  },
+  "WaveView": {
+    "Path": "/home/xztaityozx/.go/src/github.com/xztaityozx/avv/test/wv.sh"
+  },
+  "Taa": {
+    "Path": "/home/xztaityozx/.go/src/github.com/xztaityozx/avv/test/taa.exe",
+    "ConfigFile": "/home/xztaityozx/.config/taa/config.yml",
+    "Parallel": 10
+  }
+}
+
