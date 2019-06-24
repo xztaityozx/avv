@@ -19,7 +19,6 @@ type Default struct {
 	SearchDir  string
 	NetListDir string
 	BaseDir    string
-	SEED       SEED
 	Parameters Parameters
 }
 

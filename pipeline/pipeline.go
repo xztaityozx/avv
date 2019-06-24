@@ -7,6 +7,7 @@ import (
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
 	"github.com/xztaityozx/avv/task"
+	"golang.org/x/xerrors"
 	"sync"
 )
 
@@ -100,7 +101,7 @@ func (p *PipeLine) Start(ctx context.Context) error {
 			defer wg.Done()
 			err := x.invoke(ctx, bar)
 			if err != nil {
-				ch <- err
+				ch <- xerrors.Errorf("Failed Stage %s : %s", x.name, err)
 			}
 		}(v)
 	}
@@ -112,9 +113,9 @@ func (p *PipeLine) Start(ctx context.Context) error {
 			defer wg.Done()
 			barName := color.New(color.FgCyan).Sprint(p.Aggregator.name)
 			bar := makeBar(p.Total, barName, workingMSG, finishMSG, pb)
-			err :=  p.Aggregator.invoke(ctx, bar)
+			err := p.Aggregator.invoke(ctx, bar)
 			if err != nil {
-				ch<-err
+				ch <- err
 			}
 		}()
 	}
@@ -145,7 +146,6 @@ func (p *PipeLine) Start(ctx context.Context) error {
 func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
 	var wg sync.WaitGroup
 
-
 	for i := 0; i < s.Worker; i++ {
 		wg.Add(1)
 		go func() {
@@ -167,7 +167,7 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
 	go func() {
 		wg.Wait()
 		close(s.output)
-		wch<- struct{}{}
+		wch <- struct{}{}
 	}()
 
 	select {

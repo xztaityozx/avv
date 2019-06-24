@@ -27,6 +27,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/xztaityozx/avv/fileutils"
 	"github.com/xztaityozx/avv/task"
 	"io/ioutil"
 	"path/filepath"
@@ -45,16 +46,26 @@ SEEDごとに1つのファイルが生成されます
 
 `,
 	Run: func(cmd *cobra.Command, args []string) {
+
+		start, _ := cmd.Flags().GetInt("start")
+		end, _ := cmd.Flags().GetInt("end")
+
 		logrus.Info(color.New(color.FgYellow).Sprint("avv make"))
+
 		logrus.Info("seed:")
-		logrus.Info(" - start: ", config.Default.SEED.Start)
-		logrus.Info(" - end  : ", config.Default.SEED.End)
+		logrus.Info(" - start: ", start)
+		logrus.Info(" - end  : ", end)
 		logrus.Info("Vtn: ", config.Default.Parameters.Vtn)
 		logrus.Info("Vtp: ", config.Default.Parameters.Vtp)
 		logrus.Info("Sweeps: ", config.Default.Parameters.Sweeps)
 		fmt.Println()
 
-		tasks, err := task.Generate(config)
+		err := fileutils.TryMakeDirAll(config.Default.TaskDir())
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		tasks, err := task.Generate(start, end, config)
 		if err != nil {
 			log.Fatal(err)
 		}

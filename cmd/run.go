@@ -51,7 +51,7 @@ var runCmd = &cobra.Command{
 
 		files, err := ioutil.ReadDir(taskdir)
 		if err != nil {
-			log.Fatal(err)
+			log.WithError(err).Fatal("Failed read dir")
 		}
 
 		size := len(files)
@@ -59,18 +59,27 @@ var runCmd = &cobra.Command{
 			size = n
 		}
 
-		p := pipeline.New(size)
-
 		// Find task files
-		source := make(chan task.Task, p.Total)
-		for i := 0; i < len(files) && (i < n || all); i++ {
-			t, err := task.Unmarshal(filepath.Join(taskdir, files[i].Name()))
+		var box []task.Task
+		for i := 0; i < size && (i < n || all); i++ {
+			path := filepath.Join(taskdir, files[i].Name())
+
+			log.Info("Unmarshal :", path)
+
+			t, err := task.Unmarshal(path)
 			if err != nil {
-				log.Fatal(err)
+				log.WithError(err).Fatal("Failed unmarshal task file")
 			}
 
-			source <- t
+			box = append(box, t)
 		}
+
+		p := pipeline.New(len(box))
+		source := make(chan task.Task, p.Total)
+		for _, v := range box {
+			source <- v
+		}
+
 		close(source)
 
 		ctx, cancel := context.WithCancel(context.Background())
@@ -154,7 +163,7 @@ var runCmd = &cobra.Command{
 		})
 
 		if err != nil {
-			log.Fatal(err)
+			log.WithError(err).Fatal("Failed add aggregate stage")
 		}
 
 		// error channel
@@ -171,7 +180,7 @@ var runCmd = &cobra.Command{
 			log.Fatal("canceled")
 		case err := <-errCh:
 			if err != nil {
-				log.Fatal(err)
+				log.WithError(err).Fatal("Pipeline task was failed")
 			}
 		}
 

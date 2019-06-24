@@ -18,11 +18,11 @@ type Parameters struct {
 }
 
 // GenerateParameters generate some Parameters struct from config
-func GenerateParameters(config Config) []Parameters {
+func GenerateParameters(seeds SEED, config Config) []Parameters {
 	var rt []Parameters
 	base := config.Default.Parameters
 
-	for i := config.Default.SEED.Start; i <= config.Default.SEED.End; i++ {
+	for i := seeds.Start; i <= seeds.End; i++ {
 		base.Seed = i
 		base.AddFile.SEED = i
 		rt = append(rt, base)

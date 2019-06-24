@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/xztaityozx/avv/task"
+	"golang.org/x/xerrors"
 	"os/exec"
 )
 
@@ -31,7 +32,11 @@ func (h HSPICE) Invoke(ctx context.Context, task task.Task) error {
 	go func() {
 		_, err := exec.Command("bash", "-c",
 			h.getCommand(task.Files.Directories.DstDir, task.Files.SPIScript)).Output()
-		ch <- err
+		if err != nil {
+			ch <- xerrors.Errorf("simulation command failed: %s", err)
+		} else {
+			ch <- nil
+		}
 	}()
 
 	select {

@@ -19,7 +19,7 @@ type Task struct {
 }
 
 // Generate is generate some Task struct
-func Generate(config parameters.Config) ([]Task, error) {
+func Generate(start, end int, config parameters.Config) ([]Task, error) {
 	var rt []Task
 
 	stat := func(p string) error {
@@ -43,7 +43,7 @@ func Generate(config parameters.Config) ([]Task, error) {
 	}
 
 	// generate parameters
-	for _, v := range parameters.GenerateParameters(config) {
+	for _, v := range parameters.GenerateParameters(parameters.SEED{start, end}, config) {
 		f, err := parameters.Generate(config.Default.BaseDir, config.Default.NetListDir, config.Default.SearchDir, v)
 		if err != nil {
 			return rt, err
@@ -76,6 +76,7 @@ func Unmarshal(path string) (Task, error) {
 	return rt, err
 }
 
+// TODO: Failed Run verb
 // MakeFiles make files and directories for simulation
 func (t *Task) MakeFiles(tmp parameters.Templates) error {
 	// Generate Directories
