@@ -33,7 +33,7 @@ type TaaResultKey struct {
 }
 
 func (t TaaResultKey) Hash() string {
-	return fmt.Sprint(sha256.Sum256([]byte(fmt.Sprintf("%s%s%d", t.Vtn.String(), t.Vtp.String(), t.Sweeps))))
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%d", t.Vtn.String(), t.Vtp.String(), t.Sweeps))))
 }
 
 // getCommand generate command for pushing data to database with taa command

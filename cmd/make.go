@@ -22,6 +22,9 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/fatih/color"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/task"
@@ -42,7 +45,14 @@ SEEDごとに1つのファイルが生成されます
 
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Info("avv make")
+		logrus.Info(color.New(color.FgYellow).Sprint("avv make"))
+		logrus.Info("seed:")
+		logrus.Info(" - start: ", config.Default.SEED.Start)
+		logrus.Info(" - end  : ", config.Default.SEED.End)
+		logrus.Info("Vtn: ", config.Default.Parameters.Vtn)
+		logrus.Info("Vtp: ", config.Default.Parameters.Vtp)
+		logrus.Info("Sweeps: ", config.Default.Parameters.Sweeps)
+		fmt.Println()
 
 		tasks, err := task.Generate(config)
 		if err != nil {
@@ -55,20 +65,24 @@ SEEDごとに1つのファイルが生成されます
 				log.WithError(err).Error("Failed make task json")
 			}
 
-			path := filepath.Join(config.Default.TaskDir(), v.Hash()+".json")
+			path := filepath.Join(config.Default.TaskDir(), v.HashWithSeed()+".json")
 			if err := ioutil.WriteFile(path, b, 0644); err != nil {
 				log.WithError(err).Error("Failed write task json")
+			} else {
+				log.Info("Write task file: ", path)
 			}
 		}
+
+		log.Info(len(tasks), " files was written")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(makeCmd)
 
-	makeCmd.Flags().Float64P("PlotStart", "a", 2.5, "プロットの始点[ns]")
-	makeCmd.Flags().Float64P("PlotStep", "b", 7.5, "プロットの刻み幅[ns]")
-	makeCmd.Flags().Float64P("PlotStop", "c", 17.5, "プロットの終点[ns]")
+	makeCmd.Flags().Float64P("PlotStart", "a", 2.5, "プロットの始点")
+	makeCmd.Flags().Float64P("PlotStep", "b", 7.5, "プロットの刻み幅")
+	makeCmd.Flags().Float64P("PlotStop", "c", 17.5, "プロットの終点")
 
 	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
 	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))

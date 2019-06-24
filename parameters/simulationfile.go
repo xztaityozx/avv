@@ -49,7 +49,7 @@ func (d Directories) MakeDirectories() error {
 	return nil
 }
 
-func Generate(base, net, search string, parameters Parameters) Files {
+func Generate(base, net, search string, parameters Parameters) (Files, error) {
 
 	sha := parameters.Hash()
 	d := Directories{
@@ -60,6 +60,13 @@ func Generate(base, net, search string, parameters Parameters) Files {
 		ResultDir:  filepath.Join(base, sha, fmt.Sprint(parameters.Seed), "res"),
 	}
 
+	for _, v := range []string{d.DstDir, d.ResultDir} {
+		err := fileutils.TryMakeDirAll(v)
+		if err != nil {
+			return Files{}, err
+		}
+	}
+
 	return Files{
 		Directories:   d,
 		AddFile:       filepath.Join(d.DstDir, "add"),
@@ -68,7 +75,7 @@ func Generate(base, net, search string, parameters Parameters) Files {
 		ResultsXML:    filepath.Join(d.DstDir, "results.xml"),
 		ResultsMapXML: filepath.Join(d.DstDir, "resultsMap.xml"),
 		ResultFile:    filepath.Join(d.ResultDir, fmt.Sprintf("SEED%05d.csv", parameters.Seed)),
-	}
+	}, nil
 
 }
 

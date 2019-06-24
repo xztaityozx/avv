@@ -119,4 +119,7 @@ func initConfig() {
 	// init Logger System
 	initLogger()
 
+	// print version
+	logrus.Info(Version)
+
 }

@@ -44,7 +44,10 @@ func Generate(config parameters.Config) ([]Task, error) {
 
 	// generate parameters
 	for _, v := range parameters.GenerateParameters(config) {
-		f := parameters.Generate(config.Default.BaseDir, config.Default.NetListDir, config.Default.SearchDir, v)
+		f, err := parameters.Generate(config.Default.BaseDir, config.Default.NetListDir, config.Default.SearchDir, v)
+		if err != nil {
+			return rt, err
+		}
 
 		rt = append(rt, Task{
 			Files:      f,
@@ -74,9 +77,15 @@ func Unmarshal(path string) (Task, error) {
 }
 
 // MakeFiles make files and directories for simulation
-func (t Task) MakeFiles(tmp parameters.Templates) error {
+func (t *Task) MakeFiles(tmp parameters.Templates) error {
+	// Generate Directories
+	err := t.Files.Directories.MakeDirectories()
+	if err != nil {
+		return err
+	}
+
 	// AddFile
-	err := t.Parameters.AddFile.GenerateAddFile(t.Files.AddFile)
+	err = t.Parameters.AddFile.GenerateAddFile(t.Files.AddFile)
 	if err != nil {
 		return err
 	}
@@ -102,6 +111,5 @@ func (t Task) MakeFiles(tmp parameters.Templates) error {
 		}
 	}
 
-	// Directories
-	return t.Files.Directories.MakeDirectories()
+	return nil
 }

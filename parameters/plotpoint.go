@@ -19,11 +19,11 @@ type PlotPoint struct {
 // 	- path string: path to csv file exported by custom waveview
 func (p PlotPoint) GenerateACEScript(path, storePath string) error {
 	str := fmt.Sprintf(`
-set xml [ sx_open_wdf "resultsMap.xml"]
+set xml [ sx_open_wdf "resultsMap.xml" ]
 sx_current_sim_file $xml
 set www [ sx_signal "%s" ]
 sx_export_csv on
-sx_export_range %.5fn %.5fn %.5fn
+sx_export_range %.5f %.5f %.5f
 sx_export_data "%s" $www
 `, strings.Join(p.Signals, " "), p.Start, p.Stop, p.Step, storePath)
 

@@ -47,8 +47,8 @@ type AVVVersion struct {
 var Version = AVVVersion{
 	Major:  3,
 	Minor:  0,
-	Build:  35,
-	Date:   "2019/06/22",
+	Build:  39,
+	Date:   "2019/06/24",
 	Status: "Development",
 }
 
