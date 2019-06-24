@@ -110,7 +110,7 @@ func init() {
 	viper.BindPFlag("Default.AutoRemove", makeCmd.Flags().Lookup("autoremove"))
 
 	makeCmd.Flags().IntP("times", "t", 0, "モンテカルロシミュレーション1回当たりの回数")
-	viper.BindPFlag("Default.Sweeps", makeCmd.Flags().Lookup("times"))
+	viper.BindPFlag("Default.Parameters.Sweeps", makeCmd.Flags().Lookup("times"))
 	viper.BindPFlag("Default.SEED.Start", makeCmd.Flags().Lookup("start"))
 	viper.BindPFlag("Default.SEED.End", makeCmd.Flags().Lookup("end"))
 
