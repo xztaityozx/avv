@@ -28,6 +28,7 @@ import (
 	"github.com/xztaityozx/avv/push"
 	"github.com/xztaityozx/avv/simulation"
 	"github.com/xztaityozx/avv/task"
+	"golang.org/x/xerrors"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -155,7 +156,7 @@ var runCmd = &cobra.Command{
 				trk := dic[k]
 				err := taa.Invoke(ctx, trk.Vtn, trk.Vtp, trk.Sweeps, v)
 				if err != nil {
-					return err
+					return xerrors.Errorf("taa failed: %s", err)
 				}
 			}
 

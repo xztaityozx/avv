@@ -42,7 +42,7 @@ func (d Directories) MakeDirectories() error {
 	for _, v := range []string{d.DstDir, d.ResultDir} {
 		err := check(v)
 		if err != nil {
-			return err
+			return xerrors.Errorf("can not find directory: %s", v)
 		}
 	}
 

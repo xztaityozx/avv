@@ -115,7 +115,7 @@ func (p *PipeLine) Start(ctx context.Context) error {
 			bar := makeBar(p.Total, barName, workingMSG, finishMSG, pb)
 			err := p.Aggregator.invoke(ctx, bar)
 			if err != nil {
-				ch <- err
+				ch <- xerrors.Errorf("Failed aggregate stage: %s", err)
 			}
 		}()
 	}

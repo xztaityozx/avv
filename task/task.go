@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/xztaityozx/avv/parameters"
+	"golang.org/x/xerrors"
 	"io/ioutil"
 	"os"
 )
@@ -76,7 +77,6 @@ func Unmarshal(path string) (Task, error) {
 	return rt, err
 }
 
-// TODO: Failed Run verb
 // MakeFiles make files and directories for simulation
 func (t *Task) MakeFiles(tmp parameters.Templates) error {
 	// Generate Directories
@@ -88,19 +88,19 @@ func (t *Task) MakeFiles(tmp parameters.Templates) error {
 	// AddFile
 	err = t.Parameters.AddFile.GenerateAddFile(t.Files.AddFile)
 	if err != nil {
-		return err
+		return xerrors.Errorf("failed make AddFile: %s", err)
 	}
 
 	// SPIScript
 	err = tmp.GenerateSPIScript(t.Files.SPIScript, t.Files.Directories.SearchDir, t.Files.AddFile, t.Parameters)
 	if err != nil {
-		return err
+		return xerrors.Errorf("failed make SPIScript: %s", err)
 	}
 
 	// ACEScript
 	err = t.PlotPoint.GenerateACEScript(t.Files.ACEScript, t.Files.ResultFile)
 	if err != nil {
-		return err
+		return xerrors.Errorf("failed make ACEScript: %s", err)
 	}
 
 	//XML
