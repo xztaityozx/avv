@@ -30,7 +30,7 @@ func TestWaveView_Invoke(t *testing.T) {
 
 		fileutils.TryMakeDirAll(filepath.Join(home, "TestDir"))
 
-		err := w.Invoke(context.Background(), task.Task{
+		_, err := w.Invoke(context.Background(), task.Task{
 			Files: parameters.Files{
 				ACEScript: "/path/to/ace",
 				Directories: parameters.Directories{
@@ -47,7 +47,7 @@ func TestWaveView_Invoke(t *testing.T) {
 
 		fileutils.TryMakeDirAll(filepath.Join(home, "TestDir"))
 
-		err := w.Invoke(context.Background(), task.Task{
+		_, err := w.Invoke(context.Background(), task.Task{
 			Files: parameters.Files{
 				ACEScript: "/path/to/ace",
 				Directories: parameters.Directories{

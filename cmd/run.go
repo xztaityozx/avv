@@ -22,6 +22,11 @@ package cmd
 
 import (
 	"context"
+	"github.com/xztaityozx/avv/extract"
+	"github.com/xztaityozx/avv/push"
+	"github.com/xztaityozx/avv/remove"
+	"github.com/xztaityozx/avv/simulation"
+	"github.com/xztaityozx/avv/write"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -29,12 +34,8 @@ import (
 	"syscall"
 
 	"github.com/spf13/cobra"
-	"github.com/xztaityozx/avv/extract"
 	"github.com/xztaityozx/avv/pipeline"
-	"github.com/xztaityozx/avv/push"
-	"github.com/xztaityozx/avv/simulation"
 	"github.com/xztaityozx/avv/task"
-	"golang.org/x/xerrors"
 )
 
 // runCmd represents the run command
@@ -49,6 +50,7 @@ var runCmd = &cobra.Command{
 
 		x, _ := cmd.Flags().GetInt("simulateParallel")
 		y, _ := cmd.Flags().GetInt("extractParallel")
+		z, _ := cmd.Flags().GetInt("pushParallel")
 
 		taskdir := config.Default.TaskDir()
 
@@ -58,13 +60,14 @@ var runCmd = &cobra.Command{
 		}
 
 		size := len(files)
-		if size > n {
+		if size > n || !all {
 			size = n
 		}
 
 		// Find task files
 		var box []task.Task
-		for i := 0; i < size && (i < n || all); i++ {
+		for i := 0; i < size; i++ {
+			// /path/to/taskFile
 			path := filepath.Join(taskdir, files[i].Name())
 
 			log.Info("Unmarshal :", path)
@@ -73,102 +76,58 @@ var runCmd = &cobra.Command{
 			if err != nil {
 				log.WithError(err).Fatal("Failed unmarshal task file")
 			}
+			t.Files.TaskFile = path
 
 			box = append(box, t)
 		}
 
-		p := pipeline.New(len(box))
+		// generate pipeline struct
+		p := pipeline.New(len(box), config.MaxRetry)
+
+		// push task to source chan
 		source := make(chan task.Task, p.Total)
 		for _, v := range box {
 			source <- v
 		}
-
 		close(source)
 
+		// generate cancelable context
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
 		// set cancel signals
 		sigCh := make(chan os.Signal)
 		defer close(sigCh)
+		// watch SIGINT, SIGSTOP
 		signal.Notify(sigCh, syscall.SIGINT, syscall.SIGSTOP)
 		go func() {
 			<-sigCh
 			cancel()
 		}()
 
-		first := p.AddStage(10, source, "write files", func(ctx context.Context, t task.Task) (i task.Task, e error) {
-
-			e = t.MakeFiles(config.Templates)
-
-			return t, e
+		// first stage -> write files for simulation
+		first := p.AddStage(x, source, "write", write.Write{
+			Tmp: config.Templates,
+		})
+		// second stage -> simulation with hspice
+		second := p.AddStage(y, first, "simulation", simulation.HSPICE{
+			Path:    config.HSPICE.Path,
+			Options: config.HSPICE.Options,
 		})
 
-		// first stage -> simulation with hspice
-		second := p.AddStage(x, first, "simulation", func(ctx context.Context, t task.Task) (i task.Task, e error) {
-			h := simulation.HSPICE{
-				Path:    config.HSPICE.Path,
-				Options: config.HSPICE.Options,
-			}
-
-			e = h.Invoke(ctx, t)
-			return t, e
+		// third stage -> extract with waveview
+		third := p.AddStage(z, second, "extract", extract.WaveView{
+			Path: config.WaveView.Path,
 		})
 
-		// second stage -> extract with waveview
-		third := p.AddStage(y, second, "extract", func(ctx context.Context, t task.Task) (i task.Task, e error) {
-			w := extract.WaveView{
-				Path: config.WaveView.Path,
-			}
-			e = w.Invoke(ctx, t)
-			return t, e
+		// fourth stage -> push with taa
+		fourth := p.AddStage(z, third, "push", push.Taa{
+			ConfigFile: config.Taa.ConfigFile,
+			TaaPath:    config.Taa.Path,
 		})
 
-		// third stage -> push with taa
-		err = p.AddAggregateStage(third, "push", func(ctx context.Context, box []task.Task) error {
-			// map for result csv files
-			res := map[string][]string{}
-			// map for TaaResultKey
-			dic := map[string]push.TaaResultKey{}
-
-			// make maps
-			for _, v := range box {
-				r := push.TaaResultKey{
-					Vtn:    v.Vtn,
-					Vtp:    v.Vtp,
-					Sweeps: v.Sweeps,
-				}
-				h := r.Hash()
-				if res[h] == nil {
-					res[h] = []string{}
-				}
-
-				res[h] = append(res[h], v.Files.ResultFile)
-				dic[h] = r
-			}
-
-			taa := push.Taa{
-				ConfigFile: config.Taa.ConfigFile,
-				Parallel:   config.Taa.Parallel,
-				TaaPath:    config.Taa.Path,
-			}
-
-			// start push
-			log.Info("Start pushing")
-			for k, v := range res {
-				trk := dic[k]
-				err := taa.Invoke(ctx, trk.Vtn, trk.Vtp, trk.Sweeps, v)
-				if err != nil {
-					return xerrors.Errorf("taa failed: %s", err)
-				}
-			}
-
-			return nil
-		})
-
-		if err != nil {
-			log.WithError(err).Fatal("Failed add aggregate stage")
-		}
+		// fifth stage -> remove csv, spi
+		_ = p.AddStage(1, fourth, "remove", remove.Remove{})
 
 		// error channel
 		errCh := make(chan error)
@@ -180,8 +139,6 @@ var runCmd = &cobra.Command{
 		}()
 
 		select {
-		case <-ctx.Done():
-			log.Fatal("canceled")
 		case err := <-errCh:
 			if err != nil {
 				log.WithError(err).Fatal("Pipeline task was failed")
@@ -198,5 +155,6 @@ func init() {
 
 	runCmd.Flags().IntP("simulateParallel", "x", 1, "HSPICEの並列数です")
 	runCmd.Flags().IntP("extractParallel", "y", 1, "WaveViewの並列数です")
+	runCmd.Flags().IntP("pushParallel", "z", 1, "taaの並列数です")
 
 }

@@ -20,6 +20,7 @@ type Files struct {
 	ResultsMapXML string
 	Directories   Directories
 	ResultFile    string
+	TaskFile      string
 }
 
 type Directories struct {

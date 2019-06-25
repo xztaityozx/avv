@@ -13,6 +13,7 @@ type Config struct {
 	HSPICE      HSPICEConfig
 	WaveView    WaveViewConfig
 	Taa         TaaConfig
+	MaxRetry    int
 }
 
 type Default struct {

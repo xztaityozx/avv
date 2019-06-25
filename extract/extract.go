@@ -25,7 +25,7 @@ func (w WaveView) getCommand(dst, ace string) string {
 }
 
 // Invoke start extract task with custom waveview
-func (w WaveView) Invoke(ctx context.Context, task task.Task) error {
+func (w WaveView) Invoke(ctx context.Context, task task.Task) (task.Task, error) {
 	ch := make(chan error, 1)
 
 	command := w.getCommand(task.Files.Directories.DstDir, task.Files.ACEScript)
@@ -44,8 +44,8 @@ func (w WaveView) Invoke(ctx context.Context, task task.Task) error {
 
 	select {
 	case <-ctx.Done():
-		return errors.New("canceled")
+		return task, errors.New("canceled")
 	case err := <-ch:
-		return err
+		return task, err
 	}
 }

@@ -1,20 +1,16 @@
 package push
 
 import (
-	"bufio"
 	"context"
-	"crypto/sha256"
 	"errors"
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/vbauerster/mpb"
-	"github.com/vbauerster/mpb/decor"
 	"github.com/xztaityozx/avv/parameters"
+	"github.com/xztaityozx/avv/task"
+	"golang.org/x/xerrors"
 	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
-	"sync"
 )
 
 type Taa struct {
@@ -26,26 +22,16 @@ type Taa struct {
 	Parallel int
 }
 
-type TaaResultKey struct {
-	Vtn    parameters.Transistor
-	Vtp    parameters.Transistor
-	Sweeps int
-}
-
-func (t TaaResultKey) Hash() string {
-	return fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%d", t.Vtn.String(), t.Vtp.String(), t.Sweeps))))
-}
-
 // getCommand generate command for pushing data to database with taa command
 // returns:
 //  - string: command string
-func (t Taa) getCommand(vtn, vtp parameters.Transistor, sweeps int, files []string) string {
+func (taa Taa) getCommand(vtn, vtp parameters.Transistor, sweeps int, file string) string {
 	return fmt.Sprintf("%s push --config %s --parallel %d --VtpVoltage %f --vtpSigma %f --vtpDeviation %f --VtnVoltage %f --vtnSigma %f --vtnDeviation %f --sweeps %d %s",
-		t.TaaPath, t.ConfigFile, t.Parallel,
+		taa.TaaPath, taa.ConfigFile, taa.Parallel,
 		vtp.Threshold, vtp.Sigma, vtp.Deviation,
 		vtn.Threshold, vtn.Sigma, vtn.Deviation,
 		sweeps,
-		strings.Join(files, " "))
+		file)
 }
 
 // Invoke start push command
@@ -54,101 +40,28 @@ func (t Taa) getCommand(vtn, vtp parameters.Transistor, sweeps int, files []stri
 //  - files: files of data, these filename must be `SEED%05d.csv` format
 // returns:
 //  - error: error
-func (t Taa) Invoke(ctx context.Context, vtn, vtp parameters.Transistor, sweeps int, files []string) error {
+func (taa Taa) Invoke(ctx context.Context, t task.Task) (task.Task, error) {
 	// check filename
-	for _, v := range files {
-		base := filepath.Base(v)
-		unexpected := errors.New(fmt.Sprintf("Unexpected filename: %s", base))
+	base := filepath.Base(t.Files.ResultFile)
+	unexpected := errors.New(fmt.Sprintf("Unexpected filename: %s", base))
 
-		if len(base) < len("SEED00000.csv") {
-			return unexpected
-		}
-
-		if _, err := strconv.Atoi(
-			strings.Replace(
-				strings.Replace(base, "SEED", "", -1),
-				".csv", "", -1)); err != nil {
-			return unexpected
-		}
+	if len(base) < len("SEED00000.csv") {
+		return t, unexpected
 	}
 
-	p := mpb.NewWithContext(ctx)
-	total := len(files)
-	name := color.New(color.FgHiYellow).Sprint("push")
-	inProgressMSG := color.New(color.FgCyan).Sprint("Processing...")
-	finishMSG := color.New(color.FgHiGreen).Sprint("done!")
-	bar := p.AddBar(int64(total),
-		mpb.BarStyle("|██▒|"),
-		mpb.BarWidth(50),
-		mpb.PrependDecorators(
-			decor.Name(name, decor.WC{W: len(name) + 1, C: decor.DidentRight}),
-			decor.OnComplete(decor.EwmaETA(decor.ET_STYLE_GO, 60, decor.WC{W: 4}), "done")),
-		mpb.AppendDecorators(
-			decor.Name("   "),
-			decor.Percentage(),
-			decor.Name(" | "),
-			decor.CountersNoUnit("%d / %d", decor.WCSyncWidth),
-			decor.Name(" | "),
-			decor.OnComplete(decor.Name(inProgressMSG), finishMSG)),
-	)
-
-	ch := make(chan error, 1)
-	ch <- func() error {
-		cmd := exec.Command("bash", "-c", t.getCommand(vtn, vtp, sweeps, files))
-
-		stdout, err := cmd.StdoutPipe()
-		if err != nil {
-			return err
-		}
-		stderr, err := cmd.StderrPipe()
-		if err != nil {
-			return err
-		}
-
-		err = cmd.Start()
-		if err != nil {
-			return err
-		}
-
-		var wg sync.WaitGroup
-		wg.Add(2)
-
-		go func() {
-			scan := bufio.NewScanner(stdout)
-			for scan.Scan() {
-				bar.IncrBy(len(strings.Split(scan.Text(), "\n")))
-			}
-			wg.Done()
-			p.Wait()
-		}()
-
-		go func() {
-			scan := bufio.NewScanner(stderr)
-			agg := ""
-			for scan.Scan() {
-				agg += scan.Text()
-			}
-
-			if len(agg) == 0 {
-				err = nil
-			} else {
-				err = errors.New(agg)
-			}
-
-			wg.Done()
-		}()
-
-		wg.Wait()
-
-		return err
-	}()
-	close(ch)
-
-	select {
-	case <-ctx.Done():
-		return errors.New("canceled")
-	case err := <-ch:
-		return err
-
+	if _, err := strconv.Atoi(
+		strings.Replace(
+			strings.Replace(base, "SEED", "", -1),
+			".csv", "", -1)); err != nil {
+		return t, unexpected
 	}
+
+	command := taa.getCommand(t.Vtn, t.Vtp, t.Sweeps, t.Files.ResultFile)
+	_, err := exec.Command("bash", "-c", command).Output()
+
+	if err != nil {
+		return t, xerrors.Errorf("failed taa push: %s", err)
+	}
+
+	return t, nil
 }

@@ -2,24 +2,21 @@ package pipeline
 
 import (
 	"context"
-	"errors"
 	"github.com/fatih/color"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
 	"github.com/xztaityozx/avv/task"
 	"golang.org/x/xerrors"
+	"strings"
 	"sync"
 )
 
 type (
 	PipeLine struct {
-		Total      int
-		Stages     []*Stage
-		skip       bool
-		Aggregator Aggregator
+		Total    int
+		stages   []*Stage
+		maxRetry int
 	}
-
-	Action func(ctx context.Context, t task.Task) (task.Task, error)
 
 	Stage struct {
 		name   string
@@ -27,47 +24,44 @@ type (
 		input  chan task.Task
 		output chan task.Task
 		error  chan error
-		action Action
+		iStage IStage
 	}
 
-	Aggregator struct {
-		name   string
-		input  chan task.Task
-		action func(ctx context.Context, box []task.Task) error
+	IStage interface {
+		Invoke(ctx context.Context, t task.Task) (task.Task, error)
 	}
 )
 
 // New make struct PipeLine struct
 // params:
-//  - t: total of data
+//  - t: Total of data
 // returns:
 //  - PipeLine:
-func New(t int) PipeLine {
+func New(t, m int) PipeLine {
 	return PipeLine{
-		Total:  t,
-		skip:   true,
-		Stages: []*Stage{},
+		Total:    t,
+		stages:   []*Stage{},
+		maxRetry: m,
 	}
 }
 
 // AddStage add stage to pipeline
 // params:
-//  - w: workers
+//  - w: number of workers
 //  - s: source chan
-//  - act: function for this stage
-// returns:
-//  - chan task.Task: output chan
-func (p *PipeLine) AddStage(w int, s chan task.Task, name string, act Action) chan task.Task {
+//  - name: name of this stage
+//  - is: struct that implemented IStage interface
+func (p *PipeLine) AddStage(w int, s chan task.Task, name string, is IStage) chan task.Task {
 	st := Stage{
 		name:   name,
-		action: act,
 		input:  s,
 		output: make(chan task.Task, p.Total),
 		error:  make(chan error, p.Total),
 		Worker: w,
+		iStage: is,
 	}
-	p.Stages = append(p.Stages, &st)
 
+	p.stages = append(p.stages, &st)
 	return st.output
 }
 
@@ -79,9 +73,28 @@ func (p *PipeLine) AddStage(w int, s chan task.Task, name string, act Action) ch
 //  - error:
 func (p *PipeLine) Start(ctx context.Context) error {
 
-	var wg sync.WaitGroup
-	wg.Add(len(p.Stages))
+	// padding name
+	max := 0
+	for _, v := range p.stages {
+		if max < len(v.name) {
+			max = len(v.name)
+		}
+	}
 
+	for i := range p.stages {
+		l := max - len(p.stages[i].name)
+		if l == 0 {
+			continue
+		}
+		p.stages[i].name += strings.Repeat(" ", l)
+	}
+
+	// make WaitGroup
+	var wg sync.WaitGroup
+	// add size of stages to wg
+	wg.Add(len(p.stages))
+
+	// make Progressbar
 	pb := mpb.NewWithContext(ctx)
 
 	workingMSG := color.New(color.FgHiYellow).Sprint("processing...")
@@ -90,8 +103,8 @@ func (p *PipeLine) Start(ctx context.Context) error {
 	ch := make(chan error)
 	defer close(ch)
 
-	// Start Stages
-	for _, v := range p.Stages {
+	// Start stages
+	for _, v := range p.stages {
 		// make progressbar
 		barName := color.New(color.FgHiCyan).Sprint(v.name)
 		bar := makeBar(p.Total, barName, workingMSG, finishMSG, pb)
@@ -99,25 +112,11 @@ func (p *PipeLine) Start(ctx context.Context) error {
 		// start stage
 		go func(x *Stage) {
 			defer wg.Done()
-			err := x.invoke(ctx, bar)
+			err := x.invoke(ctx, bar, p.maxRetry)
 			if err != nil {
 				ch <- xerrors.Errorf("Failed Stage %s : %s", x.name, err)
 			}
 		}(v)
-	}
-
-	// start aggregator. if contains aggregate stage
-	if !p.skip {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			barName := color.New(color.FgCyan).Sprint(p.Aggregator.name)
-			bar := makeBar(p.Total, barName, workingMSG, finishMSG, pb)
-			err := p.Aggregator.invoke(ctx, bar)
-			if err != nil {
-				ch <- xerrors.Errorf("Failed aggregate stage: %s", err)
-			}
-		}()
 	}
 
 	wch := make(chan struct{})
@@ -141,9 +140,10 @@ func (p *PipeLine) Start(ctx context.Context) error {
 // params:
 //  - ctx: context
 //  - bar: mpb.Bar
+//  - max: limit of retry
 // returns:
 //  - error:
-func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
+func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar, max int) error {
 	var wg sync.WaitGroup
 
 	for i := 0; i < s.Worker; i++ {
@@ -151,11 +151,22 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
 		go func() {
 			defer wg.Done()
 			for v := range s.input {
-				out, err := s.action(ctx, v)
 
-				s.error <- err
+				var err error
+				var out task.Task
+				for i := 0; i < max; i++ {
+					out, err = s.iStage.Invoke(ctx, v)
+					// continue retry
+					if err == nil {
+						break
+					}
+				}
 
-				s.output <- out
+				if err != nil {
+					s.error <- err
+				} else {
+					s.output <- out
+				}
 				bar.Increment()
 			}
 		}()
@@ -181,56 +192,6 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar) error {
 		return nil
 	}
 
-}
-
-// invoke start aggregate step
-// params:
-//  - ctx: context
-//  - bar: mpb.Bar
-// returns:
-//  - error:
-func (a *Aggregator) invoke(ctx context.Context, bar *mpb.Bar) error {
-
-	// collect Task struct from input channel
-	var box []task.Task
-	for v := range a.input {
-		box = append(box, v)
-		bar.Increment()
-	}
-
-	// invoke aggregate func
-	wch := make(chan error)
-	defer close(wch)
-	go func() {
-		wch <- a.action(ctx, box)
-	}()
-
-	select {
-	case err := <-wch:
-		return err
-	}
-}
-
-// AddAggregateStage add aggregator to pipeline
-// params:
-//  - in: source chan task.Task
-//  - name: name of this aggregator
-//  - act: something do in this stage
-// returns:
-//  - error:
-func (p *PipeLine) AddAggregateStage(in chan task.Task, name string, act func(ctx context.Context, box []task.Task) error) error {
-
-	if !p.skip {
-		return errors.New("Already added aggregator\n")
-	}
-
-	p.skip = false
-	p.Aggregator = Aggregator{
-		input:  in,
-		name:   name,
-		action: act,
-	}
-	return nil
 }
 
 func makeBar(total int, barName, workingMSG, finishMSG string, pb *mpb.Progress) *mpb.Bar {

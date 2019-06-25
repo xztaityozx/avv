@@ -26,7 +26,7 @@ func (h HSPICE) getCommand(dst, spi string) string {
 }
 
 // Invoke start simulation with context
-func (h HSPICE) Invoke(ctx context.Context, task task.Task) error {
+func (h HSPICE) Invoke(ctx context.Context, task task.Task) (task.Task, error) {
 
 	ch := make(chan error)
 
@@ -42,9 +42,9 @@ func (h HSPICE) Invoke(ctx context.Context, task task.Task) error {
 
 	select {
 	case <-ctx.Done():
-		return errors.New("canceled")
+		return task, errors.New("canceled")
 	case err := <-ch:
-		return err
+		return task, err
 
 	}
 }
