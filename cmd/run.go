@@ -22,6 +22,12 @@ package cmd
 
 import (
 	"context"
+	"io/ioutil"
+	"os"
+	"os/signal"
+	"path/filepath"
+	"syscall"
+
 	"github.com/spf13/cobra"
 	"github.com/xztaityozx/avv/extract"
 	"github.com/xztaityozx/avv/pipeline"
@@ -29,11 +35,6 @@ import (
 	"github.com/xztaityozx/avv/simulation"
 	"github.com/xztaityozx/avv/task"
 	"golang.org/x/xerrors"
-	"io/ioutil"
-	"os"
-	"os/signal"
-	"path/filepath"
-	"syscall"
 )
 
 // runCmd represents the run command
@@ -42,6 +43,7 @@ var runCmd = &cobra.Command{
 	Short: "シミュレーションを実行します",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		n, _ := cmd.Flags().GetInt("count")
 		all, _ := cmd.Flags().GetBool("all")
 
@@ -99,7 +101,7 @@ var runCmd = &cobra.Command{
 
 			e = t.MakeFiles(config.Templates)
 
-			return i, e
+			return t, e
 		})
 
 		// first stage -> simulation with hspice
@@ -108,6 +110,7 @@ var runCmd = &cobra.Command{
 				Path:    config.HSPICE.Path,
 				Options: config.HSPICE.Options,
 			}
+
 			e = h.Invoke(ctx, t)
 			return t, e
 		})

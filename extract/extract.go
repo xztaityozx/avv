@@ -4,9 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/xztaityozx/avv/remove"
-	"github.com/xztaityozx/avv/task"
 	"os/exec"
+
+	"github.com/sirupsen/logrus"
+	"github.com/xztaityozx/avv/task"
+	"golang.org/x/xerrors"
 )
 
 type WaveView struct {
@@ -26,13 +28,18 @@ func (w WaveView) getCommand(dst, ace string) string {
 func (w WaveView) Invoke(ctx context.Context, task task.Task) error {
 	ch := make(chan error, 1)
 
+	command := w.getCommand(task.Files.Directories.DstDir, task.Files.ACEScript)
+	logrus.Info(task.PlotPoint.Start)
 	go func() {
 		defer close(ch)
-		_, err := exec.Command("bash", "-c",
-			w.getCommand(task.Files.Directories.DstDir, task.Files.ACEScript)).Output()
-		remove.Do(ctx, task.Files.Directories.DstDir)
+		_, err := exec.Command("bash", "-c", command).Output()
 
-		ch <- err
+		if err != nil {
+			ch <- xerrors.Errorf("failed wv: %s", err)
+		} else {
+			//ch <- remove.Do(ctx, task.Files.Directories.DstDir)
+			ch <- nil
+		}
 	}()
 
 	select {

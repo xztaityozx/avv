@@ -1,11 +1,13 @@
 package logger
 
 import (
+	"io/ioutil"
+	"path/filepath"
+	"time"
+
 	"github.com/mattn/go-colorable"
 	"github.com/sirupsen/logrus"
 	"github.com/snowzach/rotatefilehook"
-	"path/filepath"
-	"time"
 )
 
 func NewLogger(base string, config SlackConfig) *logrus.Logger {
@@ -30,7 +32,7 @@ func NewLogger(base string, config SlackConfig) *logrus.Logger {
 		logrus.Fatal(err)
 	}
 
-	//log.SetOutput(ioutil.Discard)
+	log.SetOutput(ioutil.Discard)
 	// init logrus System
 	log.SetFormatter(&logrus.TextFormatter{
 		ForceColors:     true,

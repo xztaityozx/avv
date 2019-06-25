@@ -23,10 +23,11 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/xztaityozx/avv/logger"
-	"github.com/xztaityozx/avv/parameters"
 	"os"
 	"path/filepath"
+
+	"github.com/xztaityozx/avv/logger"
+	"github.com/xztaityozx/avv/parameters"
 
 	"github.com/sirupsen/logrus"
 
@@ -118,8 +119,4 @@ func initConfig() {
 
 	// init Logger System
 	initLogger()
-
-	// print version
-	logrus.Info(Version)
-
 }

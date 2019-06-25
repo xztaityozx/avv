@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/xztaityozx/avv/parameters"
-	"golang.org/x/xerrors"
 	"io/ioutil"
 	"os"
+
+	"github.com/sirupsen/logrus"
+	"github.com/xztaityozx/avv/parameters"
+	"golang.org/x/xerrors"
 )
 
 type Task struct {
@@ -98,6 +100,7 @@ func (t *Task) MakeFiles(tmp parameters.Templates) error {
 	}
 
 	// ACEScript
+	logrus.Info(t.PlotPoint)
 	err = t.PlotPoint.GenerateACEScript(t.Files.ACEScript, t.Files.ResultFile)
 	if err != nil {
 		return xerrors.Errorf("failed make ACEScript: %s", err)

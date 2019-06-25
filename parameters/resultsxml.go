@@ -74,12 +74,12 @@ func NewResultsXML(sweeps int, d Directories) ResultsXML {
 
 // Generate write xml files for simulations
 func (r ResultsXML) Generate(xml, mapXml string) error {
-	err := r.makeMapXml(xml)
+	err := r.makeMapXml(mapXml)
 	if err != nil {
 		return err
 	}
 
-	return r.makeMapXml(mapXml)
+	return r.makeResultsXml(xml)
 }
 
 func (r ResultsXML) makeResultsFilesCollection() Collection {

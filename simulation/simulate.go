@@ -4,9 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os/exec"
+
 	"github.com/xztaityozx/avv/task"
 	"golang.org/x/xerrors"
-	"os/exec"
 )
 
 type HSPICE struct {
@@ -30,8 +31,8 @@ func (h HSPICE) Invoke(ctx context.Context, task task.Task) error {
 	ch := make(chan error)
 
 	go func() {
-		_, err := exec.Command("bash", "-c",
-			h.getCommand(task.Files.Directories.DstDir, task.Files.SPIScript)).Output()
+		command := h.getCommand(task.Files.Directories.DstDir, task.Files.SPIScript)
+		_, err := exec.Command("bash", "-c", command).Output()
 		if err != nil {
 			ch <- xerrors.Errorf("simulation command failed: %s", err)
 		} else {
