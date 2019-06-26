@@ -198,9 +198,9 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar, max int) error {
 
 func makeBar(total int, barName, workingMSG, finishMSG string, pb *mpb.Progress) *mpb.Bar {
 
-	side := color.New(color.FgHiGreen).Sprint(string('\u258D'))
-	done := color.New(color.FgCyan).Sprint(string('\u2588'))
-	now := color.New(color.FgHiBlue).Sprint(string('\u2588'))
+	side := fmt.Sprint(string('\u258D'))
+	done := fmt.Sprint(string('\u2588'))
+	now := fmt.Sprint(string('\u2588'))
 	wait := fmt.Sprint(string('\u2591'))
 
 	style := side + done + now + wait + side

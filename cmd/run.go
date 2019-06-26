@@ -178,6 +178,8 @@ var runCmd = &cobra.Command{
 
 		spin.Stop()
 
+		fmt.Println()
+
 		msg := "finished: avv run"
 		log.Info(msg)
 		logrus.Info(msg)
