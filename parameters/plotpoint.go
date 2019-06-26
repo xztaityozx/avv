@@ -32,5 +32,5 @@ sx_export_data "%s" $www
 }
 
 func (p PlotPoint) String() string {
-	return fmt.Sprintf("%.4f-%.4f-%.4f-%s", p.Start, p.Step, p.Stop, strings.Join(p.Signals, "-"))
+	return fmt.Sprintf("%v-%v-%v-%s", p.Start, p.Step, p.Stop, strings.Join(p.Signals, "-"))
 }
