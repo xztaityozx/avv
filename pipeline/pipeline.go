@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/mattn/go-colorable"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
 	"github.com/xztaityozx/avv/task"
@@ -96,7 +97,7 @@ func (p *PipeLine) Start(ctx context.Context) error {
 	wg.Add(len(p.stages))
 
 	// make Progressbar
-	pb := mpb.NewWithContext(ctx)
+	pb := mpb.NewWithContext(ctx, mpb.WithOutput(colorable.NewColorableStdout()))
 
 	workingMSG := color.New(color.FgHiYellow).Sprint("processing...")
 	finishMSG := color.New(color.FgHiGreen).Sprint("done!")

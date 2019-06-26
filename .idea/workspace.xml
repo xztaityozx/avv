@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/run.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/run.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pipeline/pipeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/pipeline.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,16 +54,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="201" column="56" selection-start-line="201" selection-start-column="56" selection-end-line="201" selection-end-column="56" />
+            <state relative-caret-position="252">
+              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline/pipeline_test.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="519">
@@ -430,7 +428,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed: simulation command" />
     <MESSAGE value="Fixed: init command" />
     <MESSAGE value="Add: extract command" />
     <MESSAGE value="Extractの結果がResult/[SigName]以下に移動するように" />
@@ -455,7 +452,8 @@
     <MESSAGE value="Fixed: change logic of SPIScript name" />
     <MESSAGE value="Fixed: remove logic" />
     <MESSAGE value="Fixed: change logic for picking task files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed: change logic for picking task files" />
+    <MESSAGE value="Add: spinner" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: spinner" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/hook/webhook.go" />
@@ -718,17 +716,17 @@
         <state relative-caret-position="-2337" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="201" column="56" selection-start-line="201" selection-start-column="56" selection-end-line="201" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pipeline/pipeline_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="519">
           <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
         </state>
       </provider>
     </entry>
