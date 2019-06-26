@@ -22,6 +22,7 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"github.com/briandowns/spinner"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -155,13 +156,17 @@ var runCmd = &cobra.Command{
 		spin.FinalMSG = "done: clean up"
 		spin.Suffix = "clean up"
 		spin.Start()
+
+		successes := 0
+
 		var dirs []string
 		for v := range fifth {
-			p, err := filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "../"))
+			p, err := filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "..", ".."))
 			if err != nil {
 				log.WithError(err).Warn("can not resolve path: ", p)
 			}
 			dirs = append(dirs, p)
+			successes++
 		}
 
 		for _, v := range dirs {
@@ -178,7 +183,7 @@ var runCmd = &cobra.Command{
 		logrus.Info(msg)
 
 		if slack {
-			config.SlackConfig.PostMessage("終わりますた")
+			config.SlackConfig.PostMessage(fmt.Sprintf(":seikou: %d\n:sippai: %d", successes, p.Total-successes))
 		}
 	},
 }
