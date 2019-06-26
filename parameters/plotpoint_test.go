@@ -20,11 +20,11 @@ func TestPlotPoint_GenerateACEScript(t *testing.T) {
 	path := "/path/to/csv.csv"
 
 	expect := []byte(fmt.Sprintf(`
-set xml [ sx_open_wdf "resultsMap.xml"]
+set xml [ sx_open_wdf "resultsMap.xml" ]
 sx_current_sim_file $xml
 set www [ sx_signal "A B C" ]
 sx_export_csv on
-sx_export_range 0.11110 0.33330 0.22220
+sx_export_range 0.1111 0.3333 0.2222
 sx_export_data "%s" $www
 `, path))
 

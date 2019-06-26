@@ -109,6 +109,7 @@ var runCmd = &cobra.Command{
 		first := p.AddStage(x, source, "write", write.Write{
 			Tmp: config.Templates,
 		})
+
 		// second stage -> simulation with hspice
 		second := p.AddStage(y, first, "simulation", simulation.HSPICE{
 			Path:    config.HSPICE.Path,
