@@ -24,7 +24,7 @@ set xml [ sx_open_wdf "resultsMap.xml"]
 sx_current_sim_file $xml
 set www [ sx_signal "A B C" ]
 sx_export_csv on
-sx_export_range 0.11110n 0.33330n 0.22220n
+sx_export_range 0.11110 0.33330 0.22220
 sx_export_data "%s" $www
 `, path))
 
