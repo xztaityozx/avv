@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xztaityozx/avv/task"
 	"golang.org/x/xerrors"
 )
@@ -29,7 +28,6 @@ func (w WaveView) Invoke(ctx context.Context, task task.Task) (task.Task, error)
 	ch := make(chan error, 1)
 
 	command := w.getCommand(task.Files.Directories.DstDir, task.Files.ACEScript)
-	logrus.Info(task.PlotPoint.Start)
 	go func() {
 		defer close(ch)
 		_, err := exec.Command("bash", "-c", command).Output()

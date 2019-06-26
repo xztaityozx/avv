@@ -62,7 +62,7 @@ var runCmd = &cobra.Command{
 		}
 
 		size := len(files)
-		if size > n || !all {
+		if size > n && !all {
 			size = n
 		}
 
