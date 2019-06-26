@@ -22,6 +22,7 @@ package cmd
 
 import (
 	"context"
+	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/extract"
 	"github.com/xztaityozx/avv/push"
 	"github.com/xztaityozx/avv/remove"
@@ -157,5 +158,8 @@ func init() {
 	runCmd.Flags().IntP("simulateParallel", "x", 1, "HSPICEの並列数です")
 	runCmd.Flags().IntP("extractParallel", "y", 1, "WaveViewの並列数です")
 	runCmd.Flags().IntP("pushParallel", "z", 1, "taaの並列数です")
+
+	runCmd.Flags().IntP("maxRetry", "m", 3, "各ステージの処理が失敗したときに再実行する回数です")
+	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
 
 }
