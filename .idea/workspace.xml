@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="Fixed: change logic of SPIScript name">
+    <list default="true" id="5ac68eb4-0ac5-4042-870f-74fdd66f929f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/run.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/run.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/version.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/version.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remove/remove.go" beforeDir="false" afterPath="$PROJECT_DIR$/remove/remove.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/task.go" beforeDir="false" afterPath="$PROJECT_DIR$/task/task.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/task_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/task/task_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipeline/pipeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/pipeline.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,10 +32,17 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/task/task.go">
+        <entry file="file://$PROJECT_DIR$/parameters/simulationfile.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="101" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="-2337" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/extract/extract.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -46,44 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmd/run.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2899">
-              <caret line="168" column="23" selection-start-line="168" selection-start-column="23" selection-end-line="168" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/version.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="673">
-              <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/simulation/simulate_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
-              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/task/task_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/write/write.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="2884">
+              <caret line="180" column="49" selection-start-line="180" selection-start-column="49" selection-end-line="180" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -91,35 +59,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1631">
-              <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
+            <state relative-caret-position="295">
+              <caret line="201" column="56" selection-start-line="201" selection-start-column="56" selection-end-line="201" selection-end-column="56" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/parameters/plotpoint.go">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pipeline/pipeline_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="631">
-              <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/parameters/simulationfile.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="84" selection-start-line="84" selection-end-line="84" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/remove/remove.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="519">
+              <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
             </state>
           </provider>
         </entry>
@@ -173,9 +123,7 @@
         <option value="$PROJECT_DIR$/parameters/config.go" />
         <option value="$PROJECT_DIR$/aggregate/aggregate.go" />
         <option value="$PROJECT_DIR$/simulation/simulate.go" />
-        <option value="$PROJECT_DIR$/extract/extract.go" />
         <option value="$PROJECT_DIR$/push/push.go" />
-        <option value="$PROJECT_DIR$/pipeline/pipeline.go" />
         <option value="$PROJECT_DIR$/parameters/parameters.go" />
         <option value="$PROJECT_DIR$/extract/extract_test.go" />
         <option value="$PROJECT_DIR$/parameters/transitor_test.go" />
@@ -184,13 +132,15 @@
         <option value="$PROJECT_DIR$/simulation/simulate_test.go" />
         <option value="$PROJECT_DIR$/parameters/plotpoint_test.go" />
         <option value="$PROJECT_DIR$/parameters/plotpoint.go" />
-        <option value="$PROJECT_DIR$/parameters/simulationfile.go" />
         <option value="$PROJECT_DIR$/remove/remove.go" />
-        <option value="$PROJECT_DIR$/cmd/run.go" />
         <option value="$PROJECT_DIR$/write/write.go" />
         <option value="$PROJECT_DIR$/task/task.go" />
         <option value="$PROJECT_DIR$/cmd/version.go" />
         <option value="$PROJECT_DIR$/task/task_test.go" />
+        <option value="$PROJECT_DIR$/parameters/simulationfile.go" />
+        <option value="$PROJECT_DIR$/extract/extract.go" />
+        <option value="$PROJECT_DIR$/cmd/run.go" />
+        <option value="$PROJECT_DIR$/pipeline/pipeline.go" />
       </list>
     </option>
   </component>
@@ -326,7 +276,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.go test github.com/xztaityozx/avv/task">
+  <component name="RunManager" selected="Go Test.TestPipeLine_Start in github.com/xztaityozx/avv/pipeline">
     <configuration name="TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
       <working_directory value="$PROJECT_DIR$/simulation" />
@@ -360,15 +310,14 @@
       <pattern value="^TestPlotPoint_GenerateACEScript$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="go test github.com/xztaityozx/avv/pipeline" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="avv" />
-      <working_directory value="$PROJECT_DIR$/push" />
+      <working_directory value="$PROJECT_DIR$/pipeline" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/xztaityozx/avv/push" />
+      <package value="github.com/xztaityozx/avv/pipeline" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestTaa_Invoke$" />
       <method v="2" />
     </configuration>
     <configuration name="go test github.com/xztaityozx/avv/task" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -382,32 +331,23 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Test.TestPipeLine_Start in github.com/xztaityozx/avv/pipeline" />
-      <item itemvalue="Go Test.TestTaa_Invoke in github.com/xztaityozx/avv/push" />
       <item itemvalue="Go Test.TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" />
       <item itemvalue="Go Test.TestPlotPoint_GenerateACEScript in github.com/xztaityozx/avv/parameters" />
       <item itemvalue="Go Test.go test github.com/xztaityozx/avv/task" />
+      <item itemvalue="Go Test.go test github.com/xztaityozx/avv/pipeline" />
+      <item itemvalue="Go Test.TestPipeLine_Start in github.com/xztaityozx/avv/pipeline" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestPipeLine_Start in github.com/xztaityozx/avv/pipeline" />
+        <item itemvalue="Go Test.go test github.com/xztaityozx/avv/pipeline" />
         <item itemvalue="Go Test.go test github.com/xztaityozx/avv/task" />
         <item itemvalue="Go Test.TestPlotPoint_GenerateACEScript in github.com/xztaityozx/avv/parameters" />
         <item itemvalue="Go Test.TestHSPICE_Invoke in github.com/xztaityozx/avv/simulation" />
-        <item itemvalue="Go Test.TestTaa_Invoke in github.com/xztaityozx/avv/push" />
-        <item itemvalue="Go Test.TestPipeLine_Start in github.com/xztaityozx/avv/pipeline" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestWaveView_Invoke_in_github_com_xztaityozx_avv_extract - 2019.06.25 at 17h 03m 52s.xml">
-      <configuration name="TestWaveView_Invoke in github.com/xztaityozx/avv/extract" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestPipeLine_Start_in_github_com_xztaityozx_avv_pipeline - 2019.06.26 at 05h 14m 52s.xml">
-      <configuration name="TestPipeLine_Start in github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.26 at 05h 22m 52s.xml">
-      <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestTaa_Invoke_in_github_com_xztaityozx_avv_push - 2019.06.26 at 05h 25m 28s.xml">
       <configuration name="TestTaa_Invoke in github.com/xztaityozx/avv/push" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -428,6 +368,15 @@
     </history-entry>
     <history-entry file="go_test_github_com_xztaityozx_avv_task - 2019.06.26 at 08h 21m 05s.xml">
       <configuration name="go test github.com/xztaityozx/avv/task" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="go_test_github_com_xztaityozx_avv_pipeline - 2019.06.26 at 09h 33m 34s.xml">
+      <configuration name="go test github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestPipeLine_Start_in_github_com_xztaityozx_avv_pipeline - 2019.06.26 at 09h 34m 25s.xml">
+      <configuration name="TestPipeLine_Start in github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestPipeLine_Start_in_github_com_xztaityozx_avv_pipeline - 2019.06.26 at 09h 35m 37s.xml">
+      <configuration name="TestPipeLine_Start in github.com/xztaityozx/avv/pipeline" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -481,8 +430,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add: run.go" />
-    <MESSAGE value="Add: init command" />
     <MESSAGE value="Fixed: simulation command" />
     <MESSAGE value="Fixed: init command" />
     <MESSAGE value="Add: extract command" />
@@ -506,7 +453,9 @@
     <MESSAGE value="Add: maxRetry option to runCmd" />
     <MESSAGE value="Fixed: PlotPoint.String()" />
     <MESSAGE value="Fixed: change logic of SPIScript name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed: change logic of SPIScript name" />
+    <MESSAGE value="Fixed: remove logic" />
+    <MESSAGE value="Fixed: change logic for picking task files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed: change logic for picking task files" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/hook/webhook.go" />
@@ -604,13 +553,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extract/extract.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1092">
-          <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.config/avv/.avv.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="799">
@@ -653,13 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="448">
           <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/pipeline_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1232">
-          <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -715,38 +650,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
+    <entry file="file://$PROJECT_DIR$/task/task_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1631">
-          <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parameters/plotpoint.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parameters/simulationfile.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="84" selection-start-line="84" selection-end-line="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/remove/remove.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/run.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2899">
-          <caret line="168" column="23" selection-start-line="168" selection-start-column="23" selection-end-line="168" selection-end-column="23" />
+        <state relative-caret-position="280">
+          <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -757,17 +664,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/task/task.go">
+    <entry file="file://$PROJECT_DIR$/parameters/plotpoint.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        <state relative-caret-position="631">
+          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/version.go">
+    <entry file="file://$PROJECT_DIR$/remove/remove.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
+        <state relative-caret-position="252">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
@@ -778,10 +685,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/task/task_test.go">
+    <entry file="file://$PROJECT_DIR$/cmd/version.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+        <state relative-caret-position="673">
+          <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/task/task.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extract/extract.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/run.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2884">
+          <caret line="180" column="49" selection-start-line="180" selection-start-column="49" selection-end-line="180" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters/simulationfile.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2337" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/pipeline.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="201" column="56" selection-start-line="201" selection-start-column="56" selection-end-line="201" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/pipeline_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
         </state>
       </provider>
     </entry>

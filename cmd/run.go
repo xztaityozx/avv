@@ -22,6 +22,7 @@ package cmd
 
 import (
 	"context"
+	"github.com/briandowns/spinner"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/extract"
@@ -34,6 +35,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"syscall"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/xztaityozx/avv/pipeline"
@@ -53,6 +55,7 @@ var runCmd = &cobra.Command{
 		x, _ := cmd.Flags().GetInt("simulateParallel")
 		y, _ := cmd.Flags().GetInt("extractParallel")
 		z, _ := cmd.Flags().GetInt("pushParallel")
+		slack, _ := cmd.Flags().GetBool("slack")
 
 		taskdir := config.Default.TaskDir()
 
@@ -148,6 +151,10 @@ var runCmd = &cobra.Command{
 			}
 		}
 
+		spin := spinner.New(spinner.CharSets[14], time.Millisecond*500)
+		spin.FinalMSG = "done: clean up"
+		spin.Suffix = "clean up"
+		spin.Start()
 		var dirs []string
 		for v := range fifth {
 			p, err := filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "../"))
@@ -164,9 +171,15 @@ var runCmd = &cobra.Command{
 			}
 		}
 
+		spin.Stop()
+
 		msg := "finished: avv run"
 		log.Info(msg)
 		logrus.Info(msg)
+
+		if slack {
+			config.SlackConfig.PostMessage("終わりますた")
+		}
 	},
 }
 
@@ -182,4 +195,5 @@ func init() {
 	runCmd.Flags().IntP("maxRetry", "m", 3, "各ステージの処理が失敗したときに再実行する回数です")
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
 
+	runCmd.Flags().Bool("slack", true, "すべてのタスクが終わったときにSlackへ投稿します")
 }

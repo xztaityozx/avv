@@ -2,6 +2,7 @@ package pipeline
 
 import (
 	"context"
+	"fmt"
 	"github.com/fatih/color"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
@@ -195,8 +196,16 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar, max int) error {
 }
 
 func makeBar(total int, barName, workingMSG, finishMSG string, pb *mpb.Progress) *mpb.Bar {
+
+	side := color.New(color.FgHiGreen).Sprint(string('\u258D'))
+	done := color.New(color.FgCyan).Sprint(string('\u2588'))
+	now := color.New(color.FgHiBlue).Sprint(string('\u2588'))
+	wait := fmt.Sprint(string('\u2591'))
+
+	style := side + done + now + wait + side
+
 	return pb.AddBar(int64(total),
-		mpb.BarStyle("┃██▒┃"),
+		mpb.BarStyle(style),
 		mpb.BarWidth(50),
 		mpb.PrependDecorators(
 			decor.Name(barName, decor.WC{W: len(barName) + 1, C: decor.DidentRight}),
