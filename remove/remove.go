@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/xztaityozx/avv/task"
 	"os"
-	"path/filepath"
 )
 
 type Remove struct{}
@@ -13,7 +12,6 @@ type Remove struct{}
 func (r Remove) Invoke(ctx context.Context, t task.Task) (task.Task, error) {
 	Do(ctx, t.Files.SPIScript)
 	Do(ctx, t.Files.TaskFile)
-	Do(ctx, filepath.Join(t.Files.Directories.DstDir, "../"))
 	return t, nil
 }
 

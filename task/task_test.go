@@ -79,6 +79,8 @@ monte: %d`
 
 	hash := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%s",
 		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, time.Now().Format(time.ANSIC)))))
+	hashWith := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d%s",
+		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, task.Seed, time.Now().Format(time.ANSIC)))))
 
 	t.Run("AddFile", func(t *testing.T) {
 		as.Equal(filepath.Join(base, hash, fmt.Sprint(task.Seed), "sim", "add"), task.Files.AddFile)
@@ -93,7 +95,7 @@ ICCommand
 	})
 
 	t.Run("SPI", func(t *testing.T) {
-		as.Equal(filepath.Join(net, hash+".spi"), task.Files.SPIScript)
+		as.Equal(filepath.Join(net, hashWith+".spi"), task.Files.SPIScript)
 		as.FileExists(task.Files.SPIScript)
 		b, err := ioutil.ReadFile(task.Files.SPIScript)
 		as.NoError(err)

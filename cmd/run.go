@@ -22,6 +22,7 @@ package cmd
 
 import (
 	"context"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/extract"
 	"github.com/xztaityozx/avv/push"
@@ -129,7 +130,7 @@ var runCmd = &cobra.Command{
 		})
 
 		// fifth stage -> remove csv, spi
-		_ = p.AddStage(1, fourth, "remove", remove.Remove{})
+		fifth := p.AddStage(1, fourth, "remove", remove.Remove{})
 
 		// error channel
 		errCh := make(chan error)
@@ -143,10 +144,29 @@ var runCmd = &cobra.Command{
 		select {
 		case err := <-errCh:
 			if err != nil {
-				log.WithError(err).Fatal("Pipeline task was failed")
+				logrus.WithError(err).Fatal("Pipeline task was failed")
 			}
 		}
 
+		var dirs []string
+		for v := range fifth {
+			p, err := filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "../"))
+			if err != nil {
+				log.WithError(err).Warn("can not resolve path: ", p)
+			}
+			dirs = append(dirs, p)
+		}
+
+		for _, v := range dirs {
+			err := remove.Do(context.Background(), v)
+			if err != nil {
+				log.WithError(err).Error("failed remove dir: ", v)
+			}
+		}
+
+		msg := "finished: avv run"
+		log.Info(msg)
+		logrus.Info(msg)
 	},
 }
 
