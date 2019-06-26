@@ -71,7 +71,7 @@ func Generate(base, net, search string, parameters Parameters) (Files, error) {
 	return Files{
 		Directories:   d,
 		AddFile:       filepath.Join(d.DstDir, "add"),
-		SPIScript:     filepath.Join(net, sha+".spi"),
+		SPIScript:     filepath.Join(net, parameters.HashWithSeed()+".spi"),
 		ACEScript:     filepath.Join(d.DstDir, "ace"),
 		ResultsXML:    filepath.Join(d.DstDir, "results.xml"),
 		ResultsMapXML: filepath.Join(d.DstDir, "resultsMap.xml"),
