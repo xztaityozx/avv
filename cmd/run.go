@@ -30,7 +30,6 @@ import (
 	"github.com/xztaityozx/avv/push"
 	"github.com/xztaityozx/avv/remove"
 	"github.com/xztaityozx/avv/simulation"
-	"github.com/xztaityozx/avv/write"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -112,18 +111,19 @@ var runCmd = &cobra.Command{
 		}()
 
 		// first stage -> write files for simulation
-		first := p.AddStage(x, source, "write", write.Write{
-			Tmp: config.Templates,
-		})
+		//first := p.AddStage(x, source, "write", write.Write{
+		//	Tmp: config.Templates,
+		//})
 
 		// second stage -> simulation with hspice
-		second := p.AddStage(y, first, "simulation", simulation.HSPICE{
+		second := p.AddStage(x, source, "simulation", simulation.HSPICE{
 			Path:    config.HSPICE.Path,
 			Options: config.HSPICE.Options,
+			Tmp:     config.Templates,
 		})
 
 		// third stage -> extract with waveview
-		third := p.AddStage(z, second, "extract", extract.WaveView{
+		third := p.AddStage(y, second, "extract", extract.WaveView{
 			Path: config.WaveView.Path,
 		})
 

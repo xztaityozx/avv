@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/xztaityozx/avv/parameters"
 	"os/exec"
 
 	"github.com/xztaityozx/avv/task"
@@ -13,6 +14,7 @@ import (
 type HSPICE struct {
 	Path    string
 	Options string
+	Tmp     parameters.Templates
 }
 
 // getCommand generate simulation command with hspice
@@ -31,6 +33,7 @@ func (h HSPICE) Invoke(ctx context.Context, task task.Task) (task.Task, error) {
 	ch := make(chan error)
 
 	go func() {
+		task.MakeFiles(h.Tmp)
 		command := h.getCommand(task.Files.Directories.DstDir, task.Files.SPIScript)
 		_, err := exec.Command("bash", "-c", command).Output()
 		if err != nil {

@@ -57,8 +57,8 @@ func Generate(base, net, search string, parameters Parameters) (Files, error) {
 		BaseDir:    base,
 		NetListDir: net,
 		SearchDir:  search,
-		DstDir:     filepath.Join(base, sha, fmt.Sprint(parameters.Seed), "sim"),
-		ResultDir:  filepath.Join(base, sha, fmt.Sprint(parameters.Seed), "res"),
+		DstDir:     filepath.Join(base, "sim", sha, fmt.Sprint(parameters.Seed), "sim"),
+		ResultDir:  filepath.Join(base, "sim", sha, fmt.Sprint(parameters.Seed), "res"),
 	}
 
 	for _, v := range []string{d.DstDir, d.ResultDir} {

@@ -114,13 +114,13 @@ func init() {
 	viper.BindPFlag("Default.Vtp.Deviation", makeCmd.Flags().Lookup("VtpDeviation"))
 	viper.BindPFlag("Default.Vtp.Sigma", makeCmd.Flags().Lookup("VtpSigma"))
 
-	makeCmd.Flags().BoolP("autoremove", "r", false, "波形データを自動で削除します")
-	makeCmd.Flags().Int("start", 0, "SEEDの始点")
-	makeCmd.Flags().Int("end", 0, "SEEDの終点")
+	//makeCmd.Flags().BoolP("autoremove", "r", false, "波形データを自動で削除します")
+	makeCmd.Flags().Int("start", 1, "SEEDの始点")
+	makeCmd.Flags().Int("end", 10, "SEEDの終点")
 
-	viper.BindPFlag("Default.AutoRemove", makeCmd.Flags().Lookup("autoremove"))
+	//viper.BindPFlag("Default.AutoRemove", makeCmd.Flags().Lookup("autoremove"))
 
-	makeCmd.Flags().IntP("times", "t", 0, "モンテカルロシミュレーション1回当たりの回数")
+	makeCmd.Flags().IntP("times", "t", 100, "モンテカルロシミュレーション1回当たりの回数")
 	viper.BindPFlag("Default.Parameters.Sweeps", makeCmd.Flags().Lookup("times"))
 	viper.BindPFlag("Default.SEED.Start", makeCmd.Flags().Lookup("start"))
 	viper.BindPFlag("Default.SEED.End", makeCmd.Flags().Lookup("end"))
