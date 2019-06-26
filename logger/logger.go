@@ -16,7 +16,7 @@ func NewLogger(base string, config SlackConfig) *logrus.Logger {
 
 	// Hook to log logDir
 	path := filepath.Join(logDir, time.Now().Format("2006-01-02-15-04-05")+".log")
-	logrus.Info("LogFile: ", path)
+	//logrus.Info("LogFile: ", path)
 	fileHook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
 		Filename: path,
 		MaxAge:   28,

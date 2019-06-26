@@ -198,7 +198,7 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar, max int) error {
 
 func makeBar(total int, barName, workingMSG, finishMSG string, pb *mpb.Progress) *mpb.Bar {
 
-	side := fmt.Sprint(string('\u258D'))
+	side := "┃"
 	done := fmt.Sprint(string('\u2588'))
 	now := fmt.Sprint(string('\u2588'))
 	wait := fmt.Sprint(string('\u2591'))
