@@ -91,9 +91,9 @@ SEEDごとに1つのファイルが生成されます
 func init() {
 	rootCmd.AddCommand(makeCmd)
 
-	makeCmd.Flags().Float64P("PlotStart", "a", 2.5, "プロットの始点")
-	makeCmd.Flags().Float64P("PlotStep", "b", 7.5, "プロットの刻み幅")
-	makeCmd.Flags().Float64P("PlotStop", "c", 17.5, "プロットの終点")
+	makeCmd.Flags().Float64P("PlotStart", "a", 2.5e-9, "プロットの始点")
+	makeCmd.Flags().Float64P("PlotStep", "b", 7.5e-9, "プロットの刻み幅")
+	makeCmd.Flags().Float64P("PlotStop", "c", 17.5e-9, "プロットの終点")
 
 	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
 	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
