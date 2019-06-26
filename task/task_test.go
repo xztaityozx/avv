@@ -83,7 +83,7 @@ monte: %d`
 		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, task.Seed, time.Now().Format(time.ANSIC)))))
 
 	t.Run("AddFile", func(t *testing.T) {
-		as.Equal(filepath.Join(base, hash, fmt.Sprint(task.Seed), "sim", "add"), task.Files.AddFile)
+		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "add"), task.Files.AddFile)
 		as.FileExists(task.Files.AddFile)
 		b, err := ioutil.ReadFile(task.Files.AddFile)
 		as.NoError(err)
@@ -109,9 +109,9 @@ ICCommand
 	})
 
 	t.Run("ACE", func(t *testing.T) {
-		as.Equal(filepath.Join(base, hash, fmt.Sprint(task.Seed), "sim", "ace"), task.Files.ACEScript)
+		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "ace"), task.Files.ACEScript)
 		as.FileExists(task.Files.ACEScript)
-		as.Equal(filepath.Join(base, hash, fmt.Sprint(task.Seed), "res", "SEED00001.csv"), task.Files.ResultFile)
+		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "res", "SEED00001.csv"), task.Files.ResultFile)
 		b, err := ioutil.ReadFile(task.Files.ACEScript)
 		as.NoError(err)
 		as.Equal([]byte(fmt.Sprintf(`
@@ -125,8 +125,8 @@ sx_export_data "%s" $www
 	})
 
 	t.Run("XML", func(t *testing.T) {
-		as.Equal(filepath.Join(base, hash, fmt.Sprint(task.Seed), "sim", "resultsMap.xml"), task.Files.ResultsMapXML)
-		as.Equal(filepath.Join(base, hash, fmt.Sprint(task.Seed), "sim", "results.xml"), task.Files.ResultsXML)
+		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "resultsMap.xml"), task.Files.ResultsMapXML)
+		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "results.xml"), task.Files.ResultsXML)
 
 		as.FileExists(task.Files.ResultsMapXML)
 		as.FileExists(task.Files.ResultsXML)
