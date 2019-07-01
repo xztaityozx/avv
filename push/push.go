@@ -28,12 +28,13 @@ type Taa struct {
 // getCommand generate command for pushing data to database with taa command
 // returns:
 //  - string: command string
-func (taa Taa) getCommand(vtn, vtp parameters.Transistor, sweeps int, file string) string {
-	return fmt.Sprintf("%s push --config %s --parallel %d --VtpVoltage %f --vtpSigma %f --vtpDeviation %f --VtnVoltage %f --vtnSigma %f --vtnDeviation %f --sweeps %d %s",
+func (taa Taa) getCommand(vtn, vtp parameters.Transistor, sweeps, seed int, file string) string {
+	return fmt.Sprintf("%s push --config %s --parallel %d --VtpVoltage %f --vtpSigma %f --vtpDeviation %f --VtnVoltage %f --vtnSigma %f --vtnDeviation %f --sweeps %d --seed %d %s",
 		taa.TaaPath, taa.ConfigFile, taa.Parallel,
 		vtp.Threshold, vtp.Sigma, vtp.Deviation,
 		vtn.Threshold, vtn.Sigma, vtn.Deviation,
 		sweeps,
+		seed,
 		file)
 }
 
@@ -59,7 +60,7 @@ func (taa Taa) Invoke(ctx context.Context, t task.Task) (task.Task, error) {
 		return t, unexpected
 	}
 
-	command := taa.getCommand(t.Vtn, t.Vtp, t.Sweeps, t.Files.ResultFile)
+	command := taa.getCommand(t.Vtn, t.Vtp, t.Sweeps, t.Seed, t.Files.ResultFile)
 	taa.Log.Info(command)
 	_, err := exec.Command("bash", "-c", command).Output()
 
