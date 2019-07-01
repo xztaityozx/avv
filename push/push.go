@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"github.com/xztaityozx/avv/parameters"
 	"github.com/xztaityozx/avv/task"
 	"golang.org/x/xerrors"
@@ -20,6 +21,8 @@ type Taa struct {
 	ConfigFile string
 	// number of parallel
 	Parallel int
+	// logrus.Logger
+	Log *logrus.Logger
 }
 
 // getCommand generate command for pushing data to database with taa command
@@ -57,6 +60,7 @@ func (taa Taa) Invoke(ctx context.Context, t task.Task) (task.Task, error) {
 	}
 
 	command := taa.getCommand(t.Vtn, t.Vtp, t.Sweeps, t.Files.ResultFile)
+	taa.Log.Info(command)
 	_, err := exec.Command("bash", "-c", command).Output()
 
 	if err != nil {

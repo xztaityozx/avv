@@ -56,6 +56,7 @@ var runCmd = &cobra.Command{
 		y, _ := cmd.Flags().GetInt("extractParallel")
 		z, _ := cmd.Flags().GetInt("pushParallel")
 		slack, _ := cmd.Flags().GetBool("slack")
+		keepcsv, _ := cmd.Flags().GetBool("keepcsv")
 
 		taskdir := config.Default.TaskDir()
 
@@ -120,17 +121,20 @@ var runCmd = &cobra.Command{
 			Path:    config.HSPICE.Path,
 			Options: config.HSPICE.Options,
 			Tmp:     config.Templates,
+			Log:     log.WithField("at", "simulation").Logger,
 		})
 
 		// third stage -> extract with waveview
 		third := p.AddStage(y, second, "extract", extract.WaveView{
 			Path: config.WaveView.Path,
+			Log:  log.WithField("at", "extract").Logger,
 		})
 
 		// fourth stage -> push with taa
 		fourth := p.AddStage(z, third, "push", push.Taa{
 			ConfigFile: config.Taa.ConfigFile,
 			TaaPath:    config.Taa.Path,
+			Log:        log.WithField("at", "push").Logger,
 		})
 
 		// fifth stage -> remove csv, spi
@@ -161,7 +165,13 @@ var runCmd = &cobra.Command{
 
 		var dirs []string
 		for v := range fifth {
-			p, err := filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "..", ".."))
+			var p string
+			var err error
+			if !keepcsv {
+				p, err = filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "..", ".."))
+			} else {
+				p, err = filepath.Abs(filepath.Join(v.Files.Directories.DstDir))
+			}
 			if err != nil {
 				log.WithError(err).Warn("can not resolve path: ", p)
 			}
@@ -203,4 +213,5 @@ func init() {
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
 
 	runCmd.Flags().Bool("slack", true, "すべてのタスクが終わったときにSlackへ投稿します")
+	runCmd.Flags().Bool("keepcsv", false, "CSVを残しす")
 }

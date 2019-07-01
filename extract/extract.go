@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"os/exec"
 
 	"github.com/xztaityozx/avv/task"
@@ -12,6 +13,7 @@ import (
 
 type WaveView struct {
 	Path string
+	Log  *logrus.Logger
 }
 
 // getCommand generate command string for extracting
@@ -28,6 +30,7 @@ func (w WaveView) Invoke(ctx context.Context, task task.Task) (task.Task, error)
 	ch := make(chan error, 1)
 
 	command := w.getCommand(task.Files.Directories.DstDir, task.Files.ACEScript)
+	w.Log.Info(command)
 	go func() {
 		defer close(ch)
 		_, err := exec.Command("bash", "-c", command).Output()

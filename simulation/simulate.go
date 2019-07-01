@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"github.com/xztaityozx/avv/parameters"
 	"os/exec"
 
@@ -15,6 +16,7 @@ type HSPICE struct {
 	Path    string
 	Options string
 	Tmp     parameters.Templates
+	Log     *logrus.Logger
 }
 
 // getCommand generate simulation command with hspice
@@ -35,6 +37,7 @@ func (h HSPICE) Invoke(ctx context.Context, task task.Task) (task.Task, error) {
 	go func() {
 		task.MakeFiles(h.Tmp)
 		command := h.getCommand(task.Files.Directories.DstDir, task.Files.SPIScript)
+		h.Log.Info(command)
 		_, err := exec.Command("bash", "-c", command).Output()
 		if err != nil {
 			ch <- xerrors.Errorf("simulation command failed: %s", err)
