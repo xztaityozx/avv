@@ -10,8 +10,8 @@ import (
 type Remove struct{}
 
 func (r Remove) Invoke(ctx context.Context, t task.Task) (task.Task, error) {
-	Do(ctx, t.Files.SPIScript)
-	Do(ctx, t.Files.TaskFile)
+	//Do(ctx, t.Files.SPIScript)
+	//Do(ctx, t.Files.TaskFile)
 	return t, nil
 }
 

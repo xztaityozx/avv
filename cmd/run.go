@@ -26,6 +26,7 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"github.com/xztaityozx/avv/extract"
 	"github.com/xztaityozx/avv/remove"
 	"github.com/xztaityozx/avv/simulation"
 	"io/ioutil"
@@ -51,7 +52,7 @@ var runCmd = &cobra.Command{
 		all, _ := cmd.Flags().GetBool("all")
 
 		x, _ := cmd.Flags().GetInt("simulateParallel")
-		//y, _ := cmd.Flags().GetInt("extractParallel")
+		y, _ := cmd.Flags().GetInt("extractParallel")
 		//z, _ := cmd.Flags().GetInt("pushParallel")
 		slack, _ := cmd.Flags().GetBool("slack")
 		keepcsv, _ := cmd.Flags().GetBool("keepcsv")
@@ -123,10 +124,10 @@ var runCmd = &cobra.Command{
 		})
 
 		// third stage -> extract with waveview
-		//third := p.AddStage(y, second, "extract", extract.WaveView{
-		//	Path: config.WaveView.Path,
-		//	Log:  log.WithField("at", "extract").Logger,
-		//})
+		third := p.AddStage(y, second, "extract", extract.WaveView{
+			Path: config.WaveView.Path,
+			Log:  log.WithField("at", "extract").Logger,
+		})
 
 		// fourth stage -> push with taa
 		//fourth := p.AddStage(z, third, "push", push.Taa{
@@ -136,7 +137,7 @@ var runCmd = &cobra.Command{
 		//})
 
 		// fifth stage -> remove csv, spi
-		fifth := p.AddStage(1, second, "remove", remove.Remove{})
+		fifth := p.AddStage(1, third, "remove", remove.Remove{})
 
 		// error channel
 		errCh := make(chan error)
