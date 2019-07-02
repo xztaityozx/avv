@@ -26,7 +26,6 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"github.com/xztaityozx/avv/extract"
 	"github.com/xztaityozx/avv/remove"
 	"github.com/xztaityozx/avv/simulation"
 	"io/ioutil"
@@ -52,7 +51,7 @@ var runCmd = &cobra.Command{
 		all, _ := cmd.Flags().GetBool("all")
 
 		x, _ := cmd.Flags().GetInt("simulateParallel")
-		y, _ := cmd.Flags().GetInt("extractParallel")
+		//y, _ := cmd.Flags().GetInt("extractParallel")
 		//z, _ := cmd.Flags().GetInt("pushParallel")
 		slack, _ := cmd.Flags().GetBool("slack")
 		keepcsv, _ := cmd.Flags().GetBool("keepcsv")
