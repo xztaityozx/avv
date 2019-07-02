@@ -213,5 +213,5 @@ func init() {
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
 
 	runCmd.Flags().Bool("slack", true, "すべてのタスクが終わったときにSlackへ投稿します")
-	runCmd.Flags().Bool("keepcsv", false, "CSVを残しす")
+	runCmd.Flags().Bool("keepcsv", false, "CSVを残します")
 }
