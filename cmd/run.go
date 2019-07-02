@@ -131,14 +131,14 @@ var runCmd = &cobra.Command{
 		})
 
 		// fourth stage -> push with taa
-		fourth := p.AddStage(z, third, "push", push.Taa{
-			ConfigFile: config.Taa.ConfigFile,
-			TaaPath:    config.Taa.Path,
-			Log:        log.WithField("at", "push").Logger,
-		})
+		//fourth := p.AddStage(z, third, "push", push.Taa{
+		//	ConfigFile: config.Taa.ConfigFile,
+		//	TaaPath:    config.Taa.Path,
+		//	Log:        log.WithField("at", "push").Logger,
+		//})
 
 		// fifth stage -> remove csv, spi
-		fifth := p.AddStage(1, fourth, "remove", remove.Remove{})
+		fifth := p.AddStage(1, third, "remove", remove.Remove{})
 
 		// error channel
 		errCh := make(chan error)
