@@ -41,11 +41,11 @@ func GenerateParameters(seeds SEED, config Config) []Parameters {
 //  - string: hash string
 func (parameters Parameters) Hash() string {
 
-	//head := sha256.Sum256([]byte(
-	//	fmt.Sprintf("%s%s%s%010d%s", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps, time.Now().Format(time.ANSIC))))
-	//
-	//return filepath.Join(fmt.Sprintf("%x", head))
-	return fmt.Sprintf("%s%s%s%010d", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps)
+	head := sha256.Sum256([]byte(
+		fmt.Sprintf("%s%s%s%010d%s", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps, time.Now().Format(time.ANSIC))))
+
+	return filepath.Join(fmt.Sprintf("%x", head))
+	//return fmt.Sprintf("%s%s%s%010d", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps)
 }
 
 // HashWithSeed generate hash string from parameters with seed value

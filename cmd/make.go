@@ -95,9 +95,9 @@ func init() {
 	makeCmd.Flags().Float64P("PlotStep", "b", 7.5e-9, "プロットの刻み幅")
 	makeCmd.Flags().Float64P("PlotStop", "c", 17.5e-9, "プロットの終点")
 
-	viper.BindPFlag("Default.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
-	viper.BindPFlag("Default.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
-	viper.BindPFlag("Default.PlotPoint.Stop", makeCmd.Flags().Lookup("PlotStop"))
+	viper.BindPFlag("Default.Parameters.PlotPoint.Start", makeCmd.Flags().Lookup("PlotStart"))
+	viper.BindPFlag("Default.Parameters.PlotPoint.Step", makeCmd.Flags().Lookup("PlotStep"))
+	viper.BindPFlag("Default.Parameters.PlotPoint.Stop", makeCmd.Flags().Lookup("PlotStop"))
 
 	makeCmd.Flags().Float64P("VtpVoltage", "P", 0, "Vtpのしきい値電圧")
 	makeCmd.Flags().Float64P("VtnVoltage", "N", 0, "Vtnのしきい値電圧")
@@ -107,12 +107,12 @@ func init() {
 	makeCmd.Flags().Float64("VtpSigma", 0, "Vtpのシグマ")
 	makeCmd.Flags().Float64("VtnSigma", 0, "Vtnのシグマ")
 
-	viper.BindPFlag("Default.Vtn.Threshold", makeCmd.Flags().Lookup("VtnVoltage"))
-	viper.BindPFlag("Default.Vtn.Deviation", makeCmd.Flags().Lookup("VtnDeviation"))
-	viper.BindPFlag("Default.Vtn.Sigma", makeCmd.Flags().Lookup("VtnSigma"))
-	viper.BindPFlag("Default.Vtp.Threshold", makeCmd.Flags().Lookup("VtpVoltage"))
-	viper.BindPFlag("Default.Vtp.Deviation", makeCmd.Flags().Lookup("VtpDeviation"))
-	viper.BindPFlag("Default.Vtp.Sigma", makeCmd.Flags().Lookup("VtpSigma"))
+	viper.BindPFlag("Default.Parameters.Vtn.Threshold", makeCmd.Flags().Lookup("VtnVoltage"))
+	viper.BindPFlag("Default.Parameters.Vtn.Deviation", makeCmd.Flags().Lookup("VtnDeviation"))
+	viper.BindPFlag("Default.Parameters.Vtn.Sigma", makeCmd.Flags().Lookup("VtnSigma"))
+	viper.BindPFlag("Default.Parameters.Vtp.Threshold", makeCmd.Flags().Lookup("VtpVoltage"))
+	viper.BindPFlag("Default.Parameters.Vtp.Deviation", makeCmd.Flags().Lookup("VtpDeviation"))
+	viper.BindPFlag("Default.Parameters.Vtp.Sigma", makeCmd.Flags().Lookup("VtpSigma"))
 
 	//makeCmd.Flags().BoolP("autoremove", "r", false, "波形データを自動で削除します")
 	makeCmd.Flags().Int("start", 1, "SEEDの始点")
@@ -122,8 +122,6 @@ func init() {
 
 	makeCmd.Flags().IntP("times", "t", 100, "モンテカルロシミュレーション1回当たりの回数")
 	viper.BindPFlag("Default.Parameters.Sweeps", makeCmd.Flags().Lookup("times"))
-	viper.BindPFlag("Default.SEED.Start", makeCmd.Flags().Lookup("start"))
-	viper.BindPFlag("Default.SEED.End", makeCmd.Flags().Lookup("end"))
 
 	makeCmd.Flags().String("basedir", "", "シミュレーションの結果を書き出す親ディレクトリ")
 

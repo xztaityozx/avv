@@ -61,13 +61,6 @@ func Execute() {
 
 func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
-
-	//Parallel Options
-	rootCmd.PersistentFlags().IntP("Parallel", "p", 1, "シミュレーションの並列数です")
-
-	// BindFlags
-	viper.BindPFlag("ParallelConfig.Master", rootCmd.PersistentFlags().Lookup("Parallel"))
-
 	cobra.OnInitialize(initConfig)
 }
 

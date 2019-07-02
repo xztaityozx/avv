@@ -27,6 +27,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/extract"
+	"github.com/xztaityozx/avv/push"
 	"github.com/xztaityozx/avv/remove"
 	"github.com/xztaityozx/avv/simulation"
 	"io/ioutil"
@@ -53,7 +54,7 @@ var runCmd = &cobra.Command{
 
 		x, _ := cmd.Flags().GetInt("simulateParallel")
 		y, _ := cmd.Flags().GetInt("extractParallel")
-		//z, _ := cmd.Flags().GetInt("pushParallel")
+		z, _ := cmd.Flags().GetInt("pushParallel")
 		slack, _ := cmd.Flags().GetBool("slack")
 		keepcsv, _ := cmd.Flags().GetBool("keepcsv")
 
@@ -129,15 +130,15 @@ var runCmd = &cobra.Command{
 			Log:  log.WithField("at", "extract").Logger,
 		})
 
-		// fourth stage -> push with taa
-		//fourth := p.AddStage(z, third, "push", push.Taa{
-		//	ConfigFile: config.Taa.ConfigFile,
-		//	TaaPath:    config.Taa.Path,
-		//	Log:        log.WithField("at", "push").Logger,
-		//})
+		//fourth stage -> push with taa
+		fourth := p.AddStage(z, third, "push", push.Taa{
+			ConfigFile: config.Taa.ConfigFile,
+			TaaPath:    config.Taa.Path,
+			Log:        log.WithField("at", "push").Logger,
+		})
 
 		// fifth stage -> remove csv, spi
-		fifth := p.AddStage(1, third, "remove", remove.Remove{})
+		fifth := p.AddStage(1, fourth, "remove", remove.Remove{})
 
 		// error channel
 		errCh := make(chan error)
@@ -206,7 +207,7 @@ func init() {
 
 	runCmd.Flags().IntP("simulateParallel", "x", 1, "HSPICEの並列数です")
 	runCmd.Flags().IntP("extractParallel", "y", 1, "WaveViewの並列数です")
-	//runCmd.Flags().IntP("pushParallel", "z", 1, "taaの並列数です")
+	runCmd.Flags().IntP("pushParallel", "z", 1, "taaの並列数です")
 
 	runCmd.Flags().IntP("maxRetry", "m", 3, "各ステージの処理が失敗したときに再実行する回数です")
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
