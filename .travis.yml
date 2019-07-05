@@ -6,12 +6,14 @@ before_deploy:
   - mkdir ./build
   - go build -o ./build/avv
   - tar cz ./build/avv -f ./build/avv-$(git tag).tar.gz
+  - rm ./build/avv
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: hGG/HNa0eXP7e+nCCga4VhvgXecS8SquMF/z6hZd6MrYN1OgdRtgBXy/GydpUnnNwJXGks9wkl/XTHbzc5pvolJ2WO1cjvkruzdbmTRvsVcRcC2j8c24JPddAD0W+iY7+UULeoPvmbRj0bWAX54vz+eNc4W0TP9XxGfuChlYU8/c1ApB6SNHsWmDMMkEQzcYQVbqyixe8jdFWASd0rFj9UEXbGlolfYxBBmeybdfgKzAij8J0lqWrM+WThgdHV39OKgrVU3cx/Kd0b+Nxhgdp0aedBKNam0zRqB89SJL4LdsIfqn7FtCBIgDCsjSljXO0gZSWpHegFHuvpVPqoyIdjeoyiuEdoBqfqnv2bYGpAhpoNt5jKKZBBi19Qvy1uoQjPuz3Dc6dMFd5+tZoofIoK/SnJg32RbB3ISlFJin7cnUN8m2ys2NZm8MlptzVTf4PDQ8qeGdJVVi49mrGlQ6GayNSUJV4xR/KuLNwu1AuxT0xdX36jY6noH1xhw+MCiNSfU+6TJfr2NFcSIxJTWe3auDhATUgurVEg1vC03XM/l9WUrzeee4mtsjfInkBZIGu711dFZxy3t30FazvJq02H5P16HnpZw3bOZHG7LVpnpDSEwdM2KMyHRVh1KXs+WwzFy3wk+g+BRHZzR4fbbxSDRANoG/mEsBsdPFrdgrjkY=
   file: './build/*.tar.gz'
+  file_glob: true
   on:
     branch: release
     tags: true
