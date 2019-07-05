@@ -23,14 +23,15 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"path/filepath"
+
 	"github.com/fatih/color"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/fileutils"
 	"github.com/xztaityozx/avv/task"
-	"io/ioutil"
-	"path/filepath"
 )
 
 // makeCmd represents the make command
@@ -75,11 +76,6 @@ SEEDごとに1つのファイルが生成されます
 			if err != nil {
 				log.WithError(err).Error("Failed make task json")
 			}
-<<<<<<< HEAD
-=======
-			logrus.Info("Task File Wrote to ", ReserveDir())
-		}()
->>>>>>> master
 
 			path := filepath.Join(config.Default.TaskDir(), v.HashWithSeed()+".json")
 			if err := ioutil.WriteFile(path, b, 0644); err != nil {
