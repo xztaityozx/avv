@@ -2,6 +2,7 @@ package push
 
 import (
 	"context"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/xztaityozx/avv/parameters"
 	"github.com/xztaityozx/avv/task"
@@ -14,6 +15,7 @@ func TestTaa_Invoke(t *testing.T) {
 	gohome := os.Getenv("GOPATH")
 	taa := Taa{
 		TaaPath: filepath.Join(gohome, "src", "github.com", "xztaityozx", "avv", "test", "taa.exe"),
+		Log:logrus.New(),
 	}
 
 	x := task.Task{

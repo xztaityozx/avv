@@ -2,6 +2,7 @@ package simulation
 
 import (
 	"context"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/xztaityozx/avv/parameters"
 	"github.com/xztaityozx/avv/task"
@@ -14,6 +15,7 @@ func TestHSPICE_Invoke(t *testing.T) {
 	gopath := os.Getenv("GOPATH")
 	h := HSPICE{
 		Path: filepath.Join(gopath, "src", "github.com", "xztaityozx", "avv", "test", "hspice.sh"),
+		Log:logrus.New(),
 	}
 
 	x := task.Task{

@@ -3,6 +3,7 @@ package extract
 import (
 	"context"
 	"github.com/mitchellh/go-homedir"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/xztaityozx/avv/fileutils"
 	"github.com/xztaityozx/avv/parameters"
@@ -26,7 +27,10 @@ func TestWaveView_Invoke(t *testing.T) {
 	home, _ := homedir.Dir()
 
 	t.Run("no error", func(t *testing.T) {
-		w := WaveView{Path: filepath.Join(gopath, "src", "github.com", "xztaityozx", "avv", "test", "wv.sh")}
+		w := WaveView{
+			Path: filepath.Join(gopath, "src", "github.com", "xztaityozx", "avv", "test", "wv.sh"),
+			Log:logrus.New(),
+		}
 
 		fileutils.TryMakeDirAll(filepath.Join(home, "TestDir"))
 
@@ -43,7 +47,10 @@ func TestWaveView_Invoke(t *testing.T) {
 	})
 
 	t.Run("error", func(t *testing.T) {
-		w := WaveView{Path: filepath.Join(gopath, "src", "github.com", "xztaityozx", "avv", "test", "wv.err.sh")}
+		w := WaveView{
+			Path: filepath.Join(gopath, "src", "github.com", "xztaityozx", "avv", "test", "wv.err.sh"),
+			Log:logrus.New(),
+		}
 
 		fileutils.TryMakeDirAll(filepath.Join(home, "TestDir"))
 
