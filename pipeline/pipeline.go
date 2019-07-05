@@ -2,15 +2,15 @@ package pipeline
 
 import (
 	"context"
-	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/fatih/color"
 	"github.com/mattn/go-colorable"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
 	"github.com/xztaityozx/avv/task"
 	"golang.org/x/xerrors"
-	"strings"
-	"sync"
 )
 
 type (
@@ -198,10 +198,10 @@ func (s *Stage) invoke(ctx context.Context, bar *mpb.Bar, max int) error {
 
 func makeBar(total int, barName, workingMSG, finishMSG string, pb *mpb.Progress) *mpb.Bar {
 
-	side := "┃"
-	done := fmt.Sprint(string('\u2588'))
-	now := fmt.Sprint(string('\u2588'))
-	wait := fmt.Sprint(string('\u2591'))
+	side := "|"
+	done := "="
+	now := ">"
+	wait := "-"
 
 	style := side + done + now + wait + side
 
