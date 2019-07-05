@@ -4,7 +4,7 @@ script:
 
 before_deploy:
   - mkdir ./build
-  - go build -o ./build/
+  - go build -o ./build/avv
   - tar cz ./build/avv ./build/avv-$(git tag).tar.gz
 deploy:
   provider: releases
