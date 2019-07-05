@@ -23,15 +23,13 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
-	"time"
 
-	"github.com/mattn/go-colorable"
+	"github.com/xztaityozx/avv/logger"
+	"github.com/xztaityozx/avv/parameters"
 
 	"github.com/sirupsen/logrus"
-	"github.com/snowzach/rotatefilehook"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
@@ -39,7 +37,7 @@ import (
 )
 
 var cfgFile string
-var config = Config{}
+var config parameters.Config
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -63,55 +61,13 @@ func Execute() {
 
 func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/avv/.avv.json)")
-
-	//Parallel Options
-	rootCmd.PersistentFlags().IntP("Parallel", "p", 1, "シミュレーションの並列数です")
-
-	// BindFlags
-	viper.BindPFlag("ParallelConfig.Master", rootCmd.PersistentFlags().Lookup("Parallel"))
-
 	cobra.OnInitialize(initConfig)
 }
 
-var log = logrus.New()
+var log *logrus.Logger
 
 func initLogger() {
-
-	// Hook to log file
-	path := PathJoin(config.LogDir, time.Now().Format("2006-01-02-15-04-05")+".log")
-	logrus.Info("LogFile: ", path)
-	filehook, err := rotatefilehook.NewRotateFileHook(rotatefilehook.RotateFileConfig{
-		Filename: path,
-		MaxAge:   28,
-		MaxSize:  500,
-		Level:    logrus.InfoLevel,
-		Formatter: &logrus.TextFormatter{
-			ForceColors:     true,
-			TimestampFormat: time.RFC3339,
-			FullTimestamp:   true,
-		},
-	})
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	log.SetOutput(ioutil.Discard)
-	// init logrus System
-	log.SetFormatter(&logrus.TextFormatter{
-		ForceColors:     true,
-		FullTimestamp:   true,
-		TimestampFormat: time.RFC3339,
-	})
-	log.AddHook(&IOHook{
-		LogLevels: []logrus.Level{logrus.ErrorLevel, logrus.FatalLevel},
-		Writer:    colorable.NewColorableStderr(),
-	})
-
-	log.AddHook(filehook)
-
-	// Slack Hook
-	slackHook := config.SlackConfig.NewFatalLoggerHook()
-	log.AddHook(slackHook)
+	log = logger.NewLogger(config.Default.BaseDir, config.SlackConfig)
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -156,14 +112,4 @@ func initConfig() {
 
 	// init Logger System
 	initLogger()
-
-	// init Task Directories
-	initDirectories()
-}
-
-func initDirectories() {
-	FU.TryMkDir(ReserveDir())
-	FU.TryMkDir(DoneDir())
-	FU.TryMkDir(FailedDir())
-	FU.TryMkDir(DustDir())
 }
