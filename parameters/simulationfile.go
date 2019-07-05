@@ -2,10 +2,11 @@ package parameters
 
 import (
 	"fmt"
-	"github.com/xztaityozx/avv/fileutils"
-	"golang.org/x/xerrors"
 	"io/ioutil"
 	"path/filepath"
+
+	"github.com/xztaityozx/avv/fileutils"
+	"golang.org/x/xerrors"
 )
 
 type Templates struct {
@@ -50,13 +51,12 @@ func (d Directories) MakeDirectories() error {
 	return nil
 }
 
-func Generate(base, net, search string, parameters Parameters) (Files, error) {
+func Generate(base, net string, parameters Parameters) (Files, error) {
 
 	sha := parameters.Hash()
 	d := Directories{
 		BaseDir:    base,
 		NetListDir: net,
-		SearchDir:  search,
 		DstDir:     filepath.Join(base, "sim", sha, fmt.Sprint(parameters.Seed), "sim"),
 		ResultDir:  filepath.Join(base, "sim", sha, fmt.Sprint(parameters.Seed), "res"),
 	}
@@ -102,7 +102,6 @@ func (t Templates) GenerateSPIScript(path, search, add string, parameters Parame
 
 	// make spi script from template string
 	data := fmt.Sprintf(tmp,
-		search,
 		parameters.Vtn.Threshold, parameters.Vtn.Sigma, parameters.Vtn.Deviation,
 		parameters.Vtp.Threshold, parameters.Vtp.Sigma, parameters.Vtp.Deviation,
 		add,
