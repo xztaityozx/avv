@@ -205,12 +205,69 @@ func init() {
 	runCmd.Flags().IntP("count", "n", 1, "number of task")
 	runCmd.Flags().Bool("all", false, "")
 
+<<<<<<< HEAD
 	runCmd.Flags().IntP("simulateParallel", "x", 1, "HSPICEの並列数です")
 	runCmd.Flags().IntP("extractParallel", "y", 1, "WaveViewの並列数です")
 	runCmd.Flags().IntP("pushParallel", "z", 1, "taaの並列数です")
 
 	runCmd.Flags().IntP("maxRetry", "m", 3, "各ステージの処理が失敗したときに再実行する回数です")
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
+=======
+func (rt RunTask) Run(ctx context.Context) {
+
+	l := logrus.WithField("at", "avv run")
+	l.Info(Version)
+	l.Info("Start run command")
+	l.Info("Number of Task=", len(rt))
+
+	var t []ITask
+	for _, r := range rt {
+		t = append(t, r)
+	}
+
+	begin := time.Now()
+	p := NewPipeLine(t)
+	res := p.Start(ctx)
+	end := time.Now()
+	var s, f []Task
+
+	for _, v := range res {
+		if v.Status {
+			s = append(s, v.Task)
+		} else {
+			f = append(f, v.Task)
+		}
+	}
+
+	var sp, fp string
+	{
+		sp = PathJoin(DoneDir(), time.Now().Format("2006-01-02-15-04-05.json"))
+		l.Info("Write Success Tasks to file: ", sp)
+		b, err := json.MarshalIndent(&s, "", "  ")
+		if err != nil {
+			l.WithError(err).Fatal("Failed Marshal Success Tasks")
+		}
+		err = ioutil.WriteFile(sp, b, 0644)
+		if err != nil {
+			l.WithError(err).Fatal("Failed Write to ", sp)
+		}
+	}
+	{
+		fp = PathJoin(FailedDir(), time.Now().Format("2006-01-02-15-04-05.json"))
+		l.Info("Write Failed Tasks to file: ", fp)
+		b, err := json.MarshalIndent(&f, "", "  ")
+		if err != nil {
+			l.WithError(err).Fatal("Failed Marshal Failed Tasks")
+		}
+		err = ioutil.WriteFile(sp, b, 0644)
+		if err != nil {
+			l.WithError(err).Fatal("Failed Write to ", fp)
+		}
+	}
+
+	config.SlackConfig.PostMessage(fmt.Sprintf(":seikou: %d\n:sippai: %d\n開始時間：%s\n終了時間：%s",
+		len(s), len(f), begin.Format(time.ANSIC), end.Format(time.ANSIC)))
+>>>>>>> master
 
 	runCmd.Flags().Bool("slack", true, "すべてのタスクが終わったときにSlackへ投稿します")
 	runCmd.Flags().Bool("keepcsv", false, "CSVを残します")

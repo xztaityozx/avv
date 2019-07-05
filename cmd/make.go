@@ -75,6 +75,11 @@ SEEDごとに1つのファイルが生成されます
 			if err != nil {
 				log.WithError(err).Error("Failed make task json")
 			}
+<<<<<<< HEAD
+=======
+			logrus.Info("Task File Wrote to ", ReserveDir())
+		}()
+>>>>>>> master
 
 			path := filepath.Join(config.Default.TaskDir(), v.HashWithSeed()+".json")
 			if err := ioutil.WriteFile(path, b, 0644); err != nil {
