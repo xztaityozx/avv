@@ -48,8 +48,8 @@ var Version = AVVVersion{
 	Major:  3,
 	Minor:  1,
 	Build:  62,
-	Date:   "2019/07/02",
-	Status: "Development",
+	Date:   "2019/07/05",
+	Status: "Stable",
 }
 
 func (av AVVVersion) String() string {

@@ -2,10 +2,10 @@ language: go
 script:
   - go test -v ./...
 
-brefor_deploy:
+before_deploy:
   - mkdir ./build
   - go build -o ./build/
-  - tar cz ./build/avv ./build/avv-$(git tag -l|head -n1).tar.gz
+  - tar cz ./build/avv ./build/avv-$(git tag).tar.gz
 deploy:
   provider: releases
   skip_cleanup: true
