@@ -2,6 +2,7 @@ package logger
 
 import (
 	"fmt"
+
 	"github.com/multiplay/go-slack/chat"
 	"github.com/multiplay/go-slack/lrhook"
 	"github.com/multiplay/go-slack/webhook"
@@ -31,11 +32,7 @@ func (sc SlackConfig) NewFatalLoggerHook() *lrhook.Hook {
 }
 
 func (sc SlackConfig) BaseMassage() string {
-<<<<<<< HEAD:logger/webhook.go
 	return fmt.Sprintf("<@%s> こちらはavvコマンドです\nマシン名:%s で実行していたお仕事がおわりました", sc.User, sc.MachineName)
-=======
-	return fmt.Sprintf("<@%s> こちらはavvコマンドです\nマシン名:%s で実行していたお仕事がおわりました", sc.User, config.MachineName)
->>>>>>> master:cmd/webhook.go
 }
 
 func (sc SlackConfig) PostMessage(text string) {
