@@ -3,15 +3,16 @@ package task
 import (
 	"crypto/sha256"
 	"fmt"
-	"github.com/mitchellh/go-homedir"
-	"github.com/stretchr/testify/assert"
-	"github.com/xztaityozx/avv/fileutils"
-	"github.com/xztaityozx/avv/parameters"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/mitchellh/go-homedir"
+	"github.com/stretchr/testify/assert"
+	"github.com/xztaityozx/avv/fileutils"
+	"github.com/xztaityozx/avv/parameters"
 )
 
 func TestTask_MakeFiles(t *testing.T) {
@@ -57,7 +58,7 @@ func TestTask_MakeFiles(t *testing.T) {
 		},
 	}
 
-	task.Files, err = parameters.Generate(base, net, search, task.Parameters)
+	task.Files, err = parameters.Generate(base, net, task.Parameters)
 	as.NoError(err)
 
 	tmp := parameters.Templates{
@@ -65,8 +66,7 @@ func TestTask_MakeFiles(t *testing.T) {
 	}
 
 	format :=
-		`search: %s
-param: vtn=AGAUSS(%.4f,%.4f,%.4f) vtp=AGAUSS(%.4f,%.4f,%.4f)
+		`param: vtn=AGAUSS(%.4f,%.4f,%.4f) vtp=AGAUSS(%.4f,%.4f,%.4f)
 include: %s
 include: %s
 monte: %d`
@@ -99,7 +99,7 @@ ICCommand
 		as.FileExists(task.Files.SPIScript)
 		b, err := ioutil.ReadFile(task.Files.SPIScript)
 		as.NoError(err)
-		as.Equal([]byte(fmt.Sprintf(format, search,
+		as.Equal([]byte(fmt.Sprintf(format,
 			task.Vtn.Threshold, task.Vtn.Sigma, task.Vtn.Deviation,
 			task.Vtp.Threshold, task.Vtp.Sigma, task.Vtp.Deviation,
 			task.Files.AddFile,

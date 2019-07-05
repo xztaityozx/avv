@@ -1,8 +1,9 @@
 package parameters
 
 import (
-	"github.com/xztaityozx/avv/logger"
 	"path/filepath"
+
+	"github.com/xztaityozx/avv/logger"
 )
 
 type Config struct {
@@ -17,7 +18,6 @@ type Config struct {
 }
 
 type Default struct {
-	SearchDir  string
 	NetListDir string
 	BaseDir    string
 	Parameters Parameters
