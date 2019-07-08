@@ -3,7 +3,6 @@
     "SPIScript": ""
   },
   "Default": {
-    "SearchDir": "トランジスタなどのモデルファイルが置かれているディレクトリへの絶対パス",
     "NetListDir": "/home/user/simulation/name/sram/sram/HSPICE/monte_carlo/netlist/",
     "BaseDir": "/home/user/Workspace/avv/base",
     "SEED": {
