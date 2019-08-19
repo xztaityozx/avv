@@ -4,7 +4,6 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"path/filepath"
-	"time"
 )
 
 type Parameters struct {
@@ -41,19 +40,19 @@ func GenerateParameters(seeds SEED, config Config) []Parameters {
 //  - string: hash string
 func (parameters Parameters) Hash() string {
 
-	head := sha256.Sum256([]byte(
-		fmt.Sprintf("%s%s%s%010d%s", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps, time.Now().Format(time.ANSIC))))
-
-	return filepath.Join(fmt.Sprintf("%x", head))
-	//return fmt.Sprintf("%s%s%s%010d", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps)
+	//head := sha256.Sum256([]byte(
+	//	fmt.Sprintf("%s%s%s%010d", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps)))
+	//
+	//return filepath.Join(fmt.Sprintf("%x", head))
+	return fmt.Sprintf("%s%s%s%010d", parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps)
 }
 
 // HashWithSeed generate hash string from parameters with seed value
 // returns:
 //  - string: hash string
 func (parameters Parameters) HashWithSeed() string {
-	head := sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d%s",
-		parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps, parameters.Seed, time.Now().Format(time.ANSIC))))
+	head := sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d",
+		parameters.PlotPoint.String(), parameters.Vtn.String(), parameters.Vtp.String(), parameters.Sweeps, parameters.Seed)))
 
 	return filepath.Join(fmt.Sprintf("%x", head))
 

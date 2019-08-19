@@ -58,7 +58,7 @@ func Generate(base, net string, parameters Parameters) (Files, error) {
 		BaseDir:    base,
 		NetListDir: net,
 		DstDir:     filepath.Join(base, "sim", sha, fmt.Sprint(parameters.Seed), "sim"),
-		ResultDir:  filepath.Join(base, "sim", sha, fmt.Sprint(parameters.Seed), "res"),
+		ResultDir:  filepath.Join(base, "sim", sha, "result"),
 	}
 
 	for _, v := range []string{d.DstDir, d.ResultDir} {
@@ -75,7 +75,7 @@ func Generate(base, net string, parameters Parameters) (Files, error) {
 		ACEScript:     filepath.Join(d.DstDir, "ace"),
 		ResultsXML:    filepath.Join(d.DstDir, "results.xml"),
 		ResultsMapXML: filepath.Join(d.DstDir, "resultsMap.xml"),
-		ResultFile:    filepath.Join(d.ResultDir, fmt.Sprintf("SEED%05d.csv", parameters.Seed)),
+		ResultFile:    filepath.Join(d.ResultDir, fmt.Sprintf("%05d", parameters.Seed)),
 	}, nil
 
 }
