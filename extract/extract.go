@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/sirupsen/logrus"
+	"github.com/xztaityozx/avv/remove"
 	"os/exec"
 
 	"github.com/xztaityozx/avv/task"
@@ -38,8 +39,7 @@ func (w WaveView) Invoke(ctx context.Context, task task.Task) (task.Task, error)
 		if err != nil {
 			ch <- xerrors.Errorf("failed wv: %s", err)
 		} else {
-			//ch <- remove.Do(ctx, task.Files.Directories.DstDir)
-			ch <- nil
+			ch <- remove.Do(ctx, task.Files.Directories.DstDir)
 		}
 	}()
 

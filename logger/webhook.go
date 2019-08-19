@@ -2,6 +2,7 @@ package logger
 
 import (
 	"fmt"
+
 	"github.com/multiplay/go-slack/chat"
 	"github.com/multiplay/go-slack/lrhook"
 	"github.com/multiplay/go-slack/webhook"

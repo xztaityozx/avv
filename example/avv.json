@@ -1,0 +1,59 @@
+{
+  "Templates": {
+    "SPIScript": ""
+  },
+  "Default": {
+    "NetListDir": "/home/user/simulation/name/sram/sram/HSPICE/monte_carlo/netlist/",
+    "BaseDir": "/home/user/Workspace/avv/base",
+    "SEED": {
+      "Start": 1,
+      "End": 2000
+    },
+    "Parameters": {
+      "PlotPoint": {
+        "Start": 2.5E-09,
+        "Step": 7.5E-09,
+        "Stop": 17.5E-09,
+        "Signals": ["N1", "N2", "BL", "BLB"]
+      },
+      "Sweeps": 5000,
+      "Vtn": {
+        "Threshold": 0.6,
+        "Sigma": 0.046,
+        "Deviation": 1.0
+      },
+      "Vtp": {
+        "Threshold": -0.6,
+        "Sigma": 0.046,
+        "Deviation": 1.0
+      },
+      "AddFile": {
+        "VddVoltage" : 0.8,
+        "GndVoltage": 0.0,
+        "ICCommand": ".IC V(N1)=0.8V V(N2)=0.0V",
+        "Options": []
+      },
+      "ModelFile": "トランジスタなどのモデルファイルへの絶対パス"
+    }
+  },
+  "SlackConfig": {
+    "user": "@付きでメンションを飛ばすユーザー",
+    "webHookURL": "SlackBotのWebHookURL",
+    "channel": "投稿するチャンネル",
+    "machineName": "実行しているマシンの名前"
+  },
+  "AutoRemove": true,
+  "HSPICE": {
+    "Path": "hspiceへの絶対パス",
+    "Options": "hspiceのオプション。空でOK"
+  },
+  "WaveView": {
+    "Path": "wvへの絶対パス"
+  },
+  "Taa": {
+    "Path": "taaへの絶対パス",
+    "ConfigFile": "taaのコンフィグファイルへの絶対パス",
+    "Parallel": 10
+  }
+}
+

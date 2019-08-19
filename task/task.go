@@ -40,13 +40,9 @@ func Generate(start, end int, config parameters.Config) ([]Task, error) {
 		return nil, err
 	}
 
-	if err := stat(config.Default.SearchDir); err != nil {
-		return nil, err
-	}
-
 	// generate parameters
 	for _, v := range parameters.GenerateParameters(parameters.SEED{start, end}, config) {
-		f, err := parameters.Generate(config.Default.BaseDir, config.Default.NetListDir, config.Default.SearchDir, v)
+		f, err := parameters.Generate(config.Default.BaseDir, config.Default.NetListDir, v)
 		if err != nil {
 			return rt, err
 		}

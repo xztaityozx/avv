@@ -11,7 +11,6 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
-	"time"
 )
 
 func TestTask_MakeFiles(t *testing.T) {
@@ -57,7 +56,7 @@ func TestTask_MakeFiles(t *testing.T) {
 		},
 	}
 
-	task.Files, err = parameters.Generate(base, net, search, task.Parameters)
+	task.Files, err = parameters.Generate(base, net, task.Parameters)
 	as.NoError(err)
 
 	tmp := parameters.Templates{
@@ -65,8 +64,7 @@ func TestTask_MakeFiles(t *testing.T) {
 	}
 
 	format :=
-		`search: %s
-param: vtn=AGAUSS(%.4f,%.4f,%.4f) vtp=AGAUSS(%.4f,%.4f,%.4f)
+		`param: vtn=AGAUSS(%.4f,%.4f,%.4f) vtp=AGAUSS(%.4f,%.4f,%.4f)
 include: %s
 include: %s
 monte: %d`
@@ -77,10 +75,10 @@ monte: %d`
 	err = task.MakeFiles(tmp)
 	as.NoError(err)
 
-	hash := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%s",
-		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, time.Now().Format(time.ANSIC)))))
-	hashWith := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d%s",
-		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, task.Seed, time.Now().Format(time.ANSIC)))))
+	hash := fmt.Sprintf("%s%s%s%010d",
+		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps)
+	hashWith := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d",
+		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, task.Seed))))
 
 	t.Run("AddFile", func(t *testing.T) {
 		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "add"), task.Files.AddFile)
@@ -99,7 +97,7 @@ ICCommand
 		as.FileExists(task.Files.SPIScript)
 		b, err := ioutil.ReadFile(task.Files.SPIScript)
 		as.NoError(err)
-		as.Equal([]byte(fmt.Sprintf(format, search,
+		as.Equal([]byte(fmt.Sprintf(format,
 			task.Vtn.Threshold, task.Vtn.Sigma, task.Vtn.Deviation,
 			task.Vtp.Threshold, task.Vtp.Sigma, task.Vtp.Deviation,
 			task.Files.AddFile,
@@ -111,7 +109,7 @@ ICCommand
 	t.Run("ACE", func(t *testing.T) {
 		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "ace"), task.Files.ACEScript)
 		as.FileExists(task.Files.ACEScript)
-		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "res", "SEED00001.csv"), task.Files.ResultFile)
+		as.Equal(filepath.Join(base, "sim", hash, "result", "00001"), task.Files.ResultFile)
 		b, err := ioutil.ReadFile(task.Files.ACEScript)
 		as.NoError(err)
 		as.Equal([]byte(fmt.Sprintf(`
