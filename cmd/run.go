@@ -28,9 +28,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"syscall"
-	"time"
 
-	"github.com/briandowns/spinner"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/extract"
@@ -55,7 +53,6 @@ var runCmd = &cobra.Command{
 		x, _ := cmd.Flags().GetInt("simulateParallel")
 		y, _ := cmd.Flags().GetInt("extractParallel")
 		slack, _ := cmd.Flags().GetBool("slack")
-		keepcsv, _ := cmd.Flags().GetBool("keepcsv")
 
 		taskdir := config.Default.TaskDir()
 
@@ -148,37 +145,11 @@ var runCmd = &cobra.Command{
 			}
 		}
 
-		spin := spinner.New(spinner.CharSets[14], time.Millisecond*500)
-		spin.FinalMSG = "done: clean up"
-		spin.Suffix = "clean up"
-		spin.Start()
-
 		successes := 0
 
-		var dirs []string
-		for v := range fourth {
-			var p string
-			var err error
-			if !keepcsv {
-				p, err = filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "..", ".."))
-			} else {
-				p, err = filepath.Abs(filepath.Join(v.Files.Directories.DstDir))
-			}
-			if err != nil {
-				log.WithError(err).Warn("can not resolve path: ", p)
-			}
-			dirs = append(dirs, p)
+		for range fourth {
 			successes++
 		}
-
-		for _, v := range dirs {
-			err := remove.Do(context.Background(), v)
-			if err != nil {
-				log.WithError(err).Error("failed remove dir: ", v)
-			}
-		}
-
-		spin.Stop()
 
 		fmt.Println()
 
@@ -205,5 +176,4 @@ func init() {
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
 
 	runCmd.Flags().Bool("slack", true, "すべてのタスクが終わったときにSlackへ投稿します")
-	runCmd.Flags().Bool("keepcsv", false, "CSVを残します")
 }
