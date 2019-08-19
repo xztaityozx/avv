@@ -119,13 +119,10 @@ func init() {
 	makeCmd.Flags().Int("start", 1, "SEEDの始点")
 	makeCmd.Flags().Int("end", 10, "SEEDの終点")
 
-	//viper.BindPFlag("Default.AutoRemove", makeCmd.Flags().Lookup("autoremove"))
 
 	makeCmd.Flags().IntP("times", "t", 100, "モンテカルロシミュレーション1回当たりの回数")
 	viper.BindPFlag("Default.Parameters.Sweeps", makeCmd.Flags().Lookup("times"))
 
 	makeCmd.Flags().String("basedir", "", "シミュレーションの結果を書き出す親ディレクトリ")
-
 	viper.BindPFlag("Default.BaseDir", makeCmd.Flags().Lookup("basedir"))
-
 }

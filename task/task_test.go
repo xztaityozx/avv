@@ -3,16 +3,14 @@ package task
 import (
 	"crypto/sha256"
 	"fmt"
-	"io/ioutil"
-	"os"
-	"path/filepath"
-	"testing"
-	"time"
-
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
 	"github.com/xztaityozx/avv/fileutils"
 	"github.com/xztaityozx/avv/parameters"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"testing"
 )
 
 func TestTask_MakeFiles(t *testing.T) {
@@ -77,10 +75,10 @@ monte: %d`
 	err = task.MakeFiles(tmp)
 	as.NoError(err)
 
-	hash := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%s",
-		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, time.Now().Format(time.ANSIC)))))
-	hashWith := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d%s",
-		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, task.Seed, time.Now().Format(time.ANSIC)))))
+	hash := fmt.Sprintf("%s%s%s%010d",
+		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps)
+	hashWith := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s%s%s%010d%010d",
+		task.PlotPoint.String(), task.Vtn.String(), task.Vtp.String(), task.Sweeps, task.Seed))))
 
 	t.Run("AddFile", func(t *testing.T) {
 		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "add"), task.Files.AddFile)
@@ -111,7 +109,7 @@ ICCommand
 	t.Run("ACE", func(t *testing.T) {
 		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "sim", "ace"), task.Files.ACEScript)
 		as.FileExists(task.Files.ACEScript)
-		as.Equal(filepath.Join(base, "sim", hash, fmt.Sprint(task.Seed), "res", "SEED00001.csv"), task.Files.ResultFile)
+		as.Equal(filepath.Join(base, "sim", hash, "result", "00001"), task.Files.ResultFile)
 		b, err := ioutil.ReadFile(task.Files.ACEScript)
 		as.NoError(err)
 		as.Equal([]byte(fmt.Sprintf(`

@@ -23,6 +23,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"github.com/briandowns/spinner"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -30,11 +31,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/briandowns/spinner"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/extract"
-	"github.com/xztaityozx/avv/push"
 	"github.com/xztaityozx/avv/remove"
 	"github.com/xztaityozx/avv/simulation"
 
@@ -55,9 +54,7 @@ var runCmd = &cobra.Command{
 
 		x, _ := cmd.Flags().GetInt("simulateParallel")
 		y, _ := cmd.Flags().GetInt("extractParallel")
-		z, _ := cmd.Flags().GetInt("pushParallel")
 		slack, _ := cmd.Flags().GetBool("slack")
-		keepcsv, _ := cmd.Flags().GetBool("keepcsv")
 
 		taskdir := config.Default.TaskDir()
 
@@ -131,15 +128,8 @@ var runCmd = &cobra.Command{
 			Log:  log.WithField("at", "extract").Logger,
 		})
 
-		//fourth stage -> push with taa
-		fourth := p.AddStage(z, third, "push", push.Taa{
-			ConfigFile: config.Taa.ConfigFile,
-			TaaPath:    config.Taa.Path,
-			Log:        log.WithField("at", "push").Logger,
-		})
-
-		// fifth stage -> remove csv, spi
-		fifth := p.AddStage(1, fourth, "remove", remove.Remove{})
+		// fourth stage -> remove csv, spi
+		fourth := p.AddStage(1, third, "remove", remove.Remove{})
 
 		// error channel
 		errCh := make(chan error)
@@ -157,36 +147,21 @@ var runCmd = &cobra.Command{
 			}
 		}
 
-		spin := spinner.New(spinner.CharSets[14], time.Millisecond*500)
-		spin.FinalMSG = "done: clean up"
-		spin.Suffix = "clean up"
-		spin.Start()
-
 		successes := 0
 
-		var dirs []string
-		for v := range fifth {
-			var p string
-			var err error
-			if !keepcsv {
-				p, err = filepath.Abs(filepath.Join(v.Files.Directories.DstDir, "..", ".."))
-			} else {
-				p, err = filepath.Abs(filepath.Join(v.Files.Directories.DstDir))
-			}
+		spin := spinner.New(spinner.CharSets[14], time.Millisecond*500)
+		spin.FinalMSG = "finished clean up"
+		spin.Suffix = "cleanup..."
+		spin.Start()
+		for v := range fourth {
+			p, err := filepath.Abs(filepath.Join(v.Files.Directories.DstDir, ".."))
 			if err != nil {
-				log.WithError(err).Warn("can not resolve path: ", p)
+				log.WithError(err).Error("can not resolve path: ", p)
+			} else {
+				remove.Do(context.Background(), p)
 			}
-			dirs = append(dirs, p)
 			successes++
 		}
-
-		for _, v := range dirs {
-			err := remove.Do(context.Background(), v)
-			if err != nil {
-				log.WithError(err).Error("failed remove dir: ", v)
-			}
-		}
-
 		spin.Stop()
 
 		fmt.Println()
@@ -214,5 +189,4 @@ func init() {
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))
 
 	runCmd.Flags().Bool("slack", true, "すべてのタスクが終わったときにSlackへ投稿します")
-	runCmd.Flags().Bool("keepcsv", false, "CSVを残します")
 }
