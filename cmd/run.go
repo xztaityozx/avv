@@ -34,7 +34,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xztaityozx/avv/extract"
-	"github.com/xztaityozx/avv/push"
 	"github.com/xztaityozx/avv/remove"
 	"github.com/xztaityozx/avv/simulation"
 
@@ -55,7 +54,6 @@ var runCmd = &cobra.Command{
 
 		x, _ := cmd.Flags().GetInt("simulateParallel")
 		y, _ := cmd.Flags().GetInt("extractParallel")
-		z, _ := cmd.Flags().GetInt("pushParallel")
 		slack, _ := cmd.Flags().GetBool("slack")
 		keepcsv, _ := cmd.Flags().GetBool("keepcsv")
 
@@ -131,15 +129,8 @@ var runCmd = &cobra.Command{
 			Log:  log.WithField("at", "extract").Logger,
 		})
 
-		//fourth stage -> push with taa
-		fourth := p.AddStage(z, third, "push", push.Taa{
-			ConfigFile: config.Taa.ConfigFile,
-			TaaPath:    config.Taa.Path,
-			Log:        log.WithField("at", "push").Logger,
-		})
-
-		// fifth stage -> remove csv, spi
-		fifth := p.AddStage(1, fourth, "remove", remove.Remove{})
+		// fourth stage -> remove csv, spi
+		fourth := p.AddStage(1, third, "remove", remove.Remove{})
 
 		// error channel
 		errCh := make(chan error)
@@ -165,7 +156,7 @@ var runCmd = &cobra.Command{
 		successes := 0
 
 		var dirs []string
-		for v := range fifth {
+		for v := range fourth {
 			var p string
 			var err error
 			if !keepcsv {
