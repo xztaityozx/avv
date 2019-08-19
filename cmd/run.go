@@ -23,11 +23,13 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"github.com/briandowns/spinner"
 	"io/ioutil"
 	"os"
 	"os/signal"
 	"path/filepath"
 	"syscall"
+	"time"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -147,9 +149,20 @@ var runCmd = &cobra.Command{
 
 		successes := 0
 
-		for range fourth {
+		spin := spinner.New(spinner.CharSets[14], time.Millisecond*500)
+		spin.FinalMSG = "finished clean up"
+		spin.Suffix = "cleanup..."
+		spin.Start()
+		for v := range fourth {
+			p, err := filepath.Abs(filepath.Join(v.Files.Directories.DstDir, ".."))
+			if err != nil {
+				log.WithError(err).Error("can not resolve path: ", p)
+			} else {
+				remove.Do(context.Background(), p)
+			}
 			successes++
 		}
+		spin.Stop()
 
 		fmt.Println()
 
