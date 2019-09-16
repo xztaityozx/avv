@@ -23,13 +23,14 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/briandowns/spinner"
 	"io/ioutil"
 	"os"
 	"os/signal"
 	"path/filepath"
 	"syscall"
 	"time"
+
+	"github.com/briandowns/spinner"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -183,7 +184,6 @@ func init() {
 
 	runCmd.Flags().IntP("simulateParallel", "x", 1, "HSPICEの並列数です")
 	runCmd.Flags().IntP("extractParallel", "y", 1, "WaveViewの並列数です")
-	runCmd.Flags().IntP("pushParallel", "z", 1, "taaの並列数です")
 
 	runCmd.Flags().IntP("maxRetry", "m", 3, "各ステージの処理が失敗したときに再実行する回数です")
 	viper.BindPFlag("MaxRetry", runCmd.Flags().Lookup("maxRetry"))

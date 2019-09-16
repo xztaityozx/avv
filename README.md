@@ -49,10 +49,10 @@ Flags:
 Use "avv [command] --help" for more information about a command.
 ```
 
-- [avv help](#avv help)
-- [avv make](#avv make)
-- [avv run](#avv run)
-- [avv version](#avv version)
+- [avv help](#avv-help)
+- [avv make](#avv-make)
+- [avv run](#avv-run)
+- [avv version](#avv-version)
 
 ### avv help
 コマンドのヘルプを出力します。詳細なリファレンスを見ることなく、おおよその使い方がわかります
@@ -152,11 +152,180 @@ $ avv make --end 2000
 
 - `-t, --times int` -->  モンテカルロシミュレーション1回当たりの回数 (default
 
+### avv run 
+作ったタスクを実行します
+
+```sh
+Usage:
+  avv run [flags]
+
+Flags:
+      --all
+  -n, --count int              number of task (default 1)
+  -y, --extractParallel int    WaveViewの並列数です (default 1)
+  -h, --help                   help for run
+  -m, --maxRetry int           各ステージの処理が失敗したときに再実行する回数です
+ (default 3)
+  -x, --simulateParallel int   HSPICEの並列数です (default 1)
+      --slack                  すべてのタスクが終わったときにSlackへ投稿します (d
+efault true)
+
+Global Flags:
+      --config string   config file (default is $HOME/.config/avv/.avv.json)
+```
+
+#### avv run all, n,count オプション
+一度に複数のタスクを実行できます。個数を個別に指定する場合は `n,count` オプション。保存されているタスクをすべて実行するには `all` オプションを指定します
+
+- `--all`       --> すべてのタスクを実行します
+- `-n, --count n` --> n個のタスクを実行します。作られた順番が保存されないことに注意してください
+
+```sh
+# ex) 8個実行
+$ avv run -n 8
+
+
+# ex) すべて
+$ avv run --all
+```
+
+#### avv run Parallelオプション
+`avv` では Hspice と WaveView を それぞれ並列で動かしています
+
+```
+                               / => [Hspice] => \
+[First task pool]-- pop one => - => [Hspice] => - => [simulation result] => [Second task pool]
+                               \ => [Hspice] => /
+
+
+                                / => [WaveView] => \
+[Second task pool]-- pop one => - => [WaveView] => - => [extract result] => [csv]
+                                \ => [WaveView] => /
+
+```
+
+Parallel オプションを使うと、HspiceやWaveViewの並列数を決めることが可能です
+
+-  `-x, --simulateParallel int` -->  HSPICEの並列数です (default 1)
+-  `-y, --extractParallel int`  -->  WaveViewの並列数です (default 1)
+
+`avv` の性能を決める一番重要なオプションであることに注意してください。例えば50,000回のモンテカルロ・シミュレーションは Hspice の段階で負荷になることはあまりありませんが、WaveViewではかなり多くのメモリが必要になります。このためWaveViewの並列数を大きくしすぎるとハングアップすることがあります。動作させるOCのスペックと相談する必要があります
+
+```sh
+# ex) HSpiceが10並列 WaveViewが3並列
+$ avv run -x 10 -y 3
+```
+
+#### avv run maxRetry オプション
+`avv` ではHspice, WaveViewが何らかの原因で失敗した場合、maxRetryに指定した回数だけ再実行を試みます。
+
+```sh
+# ex) 再実行回数の上限が5
+$ avv run --maxRetry 5
+```
+
+#### avv run slack オプション
+`avv` はタスクがすべて終了したとき、slackへ投稿することができます。詳細は[SlackConfig](#SlackConfig) を参照してください。デフォルトでTrueになります
+
+- `--slack`  -->  すべてのタスクが終わったときにSlackへ投稿します (dfault true)
+
+```sh
+# ex) slackへ投稿しない
+$ avv run --slack=false
+```
+
+### avv version
+バージョン情報を出力して終了します
+
+```sh
+# ex) バージョン情報を出力する
+$ avv version
+```
+
 ## Config
+`avv` のコンフィグについて記述します。これらを正確に設定しないと、目的のシミュレーションが実行できないことに注意してください
+
+| 項目 | 値 |  
+|:----:|:--:|  
+|場所|`$HOME/.config/avv/.avv.json`|  
+|形式|JSON|  
+
+[example](./example/avv.json)
 
 ### Templates
+#### SPIScript
+シミュレーションしたい回路のSPIスクリプトのテンプレートです
+
+1. 素のnetlistを用意します。多くの場合 `~/simulation/username/name/name/HSPICE/nominal/netlist` がそれです。加工するので、コピーをどこかに作成します
+2. コピーしたファイルの先頭に以下の行を追加します
+
+```
+.option MCBRIEF=2
+.param vtn=AGAUSS(%.4f,%.4f,%.4f) vtp=AGAUSS(%.4f,%.4f,%.4f)
+.option PARHIER = LOCAL
+.include '%s'
+.option ARTIST=2 PSF=2
+.temp 25
+.include '%s'
+```
+
+3. 更に最後尾に以下の行を追加します
+
+```
+.tran 10p 20n start=0 uic sweep monte=%d firstrun=1
+.option opfile=1 split_dp=2
+
+.end
+```
+
+4. 作成したファイルへのパスを `SPIScript` の値として設定します
+
 ### Default
+シミュレーションに必要な各パラメータのデフォルト値を決めます。コマンドラインオプションから指定できるものだけでなくここでしか設定できないものがあります。
+
+|項目|説明|CLIオプション|例|  
+|:--:|:--:|:--:|:--:|  
+|`NetListDir`|`avv` が生成するSPIスクリプトを設置する場所|なし|`$HOME/simulation/username/name/name/monte_carlo/netlist`|  
+|`BaseDir`|`avv` がワークスペースとして使うディレクトリのルートです|avv make --basedir|`$HOME/Workspace/base`|  
+|SEED.Start|Seed値の開始値です|avv make --start|1|  
+|SEED.End|Seed値の終了値です|avv make --end|2000|  
+|Parameters.PlotPoint.Start|プロットの始点です|avv make -a, --PlotStart|2.5E-9|  
+|Parameters.PlotPoint.Step|プロットの刻み幅です|avv make -b, --PlotStep|7.5E-9|  
+|Parameters.PlotPoint.Stop|プロットの終点です|avv make -c, --PlotStop|1.75E-8|  
+|Parameters.PlotPoint.Signals|取り出す信号線のリストです|なし|["N1","N2","BLB"]|  
+|Parameters.Sweeps|一回あたりのモンテカルロ・シミュレーションの回数です|avv make -t, --times|5000|  
+|Parameters.Vtn.Threshold|Vtnのしきい値電圧です|avv make -N, --VtnVoltage|0.6|  
+|Parameters.Vtn.Sigma|Vtnのシグマです|avv make --VtnSigma|0.046|  
+|Parameters.Vtn.Deviation|Vtnの偏差です|avv make --VtnDeviation|1.0|  
+|Parameters.Vtp.Threshold|Vtpのしきい値電圧です|avv make -N, --VtpVoltage|-0.6|  
+|Parameters.Vtp.Sigma|Vtpのシグマです|avv make --VtpSigma|0.046|  
+|Parameters.Vtp.Deviation|Vtpの偏差です|avv make --VtpDeviation|1.0|  
+|Parameters.AddFile.VddVoltage|電源電圧です|なし|0.8|  
+|Parameters.AddFile.GndVoltage|グランドの電圧です|なし|0|  
+|Parameters.AddFile.ICCommand|N1やN2などの初期値を決める .IC コマンドを記述します|なし|".IC V(N1)=0.8V V(N2)=0V"|  
+|Parameters.AddFile.Options|その他のオプションがあれば記述します|なし|[]|  
+|Parameters.ModelFile|モデルファイルへの __絶対パス__ です|なし|`$HOME/Workspace/avv/modelfile.exe`|  
 ### SlackConfig
-### AutoRemove
+Slackへ投稿する際に必要な設定です
+
+|項目|説明|CLIオプション|例|  
+|:--:|:--:|:--:|:--:|  
+|SlackConfig.User|@付きでメンションする相手です。自分にしておくといいと思います|なし|"xztaityozx"|  
+|SlackConfig.WebHookURL|SlackのWebHookURLです。ここでは解説しません。ggってください。この値は外部に公開しないでください|なし|URL|  
+|SlackConfig.Channel|投稿するチャンネルです|なし|"#進捗"|  
+|SlackConfig.MachineName|動作しているマシンに任意の名前をつけられます。複数のマシンで動いている `avv` を識別するために使います|なし|"MachineA"|  
+
 ### HSPICE
+Hspiceの設定です
+
+|項目|説明|CLIオプション|例|  
+|:--:|:--:|:--:|:--:|  
+|HSPICE.Path|Hspiceの実行ファイルへの __絶対パス__ です|なし|"/path/to/hspice"|  
+|HSPICE.Options|Hspiceへ渡すオプションです|なし|""|  
+
 ### WaveView
+WaveViewの設定です
+
+|項目|説明|CLIオプション|例|  
+|:--:|:--:|:--:|:--:|  
+|WaveView.Path|WaveViewの実行ファイルへの __絶対パス__ です|なし|"/path/to/wv"|  
